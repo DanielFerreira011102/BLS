@@ -4,17 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "92d885396a3fd82e",
+        "id": "b8a92ae5d33d2490",
         "type": "tabs",
         "children": [
           {
-            "id": "27c20e5bedb24d1f",
+            "id": "9f4638399f9eedbf",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Literature_collection/@modi-karthikeyan-2024-eulerian.md",
-                "mode": "source",
+                "file": "Literature_collection/@you-etal-2024-uiuc.md",
+                "mode": "preview",
                 "source": false
               }
             }
@@ -108,6 +108,7 @@
       {
         "id": "dfc3ac43caaebec9",
         "type": "tabs",
+        "dimension": 29.26356589147287,
         "children": [
           {
             "id": "2a7a3abe15749c95",
@@ -115,7 +116,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Literature_collection/@modi-karthikeyan-2024-eulerian.md"
+                "file": "Literature_collection/@you-etal-2024-uiuc.md"
               }
             }
           }
@@ -124,6 +125,7 @@
       {
         "id": "3ef71bdef75fb4cb",
         "type": "tabs",
+        "dimension": 28.875968992248062,
         "children": [
           {
             "id": "b27dc0f936788285",
@@ -131,7 +133,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Literature_collection/@modi-karthikeyan-2024-eulerian.md",
+                "file": "Literature_collection/@you-etal-2024-uiuc.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -143,7 +145,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Literature_collection/@modi-karthikeyan-2024-eulerian.md",
+                "file": "Literature_collection/@you-etal-2024-uiuc.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -160,6 +162,7 @@
       {
         "id": "2c1e0be5a0fe43b6",
         "type": "tabs",
+        "dimension": 41.86046511627907,
         "children": [
           {
             "id": "0d16a1d273eefe79",
@@ -170,7 +173,7 @@
                 "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
-                "collapseAll": false,
+                "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical"
               }
@@ -180,7 +183,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 437.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -192,21 +195,22 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "27c20e5bedb24d1f",
+  "active": "9f4638399f9eedbf",
   "lastOpenFiles": [
-    "Literature_collection/@you-etal-2024-uiuc.md",
-    "Literature_collection/@zhou-etal-2024-team.md",
-    "Literature_collection/@modi-karthikeyan-2024-eulerian.md",
-    "Literature_collection/@kim-etal-2024-saama-technologies.md",
-    "Literature_collection/@bao-etal-2024-ctyun.md",
-    "papers/Eulerian at BioLaySumm - Preprocessing Over Abstract is All You Need.pdf",
-    "references.bib",
     "papers/UIUC_BioNLP at BioLaySumm - An Extract-then-Summarize Approach.pdf",
+    "Literature_collection/@you-etal-2024-uiuc.md",
+    "papers/Eulerian at BioLaySumm - Preprocessing Over Abstract is All You Need.pdf",
+    "Literature_collection/@modi-karthikeyan-2024-eulerian.md",
+    "Literature_collection/@zhou-etal-2024-team.md",
+    "Literature_collection/@kim-etal-2024-saama-technologies.md",
+    "page 1.md",
+    "Literature_collection/@bao-etal-2024-ctyun.md",
+    "Literature_table.md",
     "papers/Ctyun AI at BioLaySumm - Enhancing Lay Summaries of Biomedical Articles Through Large Language Models and Data Augmentation.pdf",
+    "references.bib",
     "papers/Saama Technologies at BioLaySumm - Abstract based fine-tuned models.pdf",
     "papers/Team YXZ at BioLaySumm - Adapting Large Language Models for Biomedical Lay Summarization.pdf",
     "papers",
-    "Literature_table.md",
     "Literature_collection/Untitled.md",
     "Untitled",
     "Unconfirmed 571716.crdownload",
