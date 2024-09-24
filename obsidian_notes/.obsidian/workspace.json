@@ -4,19 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "b8a92ae5d33d2490",
+        "id": "ac1b7ba2ff5e2edf",
         "type": "tabs",
         "children": [
           {
-            "id": "9f4638399f9eedbf",
+            "id": "af4f2ba61887740e",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Literature_collection/@you-etal-2024-uiuc.md",
-                "mode": "preview",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ],
@@ -99,7 +95,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 410.5
+    "width": 407.5
   },
   "right": {
     "id": "b2b797a78cbab6e1",
@@ -115,9 +111,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "Literature_collection/@you-etal-2024-uiuc.md"
-              }
+              "state": {}
             }
           }
         ]
@@ -133,7 +127,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Literature_collection/@you-etal-2024-uiuc.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -145,7 +138,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Literature_collection/@you-etal-2024-uiuc.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -170,7 +162,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "tag:#BioLaySumm",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": true,
@@ -183,7 +175,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 437.5
+    "width": 430.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -195,27 +187,28 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "9f4638399f9eedbf",
+  "active": "af4f2ba61887740e",
   "lastOpenFiles": [
-    "papers/UIUC_BioNLP at BioLaySumm - An Extract-then-Summarize Approach.pdf",
-    "Literature_collection/@you-etal-2024-uiuc.md",
-    "papers/Eulerian at BioLaySumm - Preprocessing Over Abstract is All You Need.pdf",
+    "papers/LinkBERT - Pretraining Language Models with Document Links.pdf",
+    "Literature_collection/@yasunaga-etal-2022-linkbert.md",
+    "Literature_collection/@bao-etal-2024-ctyun.md",
+    "Literature_collection/@kim-etal-2024-saama-technologies.md",
     "Literature_collection/@modi-karthikeyan-2024-eulerian.md",
     "Literature_collection/@zhou-etal-2024-team.md",
-    "Literature_collection/@kim-etal-2024-saama-technologies.md",
-    "page 1.md",
-    "Literature_collection/@bao-etal-2024-ctyun.md",
+    "Literature_collection/@you-etal-2024-uiuc.md",
+    "papers/UIUC_BioNLP at BioLaySumm - An Extract-then-Summarize Approach.pdf",
     "Literature_table.md",
+    "Literature_collection/Untitled.md",
+    "papers/2203.15827v1.pdf",
+    "2203.15827v1.pdf",
+    "papers/Eulerian at BioLaySumm - Preprocessing Over Abstract is All You Need.pdf",
+    "page 1.md",
     "papers/Ctyun AI at BioLaySumm - Enhancing Lay Summaries of Biomedical Articles Through Large Language Models and Data Augmentation.pdf",
     "references.bib",
     "papers/Saama Technologies at BioLaySumm - Abstract based fine-tuned models.pdf",
     "papers/Team YXZ at BioLaySumm - Adapting Large Language Models for Biomedical Lay Summarization.pdf",
     "papers",
-    "Literature_collection/Untitled.md",
-    "Untitled",
-    "Unconfirmed 571716.crdownload",
     "references.bib.md",
-    "references.bib.txt",
     "README.md",
     "Research_diary/Example note.md",
     "Literature_collection/@Begg2020.md",
