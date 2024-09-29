@@ -5,7 +5,7 @@ year: 2024
 database: ACL Anthology
 citekey: modi-karthikeyan-2024-eulerian
 tags:
-  - BioLaySumm
+  - BioLaySumm/2024
 url: https://aclanthology.org/2024.bionlp-1.77/
 file: "[[Eulerian at BioLaySumm - Preprocessing Over Abstract is All You Need.pdf]]"
 ---
@@ -32,6 +32,11 @@ Satyam Modi, T Karthikeyan
 
 ------------------------------------
 
+### Methodology
+1. 
+
+------------------------------------
+
 ### Findings
 1. 
 
@@ -42,12 +47,7 @@ Satyam Modi, T Karthikeyan
 
 ------------------------------------
 
-### Methodology
-1. 
-
-------------------------------------
-
-### Remarks
+### Remarks & Limitations
 1. 
 
 ------------------------------------

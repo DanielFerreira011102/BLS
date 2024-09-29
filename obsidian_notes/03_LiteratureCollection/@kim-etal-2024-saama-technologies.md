@@ -5,7 +5,7 @@ year: 2024
 database: ACL Anthology
 citekey: kim-etal-2024-saama-technologies
 tags:
-  - BioLaySumm
+  - BioLaySumm/2024
 url: https://aclanthology.org/2024.bionlp-1.72/
 file: "[[Saama Technologies at BioLaySumm - Abstract based fine-tuned models.pdf]]"
 ---
@@ -31,6 +31,11 @@ Hwanmun Kim, Kamal raj Kanakarajan, Malaikannan Sankarasubbu
 
 ------------------------------------
 
+### Methodology
+1. 
+
+------------------------------------
+
 ### Findings
 1. 
 
@@ -41,12 +46,7 @@ Hwanmun Kim, Kamal raj Kanakarajan, Malaikannan Sankarasubbu
 
 ------------------------------------
 
-### Methodology
-1. 
-
-------------------------------------
-
-### Remarks
+### Remarks & Limitations
 1. 
 
 ------------------------------------

@@ -32,6 +32,11 @@ Michihiro Yasunaga, Jure Leskovec, Percy Liang
 
 ------------------------------------
 
+### Methodology
+1. 
+
+------------------------------------
+
 ### Findings
 1. 
 
@@ -42,12 +47,7 @@ Michihiro Yasunaga, Jure Leskovec, Percy Liang
 
 ------------------------------------
 
-### Methodology
-1. 
-
-------------------------------------
-
-### Remarks
+### Remarks & Limitations
 1. 
 
 ------------------------------------
