@@ -6,6 +6,17 @@ database: ACL Anthology
 citekey: kim-etal-2024-saama-technologies
 tags:
   - BioLaySumm/2024
+  - PLOS
+  - eLife
+  - ROUGE
+  - BERTScore
+  - FKGL
+  - DCRS
+  - CLI
+  - LENS
+  - AlignScore
+  - SummaC
+  - LoRA
 url: https://aclanthology.org/2024.bionlp-1.72/
 file: "[[Saama Technologies at BioLaySumm - Abstract based fine-tuned models.pdf]]"
 ---
@@ -27,7 +38,8 @@ Hwanmun Kim, Kamal raj Kanakarajan, Malaikannan Sankarasubbu
 ------------------------------------
 
 ### Research question
-1. 
+
+ How can large language models (LLMs) be adapted and fine-tuned to generate accurate, relevant, and readable lay summaries of biomedical research articles for non-expert readers?
 
 ------------------------------------
 

@@ -6,6 +6,22 @@ database: ACL Anthology
 citekey: bao-etal-2024-ctyun
 tags:
   - BioLaySumm/2024
+  - PLOS
+  - eLife
+  - ROUGE
+  - BERTScore
+  - FKGL
+  - DCRS
+  - CLI
+  - LENS
+  - AlignScore
+  - SummaC
+  - Llama/3/8B/Instruct
+  - Mistral/7B/Instruct/0/2
+  - Qwen/1/5/14B/Chat
+  - Hard_Truncation
+  - Text_Chunking
+  - Fine-tuning
 url: https://aclanthology.org/2024.bionlp-1.79/
 file: "[[Ctyun AI at BioLaySumm - Enhancing Lay Summaries of Biomedical Articles Through Large Language Models and Data Augmentation.pdf]]"
 ---
@@ -28,7 +44,8 @@ Siyu Bao, Ruijing Zhao, Siqin Zhang, Jinghui Zhang, Weiyin Wang, Yunian Ru
 ------------------------------------
 
 ### Research question
-1. 
+
+How can large language models (LLMs) be adapted and fine-tuned to generate accurate, relevant, and readable lay summaries of biomedical research articles for non-expert readers?
 
 ------------------------------------
 
@@ -36,15 +53,35 @@ Siyu Bao, Ruijing Zhao, Siqin Zhang, Jinghui Zhang, Weiyin Wang, Yunian Ru
 
 #### Datasets
 
-The model was trained and evaluated using two biomedical datasets: **PLOS** and **eLife**. These datasets consist of biomedical research articles along with their corresponding lay summaries. In the **PLOS** dataset, lay summaries are authored by the article's original authors, while **eLife** contains summaries crafted by expert editors. **PLOS** has 24,773 articles for training and 1,376 for validation, whereas **eLife** has 4,346 articles for training and 241 for validation. Articles in these datasets vary in length, with some exceeding 15,000 tokens, which posed challenges for processing​.
+The models are trained and evaluated on two biomedical datasets, **eLife** and **PLOS**, which include full-text articles along with their corresponding lay summaries. These datasets are designed to create accessible summaries for non-expert readers. The **eLife** dataset provides lay summaries written by expert editors, whereas the **PLOS** dataset contains lay summaries written by the article authors. The size of the datasets varies, with **eLife** containing 4,346 training instances and 241 validation instances, and **PLOS** including 24,773 training instances and 1,376 validation instances. The average token length is significantly larger for the eLife articles (16,555 tokens) compared to PLOS articles (10,289 tokens), making preprocessing necessary to handle lengthy inputs.
 
 #### Evaluation Metrics
 
-The performance of the models was evaluated using multiple metrics:
+To assess the quality of the generated lay summaries, several automatic metrics were used to measure relevance, readability, and factual accuracy:
 
-- **Relevance**: ROUGE (1, 2, and L) and **BERTScore** were used to assess the relevance of the generated summaries compared to the source articles.
-- **Readability**: Readability was measured using **Flesch-Kincaid Grade Level (FKGL)**, **Dale-Chall Readability Score (DCRS)**, **Coleman-Liau Index (CLI)**, and **LENS**. Lower scores for FKGL, DCRS, and CLI indicated better readability, while higher LENS scores suggested better simplification.
-- **Factuality**: The factual consistency between the summaries and source texts was measured using **AlignScore** and **SummaC**, where higher scores indicated better factual alignment​.
+- **Relevance** was measured using **ROUGE (1, 2, and L)** and **BERTScore**.
+- **Readability** was evaluated through the **Flesch-Kincaid Grade Level (FKGL)**, **Dale-Chall Readability Score (DCRS)**, **Coleman-Liau Index (CLI)**, and **Learnable Evaluation Metric for Simplification (LENS)**. Lower FKGL, DCRS, and CLI scores indicate better readability.
+- **Factuality** was measured using **AlignScore** and **SummaC**, ensuring consistency between the generated summaries and the source content​.
+
+#### Preprocessing
+
+Given the constraint on input length for large language models, two approaches were adopted to handle long articles:
+
+1. **Hard Truncation**: This method retained only the first 15,000 tokens of each article, leveraging the fact that important information is usually presented early in the articles. This approach ensured that critical content was preserved while fitting within the token limit.
+    
+2. **Text Chunking**: For articles longer than 15,000 tokens, the text was split into chunks of up to 15,000 tokens. Summaries were generated for each chunk individually, and these chunk-level summaries were later combined to create a final summary.
+
+#### Data Augmentation
+
+To address the discrepancies between the chunked articles and the corresponding full-text lay summaries, **data augmentation** was employed using the **Mixtral 8x7B model**. The Mixtral model generated summaries for the article fragments, which were used as inputs during training, with the original lay summary serving as the target output. This ensured that all parts of the article were represented in the model training process, minimizing information loss from chunking​.
+
+#### Prompt Engineering
+
+Different prompts were designed for the Hard Truncation and Text Chunking methods to guide the summarization process:
+
+- For **unmodified articles** (those with fewer than 15,000 tokens), a straightforward prompt was used to generate summaries.
+- For **chunked articles**, the prompts provided chunk-specific instructions, directing the model to generate concise summaries for each fragment.
+- An **aggregated summary prompt** was applied to merge chunk-level summaries into a coherent whole, instructing the model to condense the text into a final lay summary​
 
 ------------------------------------
 

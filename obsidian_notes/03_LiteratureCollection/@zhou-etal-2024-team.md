@@ -11,8 +11,8 @@ tags:
   - Claude/3/Opus
   - Gemini/15/Pro
   - GPT/4
-  - Llama3/8B/Instruct
-  - Llama3/OpenBioLLM/70B
+  - Llama/3/8B/Instruct
+  - Llama/3/OpenBioLLM/70B
   - BART
   - LoRA
   - BeautifulSoup

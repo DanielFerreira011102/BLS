@@ -6,6 +6,16 @@ database: ACL Anthology
 citekey: modi-karthikeyan-2024-eulerian
 tags:
   - BioLaySumm/2024
+  - PLOS
+  - eLife
+  - ROUGE
+  - BERTScore
+  - FKGL
+  - DCRS
+  - CLI
+  - LENS
+  - AlignScore
+  - SummaC
 url: https://aclanthology.org/2024.bionlp-1.77/
 file: "[[Eulerian at BioLaySumm - Preprocessing Over Abstract is All You Need.pdf]]"
 ---
@@ -28,7 +38,8 @@ Satyam Modi, T Karthikeyan
 ------------------------------------
 
 ### Research question
-1. 
+
+How can large language models (LLMs) be adapted and fine-tuned to generate accurate, relevant, and readable lay summaries of biomedical research articles for non-expert readers?
 
 ------------------------------------
 
