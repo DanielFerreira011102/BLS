@@ -62,6 +62,8 @@ How can large language models (LLMs) be adapted and fine-tuned to generate accur
 
 ### Methodology
 
+![[be5076402f95ccee97f4f3680ab2e6.png|center]]
+
 #### Datasets
 
 The models are trained and evaluated on two key biomedical datasets, **eLife** and **Public Library of Science (PLOS)**, which provide full-text biomedical articles along with their corresponding lay summaries. These datasets focus on creating summaries for laypeople. The **eLife** dataset features lay summaries crafted by expert editors, while **PLOS** includes lay summaries written by the article authors. Both datasets cover a broad range of topics within life sciences and medicine. The average token lengths are 13,000 for eLife articles and 9,000 for PLOS articles, respectively​.
@@ -134,7 +136,7 @@ Overall, the task results suggest that achieving an optimal balance between rele
 - The fine-tuning experiments were constrained by computational resources, limiting the number of epochs and batch sizes for some models (e.g., LED was fine-tuned for only **one epoch** due to resource limits).
 - Despite the improvements in relevance and readability, the use of RAG occasionally introduced **inconsistent or noisy data**, which negatively impacted the factuality of the generated summaries. Future work could explore improving the factuality of model-generated summaries, particularly by refining the retrieval-augmented generation approach and developing **domain-specific extractors** to better tailor summaries for lay audiences.
 - The eLife and PLOS datasets focus primarily on life sciences, which may limit the generalizability of the results across other biomedical fields.
-- While GPT-3.5 performed well in this task, the closed-source nature of the model may limit reproducibility and future research, particularly as it undergoes updates without versioning
+- While GPT-3.5 performed well in this task, the closed-source nature of the model may limit reproducibility and future research, particularly as it undergoes updates without versioning.
 
 ------------------------------------
 

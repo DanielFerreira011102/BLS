@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "03_LiteratureCollection/@you-etal-2024-uiuc.md",
+                "file": "03_LiteratureCollection/@bao-etal-2024-ctyun.md",
                 "mode": "source",
                 "source": false
               }
@@ -89,7 +89,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 326.5
+    "width": 328.5
   },
   "right": {
     "id": "b2b797a78cbab6e1",
@@ -106,7 +106,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "03_LiteratureCollection/@you-etal-2024-uiuc.md"
+                "file": "03_LiteratureCollection/@bao-etal-2024-ctyun.md"
               }
             }
           }
@@ -123,7 +123,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "03_LiteratureCollection/@you-etal-2024-uiuc.md",
+                "file": "03_LiteratureCollection/@bao-etal-2024-ctyun.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -135,7 +135,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "03_LiteratureCollection/@you-etal-2024-uiuc.md",
+                "file": "03_LiteratureCollection/@bao-etal-2024-ctyun.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -173,7 +173,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 302.5
+    "width": 306.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -186,25 +186,29 @@
       "omnisearch:Omnisearch": false
     }
   },
-  "active": "af4f2ba61887740e",
+  "active": "5387a57353aa6cd8",
   "lastOpenFiles": [
-    "03_LiteratureCollection/@modi-karthikeyan-2024-eulerian.md",
+    "03_LiteratureCollection/@bao-etal-2024-ctyun.md",
+    "03_LiteratureCollection/@kim-etal-2024-saama-technologies.md",
     "03_LiteratureCollection/@yasunaga-etal-2022-linkbert.md",
+    "01_ResearchPapers/Team YXZ at BioLaySumm - Adapting Large Language Models for Biomedical Lay Summarization.pdf",
     "03_LiteratureCollection/@zhou-etal-2024-team.md",
     "03_LiteratureCollection/@you-etal-2024-uiuc.md",
-    "03_LiteratureCollection/@bao-etal-2024-ctyun.md",
+    "02_Images/be5076402f95ccee97f4f3680ab2e6.png",
+    "02_Images/be5076402f95ccee97f4f3680ab2e6.png.crdownload",
+    "03_LiteratureCollection/@modi-karthikeyan-2024-eulerian.md",
+    "02_Images/1b0828750de2a5edb51f9dc99c6342.png",
+    "02_Images/2-Figure1-1.png.crdownload",
+    "00_Notes/NShotLearning.md",
+    "00_Notes/LoRA.md",
     "LiteratureTable.md",
     "01_ResearchPapers/LinkBERT - Pretraining Language Models with Document Links.pdf",
-    "01_ResearchPapers/Team YXZ at BioLaySumm - Adapting Large Language Models for Biomedical Lay Summarization.pdf",
     "01_ResearchPapers/UIUC_BioNLP at BioLaySumm - An Extract-then-Summarize Approach.pdf",
     "01_ResearchPapers/Eulerian at BioLaySumm - Preprocessing Over Abstract is All You Need.pdf",
     "01_ResearchPapers/Saama Technologies at BioLaySumm - Abstract based fine-tuned models.pdf",
-    "03_LiteratureCollection/@kim-etal-2024-saama-technologies.md",
     "01_ResearchPapers/Ctyun AI at BioLaySumm - Enhancing Lay Summaries of Biomedical Articles Through Large Language Models and Data Augmentation.pdf",
     "03_LiteratureCollection/Other",
     "03_LiteratureCollection/BioLaySumm",
-    "03_LiteratureCollection/Untitled 1",
-    "papers/Ctyun AI at BioLaySumm - Enhancing Lay Summaries of Biomedical Articles Through Large Language Models and Data Augmentation.pdf",
     "Literature_collection/@kim-etal-2024-saama-technologies.md",
     "Literature_collection/@bao-etal-2024-ctyun/@bao-etal-2024-ctyun.md",
     "Literature_collection/@bao-etal-2024-ctyun.md",
@@ -221,8 +225,6 @@
     "Literature_collection/@Begg2020.md",
     "Literature_collection/@Crowder.Ward2022.md",
     "PhD_projects/Research Ideas.md",
-    "Embryonic_learning_references/@Crowder.Ward2022.md",
-    "Embryonic_learning_references/@Mathiron.etal2015.md",
-    "Embryonic_learning_references/@Chivers.Smith1994.md"
+    "Embryonic_learning_references/@Crowder.Ward2022.md"
   ]
 }

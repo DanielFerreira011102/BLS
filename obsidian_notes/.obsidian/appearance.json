@@ -3,6 +3,7 @@
   "baseFontSize": 17,
   "theme": "obsidian",
   "enabledCssSnippets": [
-    "quote"
+    "quote",
+    "img-grids-floats"
   ]
 }
