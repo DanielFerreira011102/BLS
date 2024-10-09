@@ -2,8 +2,8 @@
 	import { fly, fade } from 'svelte/transition';
 
 	export let open = false;
-
-	const closeSidebar = () => {
+	
+	export let onClose = () => {
 		open = false;
 	};
 </script>
@@ -20,11 +20,11 @@
 				class="absolute inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
 				in:fade={{ duration: 300 }}
 				out:fade={{ duration: 300 }}
-                on:keydown={closeSidebar}
-				on:click={closeSidebar}
+				on:keydown={onClose}
+				on:click={onClose}
 			></div>
 			<!-- Sidebar Content -->
-			<section class="absolute inset-y-0 right-0 pl-10 max-w-full flex">
+			<section class="absolute inset-y-0 right-0 max-w-full flex">
 				<div
 					class="w-screen max-w-md"
 					in:fly={{ x: 100, duration: 300 }}
@@ -34,7 +34,7 @@
 						<!-- Sidebar Header -->
 						<div class="flex items-center justify-between px-4">
 							<h2 class="text-xl font-semibold text-black">Search</h2>
-							<button on:click={closeSidebar} class="text-gray-500 hover:text-gray-700">
+							<button on:click={onClose} class="text-gray-500 hover:text-gray-700">
 								<span class="sr-only">Close</span>
 								<svg
 									class="h-6 w-6"
@@ -104,11 +104,6 @@
 			</section>
 		</div>
 	{/if}
-	<button
-		class="fixed bottom-4 right-4 bg-black text-white rounded-full p-3 shadow-lg hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300"
-		on:click={() => (open = !open)}
-	>
-	</button>
 </div>
 
 <style>
