@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "03_LiteratureCollection/@10.1093-jamia-ocz152.md",
+                "file": "summary.md",
                 "mode": "source",
                 "source": false
               }
@@ -106,7 +106,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "03_LiteratureCollection/@10.1093-jamia-ocz152.md"
+                "file": "summary.md"
               }
             }
           }
@@ -123,7 +123,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "03_LiteratureCollection/@10.1093-jamia-ocz152.md",
+                "file": "summary.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -135,7 +135,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "03_LiteratureCollection/@10.1093-jamia-ocz152.md",
+                "file": "summary.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -188,6 +188,7 @@
   },
   "active": "8ba168e41f4e8e18",
   "lastOpenFiles": [
+    "collection/@bao-etal-2024-ctyun.md",
     "03_LiteratureCollection/@Abacha2019OnTS.md",
     "03_LiteratureCollection/@singhal2023expertlevelmedicalquestionanswering.md",
     "03_LiteratureCollection/@10.1093-jamia-ocz152.md",
