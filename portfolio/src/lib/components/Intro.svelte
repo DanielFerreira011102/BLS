@@ -12,7 +12,7 @@
     <div class="font-mono font-bold mt-4">
         <a href="/about" class="bg-black text-white py-2 px-4 hover:bg-gray-900 inline-flex items-center">
             More Information
-            <Icon src={FaSolidArrowRight} className="inline ml-2" /> <!-- Use inline class here -->
+            <Icon src={FaSolidArrowRight} className="inline ml-2" />
         </a>
     </div>
     <div class="border-t border-gray-300 my-9"></div>
