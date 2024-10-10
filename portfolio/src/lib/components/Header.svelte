@@ -1,30 +1,35 @@
 <script>
+	import { dataStore } from '../../stores/dataStore';
 	import Hamburger from './Hamburger.svelte';
 	import Menu from './Menu.svelte';
-	import { dataStore } from '../../stores/dataStore';
-
-	let personal = $dataStore.PERSONAL;
 
 	let open = false;
 
 	const toggleSidebar = () => {
 		open = !open;
 	};
+
+	import heroBg from '$lib/images/hero-bg.png';
 </script>
 
-<header id="header">
-	<nav
-		class="bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-200 border-gray-100 dark:border-gray-700 divide-gray-100 dark:divide-gray-700 w-full px-0 sm:px-0 font-mono py-16"
-	>
-		<div class="mx-auto flex flex-wrap justify-between flex-row-reverse items-center container">
-			<a href="/" class="flex items-center flex-1"
-				><span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-					{personal.name}
-				</span>
-			</a>
+<header
+	id="header"
+	class="relative top-0 left-0 w-full h-screen bg-cover bg-center bg-fixed before:absolute before:top-0 before:left-0 before:w-full before:h-full before:bg-black before:opacity-65"
+	style="background-image: url({heroBg})"
+>
+	<div
+		class="absolute top-0 left-0 w-full h-full opacity-40 bg-gradient-to-r from-black via-black to-transparent z-0"
+	></div>
 
-			<Hamburger on:click={toggleSidebar} />
-		</div>
+	<nav class="relative z-10">
+		<a
+			href="/"
+			class="absolute left-28 top-12 self-center whitespace-nowrap text-xl font-semibold text-white font-mono"
+			>BioLaySumm</a
+		>
+		<Hamburger on:click={toggleSidebar} className="right-28 top-12" />
+		<Menu bind:open />
 	</nav>
-	<Menu bind:open />
+
+	<div></div>
 </header>

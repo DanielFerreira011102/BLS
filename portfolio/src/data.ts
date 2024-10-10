@@ -10,7 +10,7 @@ const PERSONAL = {
 	role: 'Software Developer & Data Engineering student',
 	introduction:
 		'I create software that is both functional and beautiful. I have experience working with a variety of technologies, including Python, JavaScript, and SQL. I am always looking for new opportunities to learn and grow, and I am excited to see where my career will take me next.',
-	location: 'Aveiro, Portugal',
+	location: 'Aveiro, Portugal'
 };
 
 const SKILLS = {
@@ -48,10 +48,10 @@ const CONTACT = {
 };
 
 const NAVLIST = [
-	{ id: 1, href: '#intro', title: 'Home' },
+	{ id: 1, href: '#header', title: 'Home' },
 	{ id: 2, href: '#resources', title: 'Resources' },
 	{ id: 3, href: '#activities', title: 'Activities' },
-	{ id: 4, href: '#about', title: 'About' },
+	{ id: 4, href: '#about', title: 'About' }
 ];
 
 const ABOUT = {
