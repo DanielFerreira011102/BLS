@@ -1,6 +1,6 @@
 const META = {
 	creation_year: 2024,
-	src: 'https://github.com/DanielFerreira011102/thesis-biolaysumm' //project source code link
+	src: 'https://github.com/DanielFerreira011102/thesis-biolaysumm'
 };
 
 const PERSONAL = {
@@ -48,8 +48,10 @@ const CONTACT = {
 };
 
 const NAVLIST = [
-	{ id: 1, href: '/about', title: 'About' },
-	{ id: 2, href: '/contact', title: 'Contact' }
+	{ id: 1, href: '#intro', title: 'Home' },
+	{ id: 2, href: '#resources', title: 'Resources' },
+	{ id: 3, href: '#activities', title: 'Activities' },
+	{ id: 4, href: '#about', title: 'About' },
 ];
 
 const ABOUT = {

@@ -1,11 +1,35 @@
-<script>
+<script lang="ts">
 	import { fly, fade } from 'svelte/transition';
+    import { Icon } from 'svelte-icons-pack';
+	import { FaSolidXmark } from 'svelte-icons-pack/fa';
+	import { dataStore } from '../../stores/dataStore';
+	import Divider from './Divider.svelte';
+
+	let personal = $dataStore.PERSONAL;
+	let meta = $dataStore.META;
+	let navlist = $dataStore.NAVLIST;
 
 	export let open = false;
 	
 	export let onClose = () => {
 		open = false;
 	};
+
+	function handleNavClick(event: MouseEvent, href: string): void {
+    event.preventDefault(); // Prevent the default anchor behavior
+    const targetElement = document.querySelector(href);
+
+    if (targetElement) {
+        // Smooth scroll to the target section
+        targetElement.scrollIntoView({ behavior: 'smooth' });
+
+        // After scrolling, close the sidebar
+        setTimeout(() => {
+            onClose();
+        }, 500); // Timeout to allow the scroll to complete before closing
+    }
+}
+
 </script>
 
 <div class="flex justify-center items-center">
@@ -30,74 +54,34 @@
 					in:fly={{ x: 100, duration: 300 }}
 					out:fly={{ x: 100, duration: 300 }}
 				>
-					<div class="h-full flex flex-col py-6 bg-white shadow-xl">
+					<div class="h-full flex flex-col bg-white shadow-xl">
 						<!-- Sidebar Header -->
-						<div class="flex items-center justify-between px-4">
-							<h2 class="text-xl font-semibold text-black">Search</h2>
+						<div class="flex items-center py-6 justify-between px-4">
+							<h2 class="text-xl font-semibold text-black uppercase">MENU</h2>
 							<button on:click={onClose} class="text-gray-500 hover:text-gray-700">
-								<span class="sr-only">Close</span>
-								<svg
-									class="h-6 w-6"
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke="currentColor"
-									aria-hidden="true"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										stroke-width="2"
-										d="M6 18L18 6M6 6l12 12"
-									></path>
-								</svg>
+								<Icon src={FaSolidXmark} className="h-7 w-7"/>
 							</button>
-						</div>
-						<!-- Search Input -->
-						<div class="mt-4 px-4">
-							<input
-								type="text"
-								placeholder="Search post here"
-								class="w-full p-2 border border-gray-300 rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
-							/>
-						</div>
-						<div class="mt-4 px-4">
-							<p class="ml-2 text-gray-400">Results</p>
 						</div>
 						<!-- Sidebar Content -->
-						<div class="mt-4 px-4 h-full overflow-auto">
-							<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-								<!-- Dynamic Card Creation -->
-								{#each Array(18) as _, index}
-									<div
-										class="bg-gray-50 hover:bg-gray-100 p-4 cursor-pointer rounded-md border border-gray-300 transition-colors duration-300"
-									>
-										<h3 class="text-lg font-semibold text-black mb-2">Card {index + 1}</h3>
-										<p class="text-gray-600">Content for card {index + 1}.</p>
-									</div>
+						<div class="px-4 overflow-auto">
+							<ul	class="space-y-4">
+								{#each navlist as item, i}
+									<Divider />
+									<li>
+										<a href={item.href} class="text-lg text-black hover:text-gray-700" on:click={(event) => handleNavClick(event, item.href)}>
+											<span class="mr-6 font-mono text-gray-500">{(i + 1).toString().padStart(2, '0')}.</span>
+											{item.title}
+										</a>
+									</li>
 								{/each}
-							</div>
+								<Divider />
+							</ul>
 						</div>
 						<!-- Sidebar Footer -->
-						<div class="mt-6 px-4">
-							<button
-								class="flex justify-center items-center bg-black text-white rounded-md text-sm p-2 gap-1"
-							>
-								<svg
-									width="1rem"
-									height="1rem"
-									viewBox="0 0 24 24"
-									fill="none"
-									xmlns="http://www.w3.org/2000/svg"
-								>
-									<path
-										fill-rule="evenodd"
-										clip-rule="evenodd"
-										d="M3 7C3 6.44772 3.44772 6 4 6H20C20.5523 6 21 6.44772 21 7C21 7.55228 20.5523 8 20 8H4C3.44772 8 3 7.55228 3 7ZM6 12C6 11.4477 6.44772 11 7 11H17C17.5523 11 18 11.4477 18 12C18 12.5523 17.5523 13 17 13H7C6.44772 13 6 12.5523 6 12ZM9 17C9 16.4477 9.44772 16 10 16H14C14.5523 16 15 16.4477 15 17C15 17.5523 14.5523 18 14 18H10C9.44772 18 9 17.5523 9 17Z"
-										fill="currentColor"
-									></path>
-								</svg> Filters
-							</button>
+						<div class="py-6 px-4">
+							<p class="text-gray-500 text-sm">
+								&copy; {meta.creation_year} {personal.name}. All rights reserved.
+							</p>
 						</div>
 					</div>
 				</div>
