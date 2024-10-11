@@ -1,13 +1,11 @@
 <script>
-	import Intro from '$lib/components/Intro.svelte';
+	import { dataStore } from '$lib/stores/dataStore';
 	import Activities from '$lib/components/Activities.svelte';
 	import Resources from '$lib/components/Resources.svelte';
 	import Divider from '$lib/components/Divider.svelte';
 	import About from '$lib/components/About.svelte';
-	import { dataStore } from '../stores/dataStore';
 	import Section from '$lib/components/Section.svelte';
 
-	// Create a readable specialization string for the meta description
 	let personal = $dataStore.PERSONAL;
 	let specializations = $dataStore.SKILLS.specializations.join(', ');
 </script>

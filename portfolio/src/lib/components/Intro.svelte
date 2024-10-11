@@ -1,19 +1,23 @@
-<script>
+<script lang="ts">
 	import { Icon } from 'svelte-icons-pack';
 	import { FaSolidArrowRight } from 'svelte-icons-pack/fa';
-	import { dataStore } from '../../stores/dataStore';
+	import { dataStore } from '$lib/stores/dataStore';
 
 	let personal = $dataStore.PERSONAL;
 </script>
 
-<section id="intro" class="container mx-auto font-sans py-12">
-	<h1 class="text-4xl font-semibold text-black m-0">Hi, I'm {personal.first_name}</h1>
-	<span class="text-2xl text-gray-500">{personal.role} from {personal.location}</span>
-	<p class="text-xl py-2 text-dark-grayish-blue">{personal.introduction}</p>
-	<div class="font-mono font-bold mt-4">
+<section id="intro" class="container mx-auto py-12 font-sans">
+	<h1 class="m-0 text-4xl font-semibold text-black">
+		Hi, I'm {personal.first_name}
+	</h1>
+	<span class="text-2xl text-gray-500">
+		{personal.role} from {personal.location}
+	</span>
+	<p class="text-dark-grayish-blue py-2 text-xl">{personal.introduction}</p>
+	<div class="mt-4 font-mono font-bold">
 		<a
 			href="/about"
-			class="bg-black text-white py-2 px-4 hover:bg-gray-900 inline-flex items-center"
+			class="inline-flex items-center bg-black px-4 py-2 text-white hover:bg-gray-900"
 		>
 			More Information
 			<Icon src={FaSolidArrowRight} className="inline ml-2" />

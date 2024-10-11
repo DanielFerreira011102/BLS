@@ -1,5 +1,7 @@
 const META = {
 	creation_year: 2024,
+	title: 'BioLaySumm',
+	description: 'Answering consumer health questions<br>with non-expert language',
 	src: 'https://github.com/DanielFerreira011102/thesis-biolaysumm'
 };
 
@@ -48,10 +50,30 @@ const CONTACT = {
 };
 
 const NAVLIST = [
-	{ id: 1, href: '#header', title: 'Home' },
-	{ id: 2, href: '#resources', title: 'Resources' },
-	{ id: 3, href: '#activities', title: 'Activities' },
-	{ id: 4, href: '#about', title: 'About' }
+	{
+		title: 'Home',
+		subtitle: 'welcome',
+		href: '#header',
+		isCore: false
+	},
+	{
+		title: 'Resources',
+		subtitle: 'check out my work',
+		href: '#resources',
+		isCore: true
+	},
+	{
+		title: 'Activities',
+		subtitle: 'track my progress',
+		href: '#activities',
+		isCore: true
+	},
+	{
+		title: 'About',
+		subtitle: 'get to know me',
+		href: '#about',
+		isCore: true
+	}
 ];
 
 const ABOUT = {
@@ -85,7 +107,10 @@ const ABOUT = {
 			degree: 'Data Engineering, Bachelor of Engineering',
 			startDate: 'October 2022',
 			endDate: 'May 2026',
-			photo: { src: '/photos/pg.webp', alt: 'Logo Gdansk University of Technology' }
+			photo: {
+				src: '/photos/pg.webp',
+				alt: 'Logo Gdansk University of Technology'
+			}
 		},
 		{
 			id: 2,
@@ -93,7 +118,10 @@ const ABOUT = {
 			degree: 'Mathematics, Physics and Computer Science',
 			startDate: 'September 2018',
 			endDate: 'May 2021',
-			photo: { src: '/photos/ilo.webp', alt: 'Logo Nicolaus Copernicus High School' }
+			photo: {
+				src: '/photos/ilo.webp',
+				alt: 'Logo Nicolaus Copernicus High School'
+			}
 		}
 	]
 };

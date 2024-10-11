@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	export let color = 'gray-300';
 	export let margin = '0';
 	export let height = 'px';

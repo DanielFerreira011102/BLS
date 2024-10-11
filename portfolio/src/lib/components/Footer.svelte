@@ -1,5 +1,5 @@
-<script>
-	import { dataStore } from '../../stores/dataStore';
+<script lang="ts">
+	import { dataStore } from '$lib/stores/dataStore';
 
 	let personal = $dataStore.PERSONAL;
 	let contact = $dataStore.CONTACT;
@@ -7,8 +7,8 @@
 </script>
 
 <footer id="footer" class="bg-light-gray">
-	<div class="container mx-auto font-sans py-12">
-		<div class="flex justify-between items-center py-4">
+	<div class="container mx-auto p-12 font-sans">
+		<div class="flex items-center justify-between py-4">
 			<div class="text-left">
 				<p>
 					&copy {meta.creation_year} /
