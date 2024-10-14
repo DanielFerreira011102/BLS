@@ -8,21 +8,17 @@ export default {
 		'./node_modules/flowbite-svelte/**/*.{html,js,svelte,ts}'
 	],
 	theme: {
-		gridTemplateColumns: {
-			16: 'repeat(16, minmax(0, 1fr))',
-			24: 'repeat(24, minmax(0, 1fr))'
-		},
-		screens: {
-			xs: '520px',
-			sm: '640px',
-			md: '768px',
-			lg: '1024px',
-			xl: '1280px'
-		},
-		colors: {
-			'light-gray': '#f1f1f1'
-		},
 		extend: {
+			gridTemplateColumns: {
+				16: 'repeat(16, minmax(0, 1fr))',
+				24: 'repeat(24, minmax(0, 1fr))'
+			},
+			colors: {
+				'light-gray': '#f1f1f1'
+			},
+			screens: {
+				xs: '520px',
+			},
 			lineHeight: {
 				11: '2.75rem',
 				12: '3rem',

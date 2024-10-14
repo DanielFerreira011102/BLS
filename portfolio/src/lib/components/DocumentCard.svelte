@@ -19,7 +19,7 @@
 	rel="noopener noreferrer"
 	href={download ? src : undefined}
 	download={title}
-	class="mb-5 mr-5 flex h-52 w-56 cursor-pointer flex-col overflow-hidden rounded-md border border-gray-200 bg-white shadow"
+	class="flex h-52 w-56 cursor-pointer flex-col overflow-hidden rounded-md border border-gray-200 bg-white shadow"
 >
 	<div class="flex flex-grow items-center justify-center">
 		{#if type === 'presentation'}
