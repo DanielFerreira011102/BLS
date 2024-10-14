@@ -68,6 +68,14 @@ Hwanmun Kim, Kamal raj Kanakarajan, Malaikannan Sankarasubbu
 
 ------------------------------------
 
+### Context
+
+The paper was created in the context of the 23rd Workshop on Biomedical Language Processing (BioNLP 2024), which included a shared task called BioLaySumm. The task addresses the growing challenge of making biomedical research accessible to laypeople. With the rapid increase in scientific publications, particularly in the biomedical field, lay audiences struggle to keep up due to the technical complexity of these studies. Therefore, lay summarization—a form of text summarization that focuses on making content more understandable for non-experts—is needed.
+
+Although summarization of scientific papers has been widely studied, creating summaries specifically tailored to non-expert audiences is a relatively new and critical area of focus, especially given the importance of biomedical research in improving public health.
+
+------------------------------------
+
 ### Methodology
 
 #### Datasets

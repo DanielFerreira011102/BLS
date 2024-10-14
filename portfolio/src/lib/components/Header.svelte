@@ -2,7 +2,7 @@
 	import { dataStore } from '$lib/stores/dataStore';
 	import { scrollToElement } from '$lib/utils/scrollUtils';
 	import { Icon } from 'svelte-icons-pack';
-	import { FaBrandsGithub, FaSolidArrowDown } from 'svelte-icons-pack/fa';
+	import { FaBrandsGithub } from 'svelte-icons-pack/fa';
 	import heroBg from '$lib/images/hero-bg.png';
 	import Hamburger from './Hamburger.svelte';
 	import Menu from './Menu.svelte';

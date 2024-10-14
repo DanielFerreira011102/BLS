@@ -7,7 +7,7 @@
 	id={title.toLowerCase().replace(' ', '-')}
 	class={id % 2 === 0 ? 'bg-white' : 'bg-light-gray'}
 >
-	<div class="container mx-auto p-12 font-sans">
+	<div class="container mx-auto px-12 py-24 font-sans">
 		<slot />
 	</div>
 </section>
