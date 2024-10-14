@@ -4,7 +4,14 @@ authors: Xiaorui Su, Yibo Wang, Shanghua Gao, Xiaolong Liu, Valentina Giunchigli
 year: 2024
 database: arXiv
 citekey: su2024knowledgegraphbasedagent
-tags: 
+tags:
+  - KGAREVION
+  - KG
+  - MedDDx
+  - PubMedQA
+  - BioASQ
+  - MedQA-US
+  - MMLU-Med
 url: https://arxiv.org/abs/2410.04660
 file: "[[research-papers/Knowledge Graph Based Agent For Complex, Knowledge-intensive QA In Medicine.pdf|Knowledge Graph Based Agent For Complex, Knowledge-intensive QA In Medicine]]"
 ---
