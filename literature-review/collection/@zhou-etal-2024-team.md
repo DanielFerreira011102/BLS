@@ -9,7 +9,7 @@ tags:
   - eLife
   - PLOS
   - Claude/3/Opus
-  - Gemini/15/Pro
+  - Gemini/1/5/Pro
   - GPT/4
   - Llama/3/8B/Instruct
   - Llama/3/OpenBioLLM/70B

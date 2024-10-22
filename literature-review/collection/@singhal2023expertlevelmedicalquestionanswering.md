@@ -27,6 +27,7 @@ tags:
   - Open-ended
   - MultiMedQA
   - USMLE
+  - CoT
 url: https://arxiv.org/abs/2305.09617
 file: "[[Towards Expert-Level Medical Question Answering with Large Language Models.pdf]]"
 ---
@@ -180,9 +181,11 @@ This approach allows the model to consider multiple perspectives before producin
 #### Chain-of-Thought and Self-Consistency
 
 - Chain-of-Thought: This technique prompts the model to show its work by breaking down its reasoning into step-by-step explanations. For medical questions, this might involve listing relevant facts, considering differential diagnoses, and explaining the rationale for the final answer.
+
 - Self-Consistency: This method involves:
     
     1. Generating multiple independent answers to the same question.
+    
     2. Selecting the most common answer as the final response.
     
 

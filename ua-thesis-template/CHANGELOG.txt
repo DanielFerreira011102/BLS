@@ -1,0 +1,152 @@
+2024-06-26
+==========
+
+- Added dedication page.
+
+- UA thesis style file (uathesis.sty):
+  - The \BAR macro is now a six-colored bar to allow a unicolor bar, a
+    bicolor bar, or a tricolor bar. Examples:
+    - Brick (engineering).
+    - Blue and red (accounting).
+    - Red, white, and red (economy).
+  - The scientific areas "arts+humanities" and "misc" were added.
+  - The green color was added for other scientific areas. The RGB values
+    of Pantone colors were slightly updated.
+
+
+
+
+2024-06-24
+==========
+
+- UA thesis style file (uathesis.sty):
+  - The widths of the 1st and 2nd columns in the \TITLE and \TEXT macros
+    were updated to 47mm and 123mm respectively.
+  - In the \TEXT macro the 2nd column is using 10pt font size.
+
+- Some blank vertical spaces in the first pages were updated.
+
+- A page for the acknowledgment of use of AI tools was added in the
+  first pages.
+
+- Other small changes.
+
+
+
+
+2022-07-18
+==========
+
+- UA thesis style file (uathesis.sty):
+  - The \TEXT macro was modified to ensure that the font size remains
+    the same in the first pages.
+
+
+
+
+2022-05-24
+==========
+
+- First pages are now numbered with Alphabet uppercase letters.
+
+- Added .gitignore file to ignore LaTeX temporary files in Git.
+
+
+
+
+2022-03-09
+==========
+
+- The TeX Gyre Heros font type, a substitute of Helvetica, is now used
+  in the first pages as required in the UA norms.
+
+- UA thesis style file (uathesis.sty):
+  - Added the "draftPT" and "draftEN" options to show respectively
+    "DOCUMENTO PROVISÓRIO" and "DRAFT DOCUMENT" in the first two front
+    pages.
+  - The RGB values of the Pantone colors for the cover page top bar were
+    slightly adjusted according to the official values provided by the
+    UA norms.
+
+- Regarding the BibLaTeX references:
+  - Added the "authoryear-comp" style (compact variant of the
+    "authoryear" style).
+  - The master's thesis text was changed.
+
+- The use of the "xurl" package instead of the "url" package allows to
+  break long URLs in better positions.
+
+- Added the complete text about the funding support.
+
+- Other small changes.
+
+
+
+
+2021-08-27
+==========
+
+- Solved a bug that was making some headings (table of contents, list
+  of figures, list of tables, and bibliography) to be kept uppercase.
+  This same bug was also making the appendix heading to have the wrong
+  name ("Chapter" instead of "Appendix").
+
+- Changed "fancyhdr" heading (again): chapter is right-aligned at odd
+  pages and left-aligned at even pages.
+
+- Make "et al." italic for the Portuguese language.
+
+
+
+
+2021-08-21
+==========
+
+- Added appendices.
+
+- Solved a bug that caused an unwated vertical space (a new line) to be
+  added between bibliography entries. This problem was only noticeable
+  when a bibliography entry had no URL.
+
+- The package "glossaries-extra" is now used in replacement of
+  "glossaries", since it provides additional features.
+
+- Improved automatic detection of the TeX engine: pdfTeX or LuaTeX.
+  Now, it is not necessary to edit the "main.tex" file to choose the TeX
+  compiler.
+
+- Hyphenation is now enabled by default.
+
+- Changed "fancyhdr" heading: chapter is left-aligned at odd pages and
+  right-aligned at even pages.
+
+- Regarding the author-year style. Citations can:
+  - Use parentheses (default behavior) or square brackets.
+  - Link only the year, or include the author name (default behavior).
+
+- Renamed labels of chapters, sections, etc.
+
+- Other small changes.
+
+
+
+
+2021-05-29
+==========
+
+- UA thesis style file (uathesis.sty):
+  - Renamed directory for the images from "fig" to "img".
+  - Department name removed from the cover page and the first page.
+  - Vertical space before the rule is always present even when the
+    department name is not shown.
+  - Horizontal rule height set to 1.0pt.
+
+- Choosing pdfTeX or LuaTeX as compiler is now possible. LuaTeX is the
+  default due to its capabilities with font types (fontspec package).
+
+- Language selection is now easier (Portuguese, UKenglish, or
+  USenglish).
+
+- Commands for Latin expressions were added.
+
+- Other small changes.

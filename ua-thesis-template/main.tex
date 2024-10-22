@@ -1,0 +1,75 @@
+%
+% Copyright 1999, 2007, 2009 Tomás Oliveira e Silva
+% Copyright 2018, 2019, 2020, 2021, 2022, 2024 Rui Antunes
+%
+% LaTeX template for theses at University of Aveiro by Rui Antunes.
+% https://github.com/ruiantunes/ua-thesis-template
+%
+% This code is based on the original LaTeX template created by
+% professor Tomás Oliveira e Silva.
+% http://sweet.ua.pt/tos/TeX.html
+%
+
+% Font size possible values are restricted to 10pt, 11pt and 12pt.
+\documentclass[11pt,twoside,a4paper,openright]{report}
+
+% Select language (Portuguese, UK English, or US English).
+% \input{tex/config/language/portuguese.tex}
+% \input{tex/config/language/ukenglish.tex}
+\input{tex/config/language/usenglish.tex}
+
+% UA thesis style file.
+% Choose one of the following scientific areas:
+%   - accounting
+%   - arts
+%   - arts+humanities
+%   - economy
+%   - education
+%   - engineering
+%   - health
+%   - humanities
+%   - misc
+%   - sciences
+
+% Remove the "draft" option for the final document.
+\usepackage[engineering,draft]{uathesis}
+
+% Additional packages.
+\input{tex/config/packages.tex}
+
+% Before begin document.
+\input{tex/config/before-begin.tex}
+
+\begin{document}
+
+% After begin document.
+\input{tex/config/after-begin.tex}
+
+% First pages.
+\input{tex/contents/first-pages.tex}
+
+% Chapters.
+\input{tex/contents/c1.tex}
+\input{tex/contents/c2.tex}
+\input{tex/contents/c3.tex}
+\input{tex/contents/c4.tex}
+
+% Bibliography.
+
+% To cite all the references (debugging purposes).
+% \nocite{*}
+
+% The bibliography using BibLaTeX.
+\printbibliography
+
+% Appendices.
+\begin{appendices}
+\crefalias{chapter}{appendix}
+\input{tex/contents/a1.tex}
+\input{tex/contents/a2.tex}
+\end{appendices}
+
+% To make sure the document ends with an even number page.
+\cleardoublepage
+
+\end{document}
