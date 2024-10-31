@@ -20,6 +20,9 @@ tags:
   - Multi-choice
   - Open-ended
   - USMLE
+  - CoT
+  - Llama/2/7B
+  - Llama/2/13B
 url: https://arxiv.org/abs/2410.04660
 file: "[[research-papers/Knowledge Graph Based Agent For Complex, Knowledge-intensive QA In Medicine.pdf|Knowledge Graph Based Agent For Complex, Knowledge-intensive QA In Medicine]]"
 ---
