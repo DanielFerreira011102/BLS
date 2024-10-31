@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "11548c320418ae7f",
+        "id": "9c344b86fe35a2cd",
         "type": "tabs",
         "children": [
           {
-            "id": "9bb1eb0a7d4314c2",
+            "id": "7c2c8b69ded9c81e",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "collection/@taylor2022galacticalargelanguagemodel.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "@taylor2022galacticalargelanguagemodel"
+              "title": "New tab"
             }
           }
         ],
@@ -115,11 +111,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "collection/@taylor2022galacticalargelanguagemodel.md"
-              },
+              "state": {},
               "icon": "lucide-list",
-              "title": "Outline of @taylor2022galacticalargelanguagemodel"
+              "title": "Outline"
             }
           }
         ]
@@ -149,7 +143,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "collection/@taylor2022galacticalargelanguagemodel.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -159,7 +152,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for @taylor2022galacticalargelanguagemodel"
+              "title": "Backlinks"
             }
           }
         ],
@@ -176,7 +169,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "tag:MMLU-Med",
+                "query": "llama",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": true,
@@ -204,11 +197,16 @@
       "omnisearch:Omnisearch": false
     }
   },
-  "active": "9bb1eb0a7d4314c2",
+  "active": "7c2c8b69ded9c81e",
   "lastOpenFiles": [
+    "summary.md",
+    "collection/@liang2024controllabletextgenerationlarge.md",
+    "collection/@aeb0059a49724db4821a5a48a022d3e3.md",
+    "research-papers/Controllable Text Generation for Large Language Models - A Survey.pdf",
+    "collection/@bao-etal-2024-ctyun.md",
+    "collection/@taylor2022galacticalargelanguagemodel.md",
     "research-papers/Galactica - A Large Language Model for Science.pdf",
     "research-papers/Galactica - A Large Language Model for Science.pdf.crdownload",
-    "collection/@taylor2022galacticalargelanguagemodel.md",
     "research-papers/MEDITRON-70B - Scaling Medical Pretraining for Large Language Models.pdf",
     "collection/@chen2023meditron70bscalingmedicalpretraining.md",
     "research-papers/BioGPT - Generative Pre-trained Transformer for Biomedical Text Generation and Mining.pdf",
@@ -227,20 +225,15 @@
     "collection/@modi-karthikeyan-2024-eulerian.md",
     "collection/@maharjan2024openmedlmpromptengineeringoutperform.md",
     "collection/@kim-etal-2024-saama-technologies.md",
-    "collection/@bao-etal-2024-ctyun.md",
-    "collection/@aeb0059a49724db4821a5a48a022d3e3.md",
     "research-papers/RankRAG - Unifying Context Ranking with Retrieval-Augmented Generation in LLMs.pdf",
     "research-papers/RankRAG - Unifying Context Ranking with Retrieval-Augmented Generation in LLMs.pdf.crdownload",
     "research-papers/MedMobile - A mobile-sized language model with expert-level clinical capabilities.pdf",
-    "research-papers/MedMobile - A mobile-sized language model with expert-level clinical capabilities.pdf.crdownload",
-    "research-papers/Capabilities of Gemini Models in Medicine.pdf",
     "images/UAlDyxI6ShVvjucTUmZh5yElTjTHV9Z4.png",
     "images/ZIFhJVN3eM5EvHbY0YtOOJnzT0aCXF7R.png",
     "images/5jBpZ5zw16atNxWzxbETEbi4YAueyjvo.png",
     "collection/@zhou-etal-2024-team.md",
     "collection/@Abacha2019OnTS.md",
     "collection/@10.1093-jamia-ocz152.md",
-    "summary.md",
     "03_LiteratureCollection/@Abacha2019OnTS.md",
     "03_LiteratureCollection/@singhal2023expertlevelmedicalquestionanswering.md",
     "03_LiteratureCollection/@10.1093-jamia-ocz152.md",

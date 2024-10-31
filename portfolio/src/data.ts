@@ -11,7 +11,7 @@ const PERSONAL = {
 	surname: 'Ferreira',
 	role: 'Software Developer & Data Engineering student',
 	introduction:
-		'I create software that is both functional and beautiful. I have experience working with a variety of technologies, including Python, JavaScript, and SQL. I am always looking for new opportunities to learn and grow, and I am excited to see where my career will take me next.',
+		'I\'m a Master\'s student in Software Engineering and Computer Science at the University of Aveiro, specializing in artificial intelligence and natural language processing. My research focuses on machine learning and large language models, with particular emphasis on deep learning and transformer architectures.\nCurrently, my thesis work involves developing language models for biomedical question-answering with controllable generation, combining my passion for AI advancement with practical healthcare applications',
 	location: 'Aveiro, Portugal'
 };
 
