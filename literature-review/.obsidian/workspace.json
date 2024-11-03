@@ -4,35 +4,21 @@
     "type": "split",
     "children": [
       {
-<<<<<<< HEAD
-        "id": "9c344b86fe35a2cd",
+        "id": "948aa9fe87155172",
         "type": "tabs",
         "children": [
           {
-            "id": "7c2c8b69ded9c81e",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {},
-              "icon": "lucide-file",
-              "title": "New tab"
-=======
-        "id": "fd4688a2893d03d1",
-        "type": "tabs",
-        "children": [
-          {
-            "id": "6a08be397eeba035",
+            "id": "00e9c3b68ab87af1",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "collection/@you-etal-2024-uiuc.md",
+                "file": "collection/@bi-etal-2021-simple-complex.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "@you-etal-2024-uiuc"
->>>>>>> 9b5ed275fd39c2e97fa9b51206787cacfa29b690
+              "title": "@bi-etal-2021-simple-complex"
             }
           }
         ],
@@ -113,7 +99,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 483.5
+    "width": 481.5
   },
   "right": {
     "id": "b2b797a78cbab6e1",
@@ -129,17 +115,11 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-<<<<<<< HEAD
-              "state": {},
-              "icon": "lucide-list",
-              "title": "Outline"
-=======
               "state": {
-                "file": "collection/@you-etal-2024-uiuc.md"
+                "file": "collection/@bi-etal-2021-simple-complex.md"
               },
               "icon": "lucide-list",
-              "title": "Outline of @you-etal-2024-uiuc"
->>>>>>> 9b5ed275fd39c2e97fa9b51206787cacfa29b690
+              "title": "Outline of @bi-etal-2021-simple-complex"
             }
           }
         ]
@@ -169,10 +149,7 @@
             "state": {
               "type": "backlink",
               "state": {
-<<<<<<< HEAD
-=======
-                "file": "collection/@you-etal-2024-uiuc.md",
->>>>>>> 9b5ed275fd39c2e97fa9b51206787cacfa29b690
+                "file": "collection/@bi-etal-2021-simple-complex.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -182,11 +159,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-<<<<<<< HEAD
-              "title": "Backlinks"
-=======
-              "title": "Backlinks for @you-etal-2024-uiuc"
->>>>>>> 9b5ed275fd39c2e97fa9b51206787cacfa29b690
+              "title": "Backlinks for @bi-etal-2021-simple-complex"
             }
           }
         ],
@@ -203,11 +176,7 @@
             "state": {
               "type": "search",
               "state": {
-<<<<<<< HEAD
                 "query": "llama",
-=======
-                "query": "tag:Gemini",
->>>>>>> 9b5ed275fd39c2e97fa9b51206787cacfa29b690
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": true,
@@ -235,70 +204,47 @@
       "omnisearch:Omnisearch": false
     }
   },
-<<<<<<< HEAD
-  "active": "7c2c8b69ded9c81e",
+  "active": "00e9c3b68ab87af1",
   "lastOpenFiles": [
-    "summary.md",
-    "collection/@liang2024controllabletextgenerationlarge.md",
     "collection/@aeb0059a49724db4821a5a48a022d3e3.md",
-    "research-papers/Controllable Text Generation for Large Language Models - A Survey.pdf",
-    "collection/@bao-etal-2024-ctyun.md",
-    "collection/@taylor2022galacticalargelanguagemodel.md",
-=======
-  "active": "6a08be397eeba035",
-  "lastOpenFiles": [
-    "collection/@yu2024rankragunifyingcontextranking.md",
-    "collection/@chen2023meditron70bscalingmedicalpretraining.md",
+    "collection/@bi-etal-2021-simple-complex.md",
+    "collection/@deng-raffel-2023-reward.md",
+    "collection/@luo-etal-2022-readability.md",
+    "collection/@keskar2019ctrlconditionaltransformerlanguage.md",
+    "collection/@dathathri2020plugplaylanguagemodels.md",
     "collection/@kim-etal-2024-saama-technologies.md",
-    "collection/@maharjan2024openmedlmpromptengineeringoutperform.md",
-    "collection/@modi-karthikeyan-2024-eulerian.md",
-    "collection/@singhal2023expertlevelmedicalquestionanswering.md",
-    "collection/@saab2024capabilitiesgeminimodelsmedicine.md",
-    "collection/@su2024knowledgegraphbasedagent.md",
-    "collection/@tomar2024knowledgeinfusedautomateddiseasediagnosis.md",
-    "collection/@zhou-etal-2024-team.md",
-    "research-papers/Team YXZ at BioLaySumm - Adapting Large Language Models for Biomedical Lay Summarization.pdf",
-    "collection/@taylor2022galacticalargelanguagemodel.md",
     "collection/@Varshney2023KnowledgeGM.md",
     "collection/@vishwanath2024medmobilemobilesizedlanguagemodel.md",
     "collection/@yasunaga-etal-2022-linkbert.md",
-    "collection/@you-etal-2024-uiuc.md",
->>>>>>> 9b5ed275fd39c2e97fa9b51206787cacfa29b690
+    "collection/@taylor2022galacticalargelanguagemodel.md",
+    "collection/@su2024knowledgegraphbasedagent.md",
+    "collection/@singhal2023expertlevelmedicalquestionanswering.md",
+    "collection/@modi-karthikeyan-2024-eulerian.md",
+    "collection/@maharjan2024openmedlmpromptengineeringoutperform.md",
+    "collection/@Luo_2022.md",
+    "collection/@liang2024controllabletextgenerationlarge.md",
+    "research-papers/Plug and Play Language Models - A Simple Approach to Controlled Text Generation.pdf",
+    "research-papers/Simple or Complex - Complexity-Controllable Question Generation with Soft Templates and Deep Mixture of Experts Model.pdf",
+    "research-papers/Reward-Augmented Decoding - Efficient Controlled Text Generation With a Unidirectional Reward Model.pdf",
+    "research-papers/Readability Controllable Biomedical Document Summarization.pdf",
+    "research-papers/CTRL - A Conditional Transformer Language Model for Controllable Generation.pdf",
+    "collection/@saab2024capabilitiesgeminimodelsmedicine.md",
+    "collection/@chen2023meditron70bscalingmedicalpretraining.md",
+    "collection/@bao-etal-2024-ctyun.md",
+    "summary.md",
+    "research-papers/Controllable Text Generation for Large Language Models - A Survey.pdf",
     "research-papers/Galactica - A Large Language Model for Science.pdf",
     "research-papers/Galactica - A Large Language Model for Science.pdf.crdownload",
     "research-papers/MEDITRON-70B - Scaling Medical Pretraining for Large Language Models.pdf",
     "research-papers/BioGPT - Generative Pre-trained Transformer for Biomedical Text Generation and Mining.pdf",
-    "research-papers/MEDITRON-70B - Scaling Medical Pretraining for Large Language Models.pdf.crdownload",
-    "collection/@Luo_2022.md",
-    "research-papers/BioGPT - Generative Pre-trained Transformer for Biomedical Text Generation and Mining.pdf.crdownload",
-<<<<<<< HEAD
     "collection/@you-etal-2024-uiuc.md",
-    "collection/@yasunaga-etal-2022-linkbert.md",
-    "collection/@vishwanath2024medmobilemobilesizedlanguagemodel.md",
-    "collection/@Varshney2023KnowledgeGM.md",
     "collection/@tomar2024knowledgeinfusedautomateddiseasediagnosis.md",
-    "collection/@su2024knowledgegraphbasedagent.md",
-    "collection/@singhal2023expertlevelmedicalquestionanswering.md",
-    "collection/@saab2024capabilitiesgeminimodelsmedicine.md",
-    "collection/@modi-karthikeyan-2024-eulerian.md",
-    "collection/@maharjan2024openmedlmpromptengineeringoutperform.md",
-    "collection/@kim-etal-2024-saama-technologies.md",
-=======
-    "collection/@bao-etal-2024-ctyun.md",
-    "collection/@aeb0059a49724db4821a5a48a022d3e3.md",
->>>>>>> 9b5ed275fd39c2e97fa9b51206787cacfa29b690
-    "research-papers/RankRAG - Unifying Context Ranking with Retrieval-Augmented Generation in LLMs.pdf",
-    "research-papers/RankRAG - Unifying Context Ranking with Retrieval-Augmented Generation in LLMs.pdf.crdownload",
-    "research-papers/MedMobile - A mobile-sized language model with expert-level clinical capabilities.pdf",
     "images/UAlDyxI6ShVvjucTUmZh5yElTjTHV9Z4.png",
     "images/ZIFhJVN3eM5EvHbY0YtOOJnzT0aCXF7R.png",
     "images/5jBpZ5zw16atNxWzxbETEbi4YAueyjvo.png",
     "collection/@Abacha2019OnTS.md",
     "collection/@10.1093-jamia-ocz152.md",
     "03_LiteratureCollection/@Abacha2019OnTS.md",
-    "03_LiteratureCollection/@singhal2023expertlevelmedicalquestionanswering.md",
-    "03_LiteratureCollection/@10.1093-jamia-ocz152.md",
-    "03_LiteratureCollection/@yasunaga-etal-2022-linkbert.md",
     "02_Images/be5076402f95ccee97f4f3680ab2e6.png",
     "02_Images/1b0828750de2a5edb51f9dc99c6342.png",
     "Untitled.canvas"

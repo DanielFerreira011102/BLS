@@ -8,6 +8,10 @@ You can access the datasets through the following link:
 
 [Download Dataset from Google Drive](https://drive.google.com/drive/folders/11DirHYh-yo7Q7wDjhUWCtRFg_1OQeizt?usp=sharing)
 
+The following github repository also contains the datasets used in this project and more:
+
+[Biomedical Question Answering Datasets](https://github.com/Andy-jqa/biomedical-qa-datasets?tab=readme-ov-file#bioinformatics)
+
 ## Dataset Descriptions
 
 The datasets used in this project are as follows:
@@ -23,7 +27,7 @@ The datasets used in this project are as follows:
 | BioASQ-Factoid | Which enzyme is targeted by the drug ...?                 | Short answer     | Yes               |
 | BioASQ-List    | Which proteins are involved in ...?                       | List             | Yes               |
 | BioASQ-Summary | What is the effect of TRH on ...?                         | Summary          | Yes               |
-| LiveQA         | What is the most common cause of ...?                     | Long answer      | No                |
+| LiveQA         | What is the most common cause of ...?                     | Long answer      | Yes?              |
 | MedicationQA   | Does cyclosporine ophthalmic help ...?                    | Long answer      | No                |
 | eLife          | \<Scientific research paper\>                             | Summary          | Yes               |
 | PLOS           | \<Scientific research paper\>                             | Summary          | Yes               |
