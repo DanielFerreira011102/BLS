@@ -4,7 +4,8 @@ authors: Sheng Bi, Xiya Cheng, Yuan-Fang Li, Lizhen Qu, Shirong Shen, Guilin Qi,
 year: 2021
 database: ACL Anthology
 citekey: bi-etal-2021-simple-complex
-tags: 
+tags:
+  - CTRL
 url: https://aclanthology.org/2021.findings-emnlp.397/
 file: "[[Simple or Complex - Complexity-Controllable Question Generation with Soft Templates and Deep Mixture of Experts Model.pdf]]"
 ---

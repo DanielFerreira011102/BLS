@@ -49,6 +49,13 @@ const DOCUMENTS = [
 		description: 'This is the first sprint presentation for the PDE course.',
 		download: true
 	},
+	{
+		title: 'PDE_Sprint_2.pptx',
+		src: '/documents/PDE_Sprint_2.pptx',
+		type: 'presentation',
+		description: 'This is the second sprint presentation for the PDE course.',
+		download: true
+	}
 ];
 
 

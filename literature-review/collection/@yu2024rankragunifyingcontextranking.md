@@ -4,7 +4,8 @@ authors: Yue Yu, Wei Ping, Zihan Liu, Boxin Wang, Jiaxuan You, Chao Zhang, Moham
 year: 2024
 database: arXiv
 citekey: yu2024rankragunifyingcontextranking
-tags: 
+tags:
+  - RAG
 url: https://arxiv.org/abs/2407.02485
 file: "[[RankRAG - Unifying Context Ranking with Retrieval-Augmented Generation in LLMs.pdf]]"
 ---

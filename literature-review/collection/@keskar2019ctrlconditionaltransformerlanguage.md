@@ -4,7 +4,8 @@ authors: Nitish Shirish Keskar, Bryan McCann, Lav R. Varshney, Caiming Xiong, Ri
 year: 2019
 database: arXiv
 citekey: keskar2019ctrlconditionaltransformerlanguage
-tags: 
+tags:
+  - CTRL
 url: https://arxiv.org/abs/1909.05858
 file: "[[CTRL - A Conditional Transformer Language Model for Controllable Generation.pdf]]"
 ---

@@ -4,7 +4,8 @@ authors: Deeksha Varshney, Aizan Zafar, Niranshu Kumar Behera, Asif Ekbal
 year: 2023
 database: Nature
 citekey: Varshney2023KnowledgeGM
-tags: 
+tags:
+  - KG
 url: https://www.nature.com/articles/s41598-023-29213-8
 file: "[[Knowledge grounded medical dialogue generation using augmented graphs.pdf]]"
 ---

@@ -4,7 +4,8 @@ authors: Haikang Deng, Colin Raffel
 year: 2023
 database: ACL Anthology
 citekey: deng-raffel-2023-reward
-tags: 
+tags:
+  - CTRL
 url: https://aclanthology.org/2023.emnlp-main.721/
 file: "[[Reward-Augmented Decoding - Efficient Controlled Text Generation With a Unidirectional Reward Model.pdf]]"
 ---

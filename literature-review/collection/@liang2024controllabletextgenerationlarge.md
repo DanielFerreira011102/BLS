@@ -4,7 +4,8 @@ authors: Xun Liang, Hanyu Wang, Yezhaohui Wang, Shichao Song, Jiawei Yang, Simin
 year: 2024
 database: arXiv
 citekey: liang2024controllabletextgenerationlarge
-tags: 
+tags:
+  - CTRL
 url: https://arxiv.org/abs/2408.12599
 file: "[[Controllable Text Generation for Large Language Models - A Survey.pdf]]"
 ---

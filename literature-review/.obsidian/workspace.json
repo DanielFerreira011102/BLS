@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "948aa9fe87155172",
+        "id": "1b930cad7d5e571f",
         "type": "tabs",
         "children": [
           {
-            "id": "00e9c3b68ab87af1",
+            "id": "e6a31672ebacaf38",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "collection/@bi-etal-2021-simple-complex.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "@bi-etal-2021-simple-complex"
+              "title": "New tab"
             }
           }
         ],
@@ -34,7 +30,7 @@
       {
         "id": "440f380322d177a2",
         "type": "tabs",
-        "dimension": 44.18604651162791,
+        "dimension": 45.096056622851364,
         "children": [
           {
             "id": "4011301bc14b4afa",
@@ -63,7 +59,7 @@
       {
         "id": "40252d87e6aa89ed",
         "type": "tabs",
-        "dimension": 23.053589484327603,
+        "dimension": 26.895854398382202,
         "children": [
           {
             "id": "c7a084cf6dae830f",
@@ -81,12 +77,12 @@
         ]
       },
       {
-        "id": "8cefa00194e9838e",
+        "id": "2529ec0aa195bb51",
         "type": "tabs",
-        "dimension": 32.76036400404449,
+        "dimension": 28.00808897876643,
         "children": [
           {
-            "id": "5387a57353aa6cd8",
+            "id": "268acf207439559d",
             "type": "leaf",
             "state": {
               "type": "graph",
@@ -115,11 +111,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "collection/@bi-etal-2021-simple-complex.md"
-              },
+              "state": {},
               "icon": "lucide-list",
-              "title": "Outline of @bi-etal-2021-simple-complex"
+              "title": "Outline"
             }
           }
         ]
@@ -149,7 +143,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "collection/@bi-etal-2021-simple-complex.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -159,7 +152,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for @bi-etal-2021-simple-complex"
+              "title": "Backlinks"
             }
           }
         ],
@@ -200,51 +193,51 @@
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
       "command-palette:Open command palette": false,
-      "graph:Open graph view": false,
-      "omnisearch:Omnisearch": false
+      "omnisearch:Omnisearch": false,
+      "graph:Open graph view": false
     }
   },
-  "active": "00e9c3b68ab87af1",
+  "active": "268acf207439559d",
   "lastOpenFiles": [
-    "collection/@aeb0059a49724db4821a5a48a022d3e3.md",
-    "collection/@bi-etal-2021-simple-complex.md",
-    "collection/@deng-raffel-2023-reward.md",
-    "collection/@luo-etal-2022-readability.md",
-    "collection/@keskar2019ctrlconditionaltransformerlanguage.md",
-    "collection/@dathathri2020plugplaylanguagemodels.md",
-    "collection/@kim-etal-2024-saama-technologies.md",
-    "collection/@Varshney2023KnowledgeGM.md",
+    "research-papers/f.txt",
     "collection/@vishwanath2024medmobilemobilesizedlanguagemodel.md",
     "collection/@yasunaga-etal-2022-linkbert.md",
+    "collection/@you-etal-2024-uiuc.md",
+    "collection/@zhou-etal-2024-team.md",
+    "collection/@yu2024rankragunifyingcontextranking.md",
+    "collection/@Varshney2023KnowledgeGM.md",
     "collection/@taylor2022galacticalargelanguagemodel.md",
+    "collection/@tomar2024knowledgeinfusedautomateddiseasediagnosis.md",
     "collection/@su2024knowledgegraphbasedagent.md",
     "collection/@singhal2023expertlevelmedicalquestionanswering.md",
+    "collection/@saab2024capabilitiesgeminimodelsmedicine.md",
     "collection/@modi-karthikeyan-2024-eulerian.md",
     "collection/@maharjan2024openmedlmpromptengineeringoutperform.md",
+    "collection/@luo-etal-2022-readability.md",
     "collection/@Luo_2022.md",
     "collection/@liang2024controllabletextgenerationlarge.md",
+    "collection/@kim-etal-2024-saama-technologies.md",
+    "collection/@keskar2019ctrlconditionaltransformerlanguage.md",
+    "collection/@deng-raffel-2023-reward.md",
+    "collection/@dathathri2020plugplaylanguagemodels.md",
+    "collection/@chen2023meditron70bscalingmedicalpretraining.md",
+    "collection/@bi-etal-2021-simple-complex.md",
+    "collection/@bao-etal-2024-ctyun.md",
+    "collection/@aeb0059a49724db4821a5a48a022d3e3.md",
     "research-papers/Plug and Play Language Models - A Simple Approach to Controlled Text Generation.pdf",
     "research-papers/Simple or Complex - Complexity-Controllable Question Generation with Soft Templates and Deep Mixture of Experts Model.pdf",
     "research-papers/Reward-Augmented Decoding - Efficient Controlled Text Generation With a Unidirectional Reward Model.pdf",
     "research-papers/Readability Controllable Biomedical Document Summarization.pdf",
     "research-papers/CTRL - A Conditional Transformer Language Model for Controllable Generation.pdf",
-    "collection/@saab2024capabilitiesgeminimodelsmedicine.md",
-    "collection/@chen2023meditron70bscalingmedicalpretraining.md",
-    "collection/@bao-etal-2024-ctyun.md",
     "summary.md",
     "research-papers/Controllable Text Generation for Large Language Models - A Survey.pdf",
     "research-papers/Galactica - A Large Language Model for Science.pdf",
     "research-papers/Galactica - A Large Language Model for Science.pdf.crdownload",
     "research-papers/MEDITRON-70B - Scaling Medical Pretraining for Large Language Models.pdf",
     "research-papers/BioGPT - Generative Pre-trained Transformer for Biomedical Text Generation and Mining.pdf",
-    "collection/@you-etal-2024-uiuc.md",
-    "collection/@tomar2024knowledgeinfusedautomateddiseasediagnosis.md",
     "images/UAlDyxI6ShVvjucTUmZh5yElTjTHV9Z4.png",
     "images/ZIFhJVN3eM5EvHbY0YtOOJnzT0aCXF7R.png",
     "images/5jBpZ5zw16atNxWzxbETEbi4YAueyjvo.png",
-    "collection/@Abacha2019OnTS.md",
-    "collection/@10.1093-jamia-ocz152.md",
-    "03_LiteratureCollection/@Abacha2019OnTS.md",
     "02_Images/be5076402f95ccee97f4f3680ab2e6.png",
     "02_Images/1b0828750de2a5edb51f9dc99c6342.png",
     "Untitled.canvas"
