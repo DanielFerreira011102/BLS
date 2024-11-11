@@ -5,24 +5,24 @@ year: 2024
 database: ACL Anthology
 citekey: bao-etal-2024-ctyun
 tags:
-  - BioLaySumm/2024
-  - PLOS
-  - eLife
-  - ROUGE
-  - BERTScore
-  - FKGL
-  - DCRS
-  - CLI
-  - LENS
-  - AlignScore
-  - SummaC
-  - Llama/3/8B/Instruct
-  - Mistral/7B/Instruct/0/2
-  - Qwen/1/5/14B/Chat
-  - Hard_Truncation
-  - Text_Chunking
-  - Fine-tuning
-  - SFT
+  - biolaysumm/2024
+  - plos
+  - elife
+  - rouge
+  - bert-score
+  - fkgl
+  - dcrs
+  - cli
+  - lens
+  - align-score
+  - summa-c
+  - llama/3/8b/instruct
+  - mistral/7b/instruct/0/2
+  - qwen/1/5/14b/chat
+  - hard-truncation
+  - text-chunking
+  - fine-tuning
+  - sft
 url: https://aclanthology.org/2024.bionlp-1.79/
 file: "[[Ctyun AI at BioLaySumm - Enhancing Lay Summaries of Biomedical Articles Through Large Language Models and Data Augmentation.pdf]]"
 ---

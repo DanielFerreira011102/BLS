@@ -5,26 +5,26 @@ year: 2024
 database: ACL Anthology
 citekey: kim-etal-2024-saama-technologies
 tags:
-  - BioLaySumm/2024
-  - PLOS
-  - eLife
-  - ROUGE
-  - BERTScore
-  - FKGL
-  - DCRS
-  - CLI
-  - LENS
-  - AlignScore
-  - SummaC
-  - LoRA
-  - Mistral/7B/Instruct/0/2
-  - vLLM
-  - Transformers
-  - PEFT
-  - TRL
-  - DPO
-  - Zero-shot
-  - Few-shot
+  - biolaysumm/2024
+  - plos
+  - elife
+  - rouge
+  - bert-score
+  - fkgl
+  - dcrs
+  - cli
+  - lens
+  - align-score
+  - summa-c
+  - lora
+  - mistral/7b/instruct/0/2
+  - v-llm
+  - transformers
+  - peft
+  - trl
+  - dpo
+  - zero-shot
+  - few-shot
 url: https://aclanthology.org/2024.bionlp-1.72/
 file: "[[Saama Technologies at BioLaySumm - Abstract based fine-tuned models.pdf]]"
 ---

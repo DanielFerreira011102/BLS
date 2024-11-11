@@ -5,27 +5,27 @@ year: 2024
 database: ACL Anthology
 citekey: you-etal-2024-uiuc
 tags:
-  - BioLaySumm/2024
-  - GPT/3/5
-  - RAG
-  - Wikipedia
-  - Fine-tuning
-  - LED
-  - TextRank
-  - BERT_Clustering
-  - GPT/4
-  - eLife
-  - PLOS
-  - Zero-shot
-  - BART
-  - ROUGE
-  - BERTScore
-  - FKGL
-  - DCRS
-  - CLI
-  - LENS
-  - AlignScore
-  - SummaC
+  - biolaysumm/2024
+  - gpt/3/5
+  - rag
+  - wikipedia
+  - fine-tuning
+  - led
+  - textrank
+  - bert-clustering
+  - gpt/4
+  - elife
+  - plos
+  - zero-shot
+  - bart
+  - rouge
+  - bert-score
+  - fkgl
+  - dcrs
+  - cli
+  - lens
+  - align-score
+  - summa-c
 url: https://aclanthology.org/2024.bionlp-1.11/
 file: "[[UIUC_BioNLP at BioLaySumm - An Extract-then-Summarize Approach.pdf]]"
 ---

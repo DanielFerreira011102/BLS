@@ -5,31 +5,31 @@ year: 2024
 database: ACL Anthology
 citekey: zhou-etal-2024-team
 tags:
-  - BioLaySumm/2024
-  - eLife
-  - PLOS
-  - Claude/3/Opus
-  - Gemini/1/5/Pro
-  - GPT/4
-  - Llama/3/8B/Instruct
-  - Llama/3/OpenBioLLM/70B
-  - BART
-  - LoRA
-  - BeautifulSoup
-  - Title_Infusion
-  - K-shot_Prompting
-  - LLM_Rewriting
-  - Instruction_Tuning
-  - Fine-tuning
-  - BGE/M3
-  - ROUGE
-  - BERTScore
-  - FKGL
-  - DCRS
-  - CLI
-  - LENS
-  - AlignScore
-  - SummaC
+  - biolaysumm/2024
+  - elife
+  - plos
+  - claude/3/opus
+  - gemini/1/5/pro
+  - gpt/4
+  - llama/3/8b/instruct
+  - llama/3/openbiollm/70b
+  - bart
+  - lora
+  - beautifulsoup
+  - title-infusion
+  - k-shot-prompting
+  - llm-rewriting
+  - instruction-tuning
+  - fine-tuning
+  - bge/m3
+  - rouge
+  - bert-score
+  - fkgl
+  - dcrs
+  - cli
+  - lens
+  - align-score
+  - summa-c
 url: https://aclanthology.org/2024.bionlp-1.76/
 file: "[[Team YXZ at BioLaySumm - Adapting Large Language Models for Biomedical Lay Summarization.pdf]]"
 ---

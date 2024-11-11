@@ -5,7 +5,7 @@ year: 2021
 database: ACL Anthology
 citekey: bi-etal-2021-simple-complex
 tags:
-  - CTRL
+  - ctg
 url: https://aclanthology.org/2021.findings-emnlp.397/
 file: "[[Simple or Complex - Complexity-Controllable Question Generation with Soft Templates and Deep Mixture of Experts Model.pdf]]"
 ---

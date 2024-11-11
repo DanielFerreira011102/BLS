@@ -5,7 +5,7 @@ year: 2022
 database: ACL Anthology
 citekey: aeb0059a49724db4821a5a48a022d3e3
 tags:
-  - CTRL
+  - ctg
 url: https://aclanthology.org/2022.findings-emnlp.343/
 file: "[[Readability Controllable Biomedical Document Summarization.pdf]]"
 ---

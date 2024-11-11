@@ -5,7 +5,7 @@ year: 2023
 database: Nature
 citekey: Varshney2023KnowledgeGM
 tags:
-  - KG
+  - kg
 url: https://www.nature.com/articles/s41598-023-29213-8
 file: "[[Knowledge grounded medical dialogue generation using augmented graphs.pdf]]"
 ---

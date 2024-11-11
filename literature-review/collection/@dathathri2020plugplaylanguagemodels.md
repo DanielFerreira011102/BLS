@@ -5,7 +5,7 @@ year: 2020
 database: arXiv
 citekey: dathathri2020plugplaylanguagemodels
 tags:
-  - CTRL
+  - ctg
 url: https://arxiv.org/abs/1912.02164
 file: "[[Plug and Play Language Models - A Simple Approach to Controlled Text Generation.pdf]]"
 ---

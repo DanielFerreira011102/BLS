@@ -5,7 +5,7 @@ year: 2022
 database: ACL Anthology
 citekey: yasunaga-etal-2022-linkbert
 tags:
-  - BERT
+  - bert
 url: https://aclanthology.org/2022.acl-long.551/
 file: "[[LinkBERT - Pretraining Language Models with Document Links.pdf]]"
 ---

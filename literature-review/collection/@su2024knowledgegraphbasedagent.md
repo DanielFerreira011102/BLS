@@ -5,24 +5,23 @@ year: 2024
 database: arXiv
 citekey: su2024knowledgegraphbasedagent
 tags:
-  - KGAREVION
-  - KG
-  - MedDDx
-  - PubMedQA
-  - BioASQ
-  - MedQA-US
-  - MMLU-Med
-  - Llama/3/8B
-  - Llama/3/1/8B
-  - Fine-tuning
-  - Knowledge_Completion
-  - QA
-  - Multi-choice
-  - Open-ended
-  - USMLE
-  - CoT
-  - Llama/2/7B
-  - Llama/2/13B
+  - kgarevion
+  - kg
+  - medddx
+  - pubmedqa
+  - bioasq
+  - medqa-us
+  - mmlu-med
+  - llama/3/8b
+  - llama/3/1/8b
+  - fine-tuning
+  - knowledge-completion
+  - multi-choice
+  - open-ended
+  - usmle
+  - cot
+  - llama/2/7b
+  - llama/2/13b
 url: https://arxiv.org/abs/2410.04660
 file: "[[research-papers/Knowledge Graph Based Agent For Complex, Knowledge-intensive QA In Medicine.pdf|Knowledge Graph Based Agent For Complex, Knowledge-intensive QA In Medicine]]"
 ---

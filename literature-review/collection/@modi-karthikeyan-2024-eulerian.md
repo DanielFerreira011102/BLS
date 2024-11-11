@@ -5,18 +5,18 @@ year: 2024
 database: ACL Anthology
 citekey: modi-karthikeyan-2024-eulerian
 tags:
-  - BioLaySumm/2024
-  - PLOS
-  - eLife
-  - ROUGE
-  - BERTScore
-  - FKGL
-  - DCRS
-  - CLI
-  - LENS
-  - AlignScore
-  - SummaC
-  - PoA
+  - biolaysumm/2024
+  - plos
+  - elife
+  - rouge
+  - bert-score
+  - fkgl
+  - dcrs
+  - cli
+  - lens
+  - align-score
+  - summa-c
+  - poa
   - flan/t5/small
   - flan/t5/base
 url: https://aclanthology.org/2024.bionlp-1.77/

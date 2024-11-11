@@ -5,18 +5,18 @@ year: 2024
 database: arXiv
 citekey: saab2024capabilitiesgeminimodelsmedicine
 tags:
-  - Med-Gemini
-  - Gemini/1/0/Pro
-  - USMLE
-  - MedQA-US
-  - MedQA-RS
-  - Med-Gemini-S/1/0
-  - Gemini/M/1/5
-  - Med-Gemini-M/1/5
-  - Gemini/1/5/Pro
-  - EHR
-  - Self-training
-  - CoT
+  - med-gemini
+  - gemini/1/0/pro
+  - usmle
+  - medqa-us
+  - medqa-rs
+  - med-gemini-s/1/0
+  - gemini/m/1/5
+  - med-gemini-m/1/5
+  - gemini/1/5/pro
+  - ehr
+  - self-training
+  - cot
 url: https://arxiv.org/abs/2404.18416
 file: "[[Capabilities of Gemini Models in Medicine.pdf]]"
 ---

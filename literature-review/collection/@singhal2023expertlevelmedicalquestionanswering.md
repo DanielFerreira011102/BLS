@@ -5,29 +5,29 @@ year: 2023
 database: arXiv
 citekey: singhal2023expertlevelmedicalquestionanswering
 tags:
-  - Med-PaLM/2
-  - Med-PaLM
-  - PaLM
-  - PaLM/2
-  - MedQA-US
-  - Ensemble_Refinement
-  - MedMCQA
-  - PubMedQA
-  - MMLU-Med
-  - HealthSearchQA
-  - Instruction_Tuning
-  - Adversarial_Testing
-  - Alignment
-  - Physician_Comparison
-  - LiveQA
-  - MedicationQA
-  - Pairwise_Ranking
-  - Human_Evaluation
-  - Multi-choice
-  - Open-ended
-  - MultiMedQA
-  - USMLE
-  - CoT
+  - med-palm/2
+  - med-palm
+  - palm
+  - palm/2
+  - medqa-us
+  - ensemble-refinement
+  - medmcqa
+  - pubmedqa
+  - mmlu-med
+  - healthsearchqa
+  - instruction-tuning
+  - adversarial-testing
+  - alignment
+  - physician-comparison
+  - liveqa
+  - medicationqa
+  - pairwise-ranking
+  - human-evaluation
+  - multi-choice
+  - open-ended
+  - multimedqa
+  - usmle
+  - cot
 url: https://arxiv.org/abs/2305.09617
 file: "[[Towards Expert-Level Medical Question Answering with Large Language Models.pdf]]"
 ---
