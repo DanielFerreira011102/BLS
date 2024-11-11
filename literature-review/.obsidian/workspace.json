@@ -206,6 +206,8 @@
   },
   "active": "e6a31672ebacaf38",
   "lastOpenFiles": [
+    "research-papers/Diffusion Guided Language Modeling.pdf",
+    "collection/@lovelace2024diffusionguidedlanguagemodeling.md",
     "collection/@liang2024controllabletextgenerationlarge.md",
     "collection/@kim-etal-2024-saama-technologies.md",
     "collection/@keskar2019ctrlconditionaltransformerlanguage.md",
@@ -236,7 +238,6 @@
     "research-papers/Reward-Augmented Decoding - Efficient Controlled Text Generation With a Unidirectional Reward Model.pdf",
     "research-papers/Readability Controllable Biomedical Document Summarization.pdf",
     "research-papers/CTRL - A Conditional Transformer Language Model for Controllable Generation.pdf",
-    "summary.md",
     "research-papers/Controllable Text Generation for Large Language Models - A Survey.pdf",
     "research-papers/Galactica - A Large Language Model for Science.pdf",
     "research-papers/Galactica - A Large Language Model for Science.pdf.crdownload",
