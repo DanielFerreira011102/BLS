@@ -5,7 +5,7 @@ year: 2024
 database: arXiv
 citekey: lovelace2024diffusionguidedlanguagemodeling
 tags:
-  - CTRL
+  - ctrl
 url: https://arxiv.org/abs/2408.04220
 file: "[[Diffusion Guided Language Modeling.pdf]]"
 ---

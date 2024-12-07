@@ -10,6 +10,59 @@ This chapter presents some basic tips and a few examples on how to use \LaTeX.
 \section{Linguistic Complexity}
 \label{c2:s:linguistic-complexity}
 
+\subsection{Traditional Readability Metrics}
+
+Readability formulas are designed to estimate the difficulty of a text based on surface-level features such as word and sentence length. 
+While originally developed for general-domain texts, some of these metrics have been applied to biomedical literature to assess suitability for lay readers. 
+In this section, we review several widely used readability metrics and discuss their strengths and limitations.
+
+\subsubsection{Flesch-Kincaid Grade Level (FKGL)}
+
+The Flesch-Kincaid Grade Level (FKGL) is one of the most commonly reported readability metrics. It is based on the Flesch Reading Ease (FRE) formula, which estimates the ease of reading on a scale of 0 to 100, but was later adapted to provide a grade-level score rather than a readability score. 
+The formula for FKGL is:
+
+$$FKGL = 0.39 \times \left(\frac{\text{words}}{\text{sentences}}\right) + 11.8 \times \left(\frac{\text{syllables}}{\text{words}}\right) - 15.59$$
+
+FKGL scores typically range from 0 to 12, with higher scores indicating more difficult text. For example, a score of 9.2 would suggest that the text is suitable for an average 9th-grade student. 
+Text that scores above 12 suggest college-level or domain-specific expertise. 
+
+...
+
+Despite these drawbacks, FKGL continues to be frequently used to assess the readability of patient education materials and informed consent documents.
+
+\subsubsection{Automated Readability Index (ARI)}
+
+The Automated Readability Index (ARI) is another readability formula that estimates the U.S. grade level needed to understand a given text. Like FKGL, it considers the number of words, sentences, and characters in a passage. The formula for ARI is:
+
+$$ARI = 4.71 \times \left(\frac{\text{characters}}{\text{words}}\right) + 0.5 \times \left(\frac{\text{words}}{\text{sentences}}\right) - 21.43$$
+
+ARI scores are typically rounded up to the nearest whole number to correspond with grade levels. For instance, a score of 10.3 would indicate that the text is suitable for an 11th-grade student.
+One advantage of ARI over FKGL is that it uses characters per word instead of syllables, which are easier to calculate automatically. 
+However, it shares many of the same limitations, such as ignoring word meaning and context. 
+Additionally, ARI was developed using textbooks and technical manuals, so its applicability to biomedical literature is questionable.
+
+\subsubsection{Simple Measure of Gobbledygook (SMOG)}
+
+The Simple Measure of Gobbledygook (SMOG) is a readability formula that estimates the years of education needed to understand a piece of writing. It is calculated by counting the number of polysyllabic words (i.e., those with three or more syllables) in a sample of 30 sentences. 
+The formula for SMOG is:
+
+$$SMOG = 1.0430 \times \sqrt{\text{polysyllables} \times \left(\frac{30}{\text{sentences}}\right)} + 3.1291$$
+
+SMOG scores range from around 4 to 18, corresponding to U.S. grade levels, with a score of 13 indicating a college freshman comprehension level.
+Like ARI, SMOG has the advantage of being easily automated since it only requires counting syllables and sentences. However, SMOG has been criticized for overestimating readability difficulty by focusing solely on polysyllabic words and ignoring other factors such as sentence structure and cohesion. Despite that, SMOG remains popular for assessing patient education materials. Its widespread use in healthcare is supported by a 2010 study published in the Journal of the Royal College of Physicians of Edinburgh, which recommended SMOG as the preferred measure for evaluating consumer-oriented healthcare material.
+
+\subsubsection{Dale-Chall Readability Score (DCRS)}
+
+The Dale-Chall Readability Score (DCRS) is a formula that assesses text difficulty based on average sentence length and the percentage of "hard" words not found on a predefined list of 3,000 familiar words. The original formula was:
+
+$$DCRS = 0.1579 \times \left(\frac{\text{hard words}}{\text{words}}\right) + 0.0496 \times \left(\frac{\text{words}}{\text{sentences}}\right)$$
+
+If the percentage of difficult words was above 5\%, an additional constant of 3.6365 was added to the raw score to get the final DCRS. Scores range from 4.9 or below for easily understood text up to 10+ for very challenging text.
+
+\subsubsection{Limitations of Traditional Readability Metrics}
+
+
+
 \section{Biomedical Language Characteristics}
 
 \subsection{Terminology Complexity}

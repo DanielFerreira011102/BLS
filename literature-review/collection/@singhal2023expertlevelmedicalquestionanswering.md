@@ -78,7 +78,7 @@ The paper emerged from the broader context of applying artificial intelligence (
 
 The relevance of the work lies in the growing potential of large language models (LLMs) to transform healthcare by retrieving medical knowledge, reasoning through it, and providing accurate, reliable answers to medical questions. The importance of this paper stems from the fact that existing models, while capable of passing medical exams like the USMLE, still fall short in matching the depth, safety, and alignment of human-generated answers, especially in critical and nuanced real-world settings.
 
-The goal of this research is to close the performance gap between AI models and physicians in medical question answering. By improving the model's reasoning capabilities, factual accuracy, and alignment with clinical standards, the authors aim to create a system that can assist doctors and improve access to high-quality medical information, benefiting patients and healthcare providers alike​(Towards Expert-Level Me…).
+The goal of this research is to close the performance gap between AI models and physicians in medical question answering. By improving the model's reasoning capabilities, factual accuracy, and alignment with clinical standards, the authors aim to create a system that can assist doctors and improve access to high-quality medical information, benefiting patients and healthcare providers alike​.
 
 ------------------------------------
 

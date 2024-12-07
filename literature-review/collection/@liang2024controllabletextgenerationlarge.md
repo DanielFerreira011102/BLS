@@ -27,6 +27,7 @@ tags:
   - structure-control
   - multi-attribute-control
   - attribute-decoupling
+  - spurious-correlations
   - survey
 url: https://arxiv.org/abs/2408.12599
 file: "[[Controllable Text Generation for Large Language Models - A Survey.pdf]]"
