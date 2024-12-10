@@ -7,12 +7,19 @@ This chapter presents some basic tips and a few examples on how to use \LaTeX.
 \section{Language Models}
 \label{c2:s:language-models}
 
-\section{Linguistic Complexity}
+\section{Measuring Readability in the Biomedical Domain}
 \label{c2:s:linguistic-complexity}
+
+The complexity of biomedical terminology represents a unique challenge for language complexity measurement. 
+Medical terms often combine elements from multiple languages, primarily Greek and Latin, creating systematic patterns that affect both structural and cognitive complexity. 
+These patterns follow predictable rules but can create significant processing challenges for non-expert readers.
+
+The relationship between professional and lay terminology adds another layer of complexity. 
+Many medical concepts can be expressed through either technical or lay terms (e.g., ``myocardial infarction'' vs. ``heart attack''), creating parallel vocabularies that must be considered in complexity measurement. 
 
 \subsection{Traditional Readability Metrics}
 
-Readability formulas are designed to estimate the difficulty of a text based on surface-level features such as average sentence length, average word length, and the proportion of difficult or unfamiliar words. While originally developed for general-domain texts, some of these metrics have been applied to biomedical literature to assess the accessibility and suitability of patient education materials, consent forms, and other health-related documents. For example, researchers have used these metrics to evaluate the readability of online patient education materials for conditions such as nocturnal enuresis (\cite{Fung2024-uh}), bariatric surgery (\cite{Lucy2023-zi}), and female pelvic floor disorders (\cite{Varli2023-ma}). Moreover, these metrics have been utilized to assess the readability of discharge instructions for heart failure patients (\cite{Tuan2023-wc}) and to analyze the quality of information provided by intensive and critical care societies (\cite{Hanci2024-wv}).
+Readability formulas are designed to estimate the difficulty of a text based on surface-level features such as average sentence length, average word length, and the proportion of difficult or unfamiliar words. While originally developed for general-domain texts, some of these metrics have been applied to biomedical literature to assess the accessibility and suitability of patient education materials, consent forms, and other health-related documents. For example, researchers have used these metrics to evaluate the readability of online patient education materials for conditions such as nocturnal enuresis \cite{Fung2024-uh}, bariatric surgery \cite{Lucy2023-zi}, and female pelvic floor disorders (\cite{Varli2023-ma}). Moreover, these metrics have been utilized to assess the readability of discharge instructions for heart failure patients (\cite{Tuan2023-wc}) and to analyze the quality of information provided by intensive and critical care societies (\cite{Hanci2024-wv}).
 
 One of the most widely reported readability metrics is the Flesch-Kincaid Grade Level (FKGL). This formula estimates the U.S. grade level required to understand a given text, calculated as follows:
 $$FKGL = 0.39 \times \left(\frac{\text{words}}{\text{sentences}}\right) + 11.8 \times \left(\frac{\text{syllables}}{\text{words}}\right) - 15.59$$
@@ -20,7 +27,7 @@ FKGL scores typically vary from 0 to 18, with higher scores indicating more diff
 
 Another commonly used readability formula is the Simple Measure of Gobbledygook (SMOG). This metric estimates the years of education needed to understand a piece of writing based on the number of polysyllabic words (i.e., those with three or more syllables) in a sample of 30 sentences, using the following formula:
 $$SMOG = 1.0430 \times \sqrt{\text{polysyllables} \times \left(\frac{30}{\text{sentences}}\right)} + 3.1291$$
-Like FKGL, SMOG scores correspond to U.S. grade levels. A score of 13 indicates a college freshman reading level, while scores below 6 are considered easily understood by most readers. The SMOG formula has gained popularity in healthcare settings due to its relative ease of use and focus on vocabulary complexity. Its widespread use in healthcare is supported by a 2010 study published in the Journal of the Royal College of Physicians of Edinburgh, which recommended SMOG as the preferred measure for evaluating consumer-oriented healthcare material (\cite{Fitzsimmons2010-mq}).
+Like FKGL, SMOG scores correspond to U.S. grade levels. A score of 13 indicates a college freshman reading level, while scores below 6 are considered easily understood by most readers. The SMOG formula has gained popularity in healthcare settings due to its relative ease of use and focus on vocabulary complexity. Its widespread use in healthcare is supported by a 2010 study published in the Journal of the Royal College of Physicians of Edinburgh, which recommended SMOG as the preferred measure for evaluating consumer-oriented healthcare material \cite{Fitzsimmons2010-mq}.
 
 The Dale-Chall Readability Score (DCRS) is another well-known readability metric that assesses text difficulty based on the average sentence length and the percentage of ``difficult'' words not found on a list of 3,000 familiar words. The original DCRS formula is:
 $$DCRS = 0.1579 \times \left(\frac{\text{difficult words}}{\text{total words}} \times 100\right) + 0.0496 \times \left(\frac{\text{total words}}{\text{total sentences}}\right)$$
@@ -29,29 +36,27 @@ If the percentage of difficult words exceeds 5\%, an additional constant of 3.63
 In addition to FKGL, SMOG, and DCRS, there are many other readability formulas, such as the Automated Readability Index (ARI), Coleman-Liau Index (CLI), Gunning Fog Index (GFI), and Linsear Write Formula. While the specific calculations differ, they all aim to estimate text difficulty based on factors like word length, sentence length, and syllable counts.
 
 Despite their widespread use, traditional readability formulas have several notable limitations when applied to biomedical texts.
-First, these formulas rely on surface-level features like word and sentence length, which may not adequately capture the conceptual complexity of medical information (\cite{Crossley2022, WANG2013503, Singh2024}).
+First, these formulas rely on surface-level features like word and sentence length, which may not adequately capture the conceptual complexity of medical information \cite{Crossley2022, WANG2013503, Singh2024}.
 They treat the text as a ``bag of words'', ignoring higher-level discourse structures that influence comprehension, such as information density, organization, coherence, and syntax. 
-Second, readability formulas often treat all words equally based on length or syllable count, without considering the cognitive load imposed by specific terms (\cite{Swanson2024}).
+Second, readability formulas often treat all words equally based on length or syllable count, without considering the cognitive load imposed by specific terms \cite{Swanson2024}.
 Polysyllabic medical terms may be familiar to experts but challenging for lay readers, while short words like ``apnea'' or ``polyp'' may also be difficult for average adults to understand. 
-Third, these formulas were developed using general reading materials, often geared towards children's education levels. The assumptions and thresholds used in these formulas may not generalize well to the specialized language and adult literacy levels of biomedical texts (\cite{Crossley2022}).
+Third, these formulas were developed using general reading materials, often geared towards children's education levels. The assumptions and thresholds used in these formulas may not generalize well to the specialized language and adult literacy levels of biomedical texts \cite{Crossley2022}.
 Finally, readability scores are typically reported as a single average or grade level for an entire text, obscuring any variability in difficulty within the document.
 
 Despite these drawbacks, readability formulas provide an objective, quantitative measure of text complexity that can serve as a starting point for improving the clarity and accessibility of health-related materials. However, experts generally recommend using these formulas as part of a more holistic approach, combining multiple metrics with expert evaluation and user testing to ensure that health information is truly accessible and understandable for the intended audience.
 
 \subsection{Machine Learning and Neural Approaches}
 
-The most widely used automatic metric for text simplification is SARI (System Output Against References and Input). 
-SARI measures the quality of a simplified text by comparing it to multiple reference simplifications and the original complex sentence. It computes the arithmetic mean of three sub-scores: F1 score for words kept from the input (precision), F1 score for words added from the references (recall), and F1 score for words deleted from the input (precision).
-Intuitively, SARI rewards simplifications that preserve important content from the original sentence while making it easier to read. It has been shown to correlate well with human judgments of simplicity gain, especially for lexical simplification tasks. However, it has some limitations: it requires access to multiple reference simplifications which are not always available; it does not distinguish between core and non-essential information; and it may penalize valid paraphrases that do not match the references exactly.
-To address some of these issues, several variants and extensions of SARI have been proposed. For example, Xu et al. introduced an additional copy-penalty term that discourages unmodified copying from the input, favoring more aggressive simplification. Alva-Manchego et al. proposed a decomposed version of SARI that separately measures lexical and structural simplification operations. And Štajner et al. explored using semantic similarity metrics like METEOR instead of exact word matching to allow for more flexible paraphrasing.
+Recent advancements in natural language processing (NLP), particularly in text simplification research, have led to the development of sophisticated metrics for evaluating linguistic complexity. Unlike traditional statistical measures that rely solely on surface-level comparisons, these metrics incorporate deeper semantic understanding and contextual nuances. This shift aims to provide a more accurate assessment of how well simplified texts retain meaning while reducing complexity.
 
-\section{Biomedical Language Characteristics}
+The most widely adopted metric in the text simplification community is the System Output Against References and Input (SARI) \cite{xu-etal-2016-optimizing}. 
+SARI evaluates the quality of a simplified text by comparing it to multiple reference simplifications and the original complex sentence. 
+It computes the arithmetic mean of the n-gram F1 scores for three operations. First, it considers the addition of words that are present in the reference simplifications but not in the original sentence. Second, it takes into account the deletion of words that are in the original sentence but not in the reference simplifications. Lastly, it evaluates the keeping of words that are both in the original sentence and the reference simplifications. Considering these three operations, SARI encourages simplification systems to perform appropriate word additions, deletions, and phrase rewrites while preserving the core meaning of the original text.
 
-\subsection{Terminology Complexity}
-The complexity of biomedical terminology represents a unique challenge for language complexity measurement. 
-Medical terms often combine elements from multiple languages, primarily Greek and Latin, creating systematic patterns that affect both structural and cognitive complexity. 
-These patterns follow predictable rules but can create significant processing challenges for non-expert readers.
+BERTScore \cite{zhang2020bertscoreevaluatingtextgeneration} is another popular metric that uses contextualized word embeddings from the BERT language model to compute semantic similarity between the simplified text and the reference. This approach allows BERTScore to capture more nuanced similarities compared to exact word matching. BERTScore has demonstrated higher correlation with human judgments than traditional n-gram based metrics like BLEU [1]. However, it is not specifically designed for text simplification and does not directly assess readability.
 
-The relationship between professional and lay terminology adds another layer of complexity. 
-Many medical concepts can be expressed through either technical or lay terms (e.g., ``myocardial infarction'' vs. ``heart attack''), creating parallel vocabularies that must be considered in complexity measurement. 
-The choice between technical and lay terminology significantly affects both comprehension and processing efficiency.
+Recall-Oriented Understudy for Gisting Evaluation (ROUGE) [6], a family of metrics originally developed for summarization evaluation, has also been adapted for text simplification. ROUGE measures the n-gram overlap between the simplified text and the reference, with higher scores indicating greater lexical similarity. Different ROUGE variants focus on different n-gram granularities, such as unigram, bigram, and longest common subsequence (LCS) overlap.
+
+A more recent development is the Learnable Evaluation Metric for Simplification (LENS) [7], a reference-free and trainable metric designed specifically for text simplification. LENS fine-tunes a pretrained language model on expert-annotated simplicity ratings, enabling it to predict the simplicity score a human would assign without requiring reference simplifications. Experiments have shown that LENS correlates better with human judgments compared to reference-based metrics like SARI [7]. This approach opens up new possibilities for developing more flexible and generalizable simplification evaluation metrics.
+
+It is important to note that metrics like SARI, ROUGE, and LENS rely on comparing the simplified text to reference simplifications, either explicitly (in the case of SARI and ROUGE) or implicitly (in the case of LENS). The quality and diversity of these references can significantly impact the reliability of the evaluation. Therefore, these metrics are most effective for relative comparisons between simplification systems, while human evaluation remains the gold standard.
