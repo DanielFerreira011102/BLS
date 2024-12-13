@@ -14,6 +14,177 @@
   month=apr,
 }
 
+@inproceedings{snover-etal-2006-study,
+    title = "A Study of Translation Edit Rate with Targeted Human Annotation",
+    author = "Snover, Matthew  and
+      Dorr, Bonnie  and
+      Schwartz, Rich  and
+      Micciulla, Linnea  and
+      Makhoul, John",
+    booktitle = "Proceedings of the 7th Conference of the Association for Machine Translation in the Americas: Technical Papers",
+    month = aug # " 8-12",
+    year = "2006",
+    address = "Cambridge, Massachusetts, USA",
+    publisher = "Association for Machine Translation in the Americas",
+    url = "https://aclanthology.org/2006.amta-papers.25",
+    pages = "223--231",
+    abstract = "We examine a new, intuitive measure for evaluating machine-translation output that avoids the knowledge intensiveness of more meaning-based approaches, and the labor-intensiveness of human judgments. Translation Edit Rate (TER) measures the amount of editing that a human would have to perform to change a system output so it exactly matches a reference translation. We show that the single-reference variant of TER correlates as well with human judgments of MT quality as the four-reference variant of BLEU. We also define a human-targeted TER (or HTER) and show that it yields higher correlations with human judgments than BLEU{---}even when BLEU is given human-targeted references. Our results indicate that HTER correlates with human judgments better than HMETEOR and that the four-reference variants of TER and HTER correlate with human judgments as well as{---}or better than{---}a second human judgment does.",
+}
+
+@inproceedings{banerjee-lavie-2005-meteor,
+    title = "{METEOR}: An Automatic Metric for {MT} Evaluation with Improved Correlation with Human Judgments",
+    author = "Banerjee, Satanjeev  and
+      Lavie, Alon",
+    editor = "Goldstein, Jade  and
+      Lavie, Alon  and
+      Lin, Chin-Yew  and
+      Voss, Clare",
+    booktitle = "Proceedings of the {ACL} Workshop on Intrinsic and Extrinsic Evaluation Measures for Machine Translation and/or Summarization",
+    month = jun,
+    year = "2005",
+    address = "Ann Arbor, Michigan",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/W05-0909",
+    pages = "65--72",
+}
+
+@inproceedings{papineni-etal-2002-bleu,
+    title = "{B}leu: a Method for Automatic Evaluation of Machine Translation",
+    author = "Papineni, Kishore  and
+      Roukos, Salim  and
+      Ward, Todd  and
+      Zhu, Wei-Jing",
+    editor = "Isabelle, Pierre  and
+      Charniak, Eugene  and
+      Lin, Dekang",
+    booktitle = "Proceedings of the 40th Annual Meeting of the Association for Computational Linguistics",
+    month = jul,
+    year = "2002",
+    address = "Philadelphia, Pennsylvania, USA",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/P02-1040",
+    doi = "10.3115/1073083.1073135",
+    pages = "311--318",
+}
+
+@inproceedings{jin-gildea-2022-rewarding,
+    title = "Rewarding Semantic Similarity under Optimized Alignments for {AMR}-to-Text Generation",
+    author = "Jin, Lisa  and
+      Gildea, Daniel",
+    editor = "Muresan, Smaranda  and
+      Nakov, Preslav  and
+      Villavicencio, Aline",
+    booktitle = "Proceedings of the 60th Annual Meeting of the Association for Computational Linguistics (Volume 2: Short Papers)",
+    month = may,
+    year = "2022",
+    address = "Dublin, Ireland",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2022.acl-short.80",
+    doi = "10.18653/v1/2022.acl-short.80",
+    pages = "710--715",
+    abstract = "A common way to combat exposure bias is by applying scores from evaluation metrics as rewards in reinforcement learning (RL). Metrics leveraging contextualized embeddings appear more flexible than their n-gram matching counterparts and thus ideal as training rewards. However, metrics such as BERTScore greedily align candidate and reference tokens, which can allow system outputs to receive excess credit relative to a reference. Furthermore, past approaches featuring semantic similarity rewards suffer from repetitive outputs and overfitting. We address these issues by proposing metrics that replace the greedy alignments in BERTScore with optimized ones. We compute them on a model{'}s trained token embeddings to prevent domain mismatch. Our model optimizing discrete alignment metrics consistently outperforms cross-entropy and BLEU reward baselines on AMR-to-text generation. In addition, we find that this approach enjoys stable training compared to a non-RL setting.",
+}
+
+@misc{li2024largelanguagemodelsbiomedical,
+      title={Large Language Models for Biomedical Text Simplification: Promising But Not There Yet}, 
+      author={Zihao Li and Samuel Belkadi and Nicolo Micheletti and Lifeng Han and Matthew Shardlow and Goran Nenadic},
+      year={2024},
+      eprint={2408.03871},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2408.03871}, 
+}
+
+@article{Tang2024ImprovingBF,
+  title={Improving BERTScore for Machine Translation Evaluation Through Contrastive Learning},
+  author={Gongbo Tang and Oreen Yousuf and Zeying Jin},
+  journal={IEEE Access},
+  year={2024},
+  volume={12},
+  pages={77739-77749},
+  url={https://api.semanticscholar.org/CorpusID:270104029}
+}
+
+@article{Vetrov2022ANA,
+  title={A new approach to calculating BERTScore for automatic assessment of translation quality},
+  author={Aleksandr A. Vetrov and Edward Gorn},
+  journal={ArXiv},
+  year={2022},
+  volume={abs/2203.05598},
+  url={https://api.semanticscholar.org/CorpusID:247411119}
+}
+
+@inproceedings{lin-2004-rouge,
+    title = "{ROUGE}: A Package for Automatic Evaluation of Summaries",
+    author = "Lin, Chin-Yew",
+    booktitle = "Text Summarization Branches Out",
+    month = jul,
+    year = "2004",
+    address = "Barcelona, Spain",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/W04-1013",
+    pages = "74--81",
+}
+
+@ARTICLE{Truica2023-au,
+  title     = "{SimpLex}: a lexical text simplification architecture",
+  author    = "Truic{\u a}, Ciprian-Octavian and Stan, Andrei-Ionu{\c t} and
+               Apostol, Elena-Simona",
+  journal   = "Neural Comput. Appl.",
+  publisher = "Springer Science and Business Media LLC",
+  volume    =  35,
+  number    =  8,
+  pages     = "6265--6280",
+  month     =  mar,
+  year      =  2023,
+  copyright = "https://www.springernature.com/gp/researchers/text-and-data-mining",
+  language  = "en"
+}
+
+
+@inproceedings{ke-etal-2022-ctrleval,
+    title = "{CTRLE}val: An Unsupervised Reference-Free Metric for Evaluating Controlled Text Generation",
+    author = "Ke, Pei  and
+      Zhou, Hao  and
+      Lin, Yankai  and
+      Li, Peng  and
+      Zhou, Jie  and
+      Zhu, Xiaoyan  and
+      Huang, Minlie",
+    editor = "Muresan, Smaranda  and
+      Nakov, Preslav  and
+      Villavicencio, Aline",
+    booktitle = "Proceedings of the 60th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)",
+    month = may,
+    year = "2022",
+    address = "Dublin, Ireland",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2022.acl-long.164",
+    doi = "10.18653/v1/2022.acl-long.164",
+    pages = "2306--2319",
+    abstract = "Existing reference-free metrics have obvious limitations for evaluating controlled text generation models. Unsupervised metrics can only provide a task-agnostic evaluation result which correlates weakly with human judgments, whereas supervised ones may overfit task-specific data with poor generalization ability to other datasets. In this paper, we propose an unsupervised reference-free metric called CTRLEval, which evaluates controlled text generation from different aspects by formulating each aspect into multiple text infilling tasks. On top of these tasks, the metric assembles the generation probabilities from a pre-trained language model without any model training. Experimental results show that our metric has higher correlations with human judgments than other baselines, while obtaining better generalization of evaluating generated texts from different models and with different qualities.",
+}
+
+@inproceedings{maddela-etal-2023-lens,
+    title = "{LENS}: A Learnable Evaluation Metric for Text Simplification",
+    author = "Maddela, Mounica  and
+      Dou, Yao  and
+      Heineman, David  and
+      Xu, Wei",
+    editor = "Rogers, Anna  and
+      Boyd-Graber, Jordan  and
+      Okazaki, Naoaki",
+    booktitle = "Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)",
+    month = jul,
+    year = "2023",
+    address = "Toronto, Canada",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2023.acl-long.905",
+    doi = "10.18653/v1/2023.acl-long.905",
+    pages = "16383--16408",
+    abstract = "Training learnable metrics using modern language models has recently emerged as a promising method for the automatic evaluation of machine translation. However, existing human evaluation datasets for text simplification have limited annotations that are based on unitary or outdated models, making them unsuitable for this approach. To address these issues, we introduce the SimpEval corpus that contains: SimpEval{\_}past, comprising 12K human ratings on 2.4K simplifications of 24 past systems, and SimpEval{\_}2022, a challenging simplification benchmark consisting of over 1K human ratings of 360 simplifications including GPT-3.5 generated text. Training on SimpEval, we present LENS, a Learnable Evaluation Metric for Text Simplification. Extensive empirical results show that LENS correlates much better with human judgment than existing metrics, paving the way for future progress in the evaluation of text simplification. We also introduce Rank {\&} Rate, a human evaluation framework that rates simplifications from several models in a list-wise manner using an interactive interface, which ensures both consistency and accuracy in the evaluation process and is used to create the SimpEval datasets.",
+}
+
 @misc{zhang2020bertscoreevaluatingtextgeneration,
       title={BERTScore: Evaluating Text Generation with BERT}, 
       author={Tianyi Zhang and Varsha Kishore and Felix Wu and Kilian Q. Weinberger and Yoav Artzi},
