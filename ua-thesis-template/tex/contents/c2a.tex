@@ -64,13 +64,13 @@ Additionally, BERTScore has some limitations, such as its greedy alignment appro
 ROUGE measures the n-gram overlap between the simplified text and the references, with higher scores indicating greater lexical similarity.
 Different ROUGE variants focus on various aspects of n-gram matching.
 ROUGE-N calculates the recall based on the ratio of matching n-grams (e.g., unigrams for ROUGE-1, bigrams for ROUGE-2) to total reference n-grams, but it does not account for the order or contiguity of the matches. 
-ROUGE-L addresses this by considering the precision, recall, and F-measure of the \glsxtrfull{lcs}, which preserves order but allows gaps. 
+ROUGE-L addresses this by considering the precision, recall, and F-measure of the largest common subsequence, which preserves order but allows gaps. 
 ROUGE-S offers a more flexible matching by measuring the overlap of skip-bigrams, capturing both local and long-range sentence structure similarities. 
 ROUGE-W is a weighted version of ROUGE-L that assigns higher importance to consecutive matches, favoring longer common subsequences.
 These ROUGE variants capture lexical and structural similarities at different granularities, but they have limitations when used to evaluate text simplification systems. 
-ROUGE does not explicitly measure semantic similarity, potentially missing the nuances of meaning preservation between the original and simplified texts \cite{?}.
+ROUGE does not explicitly measure semantic similarity, potentially missing the nuances of meaning preservation between the original and simplified texts \cite{xu2024reasoningcomparisonllmenhancedsemantic}.
 It also does not account for readability factors such as vocabulary or syntactic simplicity, which are crucial for text simplification \cite{?}.
-Therefore, while ROUGE provides useful insights into lexical and structural similarities, additional metrics targeting semantic and readability aspects may be necessary for a more well-rounded evaluation of simplification quality.
+Therefore, while ROUGE provides useful insights into lexical and structural similarities, additional metrics targeting semantic and readability aspects may be necessary for a more well-rounded evaluation of simplification quality \cite{li2024largelanguagemodelsbiomedical}.
 
 Other reference-based metrics that have been used for simplification evaluation include \glsxtrfull{bleu}, which calculates the precision of n-gram matches between the candidate and reference, with a brevity penalty \cite{papineni-etal-2002-bleu}; \glsxtrfull{meteor}, which computes a weighted F-score based on exact, stem, synonym, and paraphrase matches between the candidate and reference \cite{banerjee-lavie-2005-meteor}; and \glsxtrfull{ter}, which measures the minimum number of edits (insertions, deletions, substitutions, and shifts) required to transform the candidate text into the reference \cite{snover-etal-2006-study}.
 However, all reference-based metrics share some common limitations. 
