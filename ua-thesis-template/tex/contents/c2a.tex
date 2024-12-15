@@ -22,7 +22,7 @@ Many medical concepts can be expressed through either technical or lay terms (e.
 
 Readability formulas are designed to estimate the difficulty of a text based on surface-level features such as average sentence length, average word length, and the proportion of difficult or unfamiliar words. While originally developed for general-domain texts, some of these metrics have been applied to biomedical literature to assess the accessibility and suitability of patient education materials, consent forms, and other health-related documents. For example, researchers have used these metrics to evaluate the readability of online patient education materials for conditions such as nocturnal enuresis \cite{Fung2024-uh}, bariatric surgery \cite{Lucy2023-zi}, and female pelvic floor disorders \cite{Varli2023-ma}. Moreover, these metrics have been used to assess the readability of discharge instructions for heart failure patients \cite{Tuan2023-wc} and to analyze the quality of information provided by intensive and critical care societies \cite{Hanci2024-wv}.
 
-One of the most widely reported readability metrics is the \gls{fkgl}. This formula estimates the U.S. grade level required to understand a given text, calculated as follows:
+The most popular readability metric is the \gls{fkgl}. This formula estimates the U.S. grade level required to understand a given text, calculated as follows:
 $$FKGL = 0.39 \times \left(\frac{\text{words}}{\text{sentences}}\right) + 11.8 \times \left(\frac{\text{syllables}}{\text{words}}\right) - 15.59$$
 \gls{fkgl} scores typically vary from 0 to 18, with higher scores indicating more difficult text. For example, a score of 9.2 would suggest that the text is suitable for an average 9th-grade student. Text that scores above 12 suggest college-level or domain-specific expertise.
 
@@ -36,58 +36,82 @@ $$DCRS = 0.1579 \times \left(\frac{\text{difficult words}}{\text{total words}} \
 If the percentage of difficult words exceeds 5\%, an additional constant of 3.6365 is added to the raw score to get the final \gls{dcrs}. Scores range from 4.9 or below for easily understood text to 10 or above for very challenging text.
 
 In addition to \gls{fkgl}, \gls{smog}, and \gls{dcrs}, there are many other readability formulas, such as the \gls{ari}, \gls{cli}, \gls{gfi}, and Linsear Write Formula. While the specific calculations differ, they all aim to estimate text difficulty based on factors like word length, sentence length, and syllable counts.
-
-Although traditional readability formulas are still widely used, they have several notable limitations when applied to biomedical texts. First, these formulas rely on surface-level features like word and sentence length, which may not adequately capture the conceptual complexity of medical information \cite{Crossley2022, WANG2013503, Singh2024}.
+Although traditional readability formulas are still widely used, they have several notable limitations when applied to biomedical texts. 
+First, these formulas rely on surface-level features like word and sentence length, which may not adequately capture the conceptual complexity of medical information \cite{Crossley2022, WANG2013503, Singh2024}.
 They treat the text as a ``bag of words'', ignoring higher-level discourse structures that influence comprehension, such as information density, organization, coherence, and syntax.  
-Second, readability formulas often treat all words equally based on length or syllable count, without considering the cognitive load imposed by specific terms \cite{Swanson2024}. Polysyllabic medical terms may be familiar to experts but challenging for lay readers, while short words like ``apnea'' or ``polyp'' may also be difficult for average adults to understand.
-Third, these formulas were developed using general reading materials, often geared towards children's education levels. The assumptions and thresholds used in these formulas may not generalize well to the specialized language and adult literacy levels of biomedical texts \cite{Crossley2022}.
+Second, readability formulas often treat all words equally based on length or syllable count, without considering the cognitive load imposed by specific terms \cite{Swanson2024}. 
+Polysyllabic medical terms may be familiar to experts but challenging for lay readers. Conversely, short words like ``apnea'' or ``polyp'' may also be difficult for average adults to understand.
+Third, these formulas were developed using general reading materials, often geared towards children's education levels. 
+The assumptions and thresholds used in these formulas may not generalize well to the specialized language and adult literacy levels of biomedical texts \cite{Crossley2022}.
 Finally, readability scores are typically reported as a single average or grade level for an entire text, obscuring any variability in difficulty within the document.
-Despite these drawbacks, readability formulas provide an objective, quantitative measure of text complexity that can serve as a starting point for improving the clarity and accessibility of health-related materials. However, experts generally recommend using these formulas as part of a more holistic approach, combining multiple metrics with expert evaluation and user testing to ensure that health information is truly accessible and understandable for the intended audience.
+Despite these drawbacks, readability formulas provide an objective, quantitative measure of text complexity that can serve as a starting point for improving the clarity and accessibility of health-related materials. 
+However, experts generally recommend using these formulas as part of a more holistic approach, combining multiple metrics with expert evaluation and user testing to ensure that health information is truly accessible and understandable for the intended audience \cite{Ko2024-dd, tanprasert-kauchak-2021-flesch}.
 
 \subsection{Reference-Based Evaluation Metrics}
 
-A series of reference-based evaluation metrics have recently been proposed in an attempt to address the limitations of traditional readability formulas when applied to the task of text simplification. 
-These metrics compare the generated text to a reference simplification, using more sophisticated natural language processing techniques to capture semantic similarity, information preservation, and fluency.
+Reference-based evaluation metrics compare machine-generated text simplifications to one or more predefined gold-standard references.
+The core idea is to measure how closely the generated text aligns with the references in terms of content, structure, and style.
 
 The most widely adopted metric in the text simplification community might be the \gls{sari} \cite{xu-etal-2016-optimizing}. 
 \gls{sari} evaluates the quality of a simplified text by comparing it to multiple reference simplifications and the original complex sentence. 
 It computes the arithmetic mean of three sub-scores: 1) the F1 score for n-grams present in the output and the references but not in the input (addition), 2) the F1 score for n-grams in the output and input but not the references (copying), and 3) the F1 score for n-grams in the input and references but not the output (deletion). 
 Considering these three operations, \gls{sari} rewards simplifications that add simplified n-grams, preserve important n-grams from the input, and delete unimportant n-grams. 
-In the biomedical domain, \gls{sari} has been shown to be a more reliable metric for assessing the quality of generated simplifications than other n-gram-based metrics like BLEU and ROUGE \cite{li2024largelanguagemodelsbiomedical}. 
-However, \gls{sari} was originally designed to evaluate lexical simplification and may not effectively capture meaning preservation or complexity reduction when applied to multi-operation simplifications \cite{alva-manchego-etal-2021-un}.
+In the biomedical domain, \gls{sari} has been shown to be a more reliable metric for assessing text quality than other n-gram-based metrics like BLEU and ROUGE \cite{li2024largelanguagemodelsbiomedical}.
+However, since it was originally designed to evaluate lexical (word-level) changes, it may not adequately measure how well a system preserves meaning or reduces complexity when evaluating multi-operation simplifications, such as rephrasing sentences or altering sentence structure \cite{alva-manchego-etal-2021-un}.
 It also struggles with correctly identifying and rewarding appropriate lexical replacements in such scenarios.
 
-BERTScore is another popular metric that uses contextualized word embeddings from the BERT language model to compute semantic similarity between the candidate and reference simplifications \cite{zhang2020bertscoreevaluatingtextgeneration}. 
+BERTScore \cite{zhang2020bertscoreevaluatingtextgeneration} is another popular metric that uses contextualized word embeddings from the BERT language model to compute semantic similarity between the candidate and reference simplifications. 
 It aligns each token in the candidate text with the most similar token in the reference, and then sums these cosine similarities to calculate precision and recall, with the F1 score computed as their harmonic mean. 
 BERTScore has demonstrated good performance in various text generation tasks, including machine translation \cite{Vetrov2022ANA, Tang2024ImprovingBF}. 
 In the context of text simplification, BERTScore has shown the highest correlations with human judgments of simplicity and meaning preservation compared to other metrics, particularly when evaluating the outputs of neural sequence-to-sequence models \cite{alva-manchego-etal-2021-un}, though it is unclear how well it generalizes to the biomedical domain. 
-As a reference-based metric, BERTScore relies on the availability and quality of human-written reference simplifications. It does not explicitly measure readability aspects such as lexical or syntactic complexity \cite{li2024largelanguagemodelsbiomedical}. 
+It does not explicitly measure readability aspects such as lexical or syntactic complexity \cite{li2024largelanguagemodelsbiomedical}. 
 Furthermore, BERTScore's greedy alignment approach may allow system outputs to receive excess credit relative to the reference \cite{jin-gildea-2022-rewarding}.
 
-\gls{rouge}, a family of metrics originally developed for text summarization, has also been adapted for text simplification \cite{xu-etal-2016-optimizing}.
+\gls{rouge} \cite{xu-etal-2016-optimizing}, a family of metrics originally developed for text summarization, has also been adapted for text simplification.
 \gls{rouge} measures the n-gram overlap between the simplified text and the references, with higher scores indicating greater lexical similarity.
-Different \gls{rouge} variants focus on various aspects of n-gram matching.
-\gls{rouge}-N calculates the recall based on the ratio of matching n-grams (e.g., unigrams for \gls{rouge}-1, bigrams for \gls{rouge}-2) to total reference n-grams, but it does not account for the order or contiguity of the matches. 
-\gls{rouge}-L addresses this by considering the precision, recall, and F-measure of the largest common subsequence, which preserves order but allows gaps. 
-\gls{rouge}-S offers a more flexible matching by measuring the overlap of skip-bigrams, capturing both local and long-range sentence structure similarities. 
-\gls{rouge}-W is a weighted version of \gls{rouge}-L that assigns higher importance to consecutive matches, favoring longer common subsequences.
-These \gls{rouge} variants capture lexical and structural similarities at different granularities, but they have limitations when used to evaluate text simplification systems. 
-\gls{rouge} does not explicitly measure semantic similarity, potentially missing the nuances of meaning preservation between the original and simplified texts \cite{xu2024reasoningcomparisonllmenhancedsemantic}.
-It also does not account for readability factors such as vocabulary or syntactic simplicity, which are crucial for text simplification.
-Therefore, while \gls{rouge} provides useful insights into lexical and structural similarities, additional metrics targeting semantic and readability aspects may be necessary for a more well-rounded evaluation of simplification quality \cite{li2024largelanguagemodelsbiomedical}.
+Different \gls{rouge} variants focus on various aspects of n-gram matching:
+\begin{itemize}
+    \item \gls{rouge}-N calculates the recall based on the ratio of matching n-grams (e.g., unigrams for \gls{rouge}-1, bigrams for \gls{rouge}-2) to total reference n-grams, but it does not account for the order or contiguity of the matches. 
+    \item \gls{rouge}-L addresses this by considering the precision, recall, and F-measure of the largest common subsequence, which preserves order but allows gaps. 
+    \item \gls{rouge}-S offers a more flexible matching by measuring the overlap of skip-bigrams, capturing both local and long-range sentence structure similarities. 
+    \item \gls{rouge}-W is a weighted version of \gls{rouge}-L that assigns higher importance to consecutive matches, favoring longer common subsequences.
+\end{itemize}
+These \gls{rouge} variants can capture lexical and structural similarities at different granularities, but they do not explicitly measure semantic similarity, potentially missing differences in meaning between the original and simplified texts, and do not account for readability factors such as vocabulary or syntax, which are crucial for text simplification \cite{xu2024reasoningcomparisonllmenhancedsemantic}.
+Ganesan \cite{ganesan2018rouge20updatedimproved} addressed some of these shortcomings in \gls{rouge} 2.0, which improves upon the original metric by incorporating WordNet-based synonym matching and allowing evaluation of specific topics through \gls{pos} based filtering. Similarly, Zhang et al. \cite{ZHANG2024121364} proposed \gls{rouge}-SEM, which combines \gls{rouge} with a Siamese-BERT network to measure semantic similarity and uses back-translation to rewrite texts that are semantically similar but lexically different.
+Still, other metrics specifically targeting readability aspects may still be necessary for a more well-rounded evaluation of simplification quality \cite{li2024largelanguagemodelsbiomedical}.
 
-Other reference-based metrics that have been used for simplification evaluation include \gls{bleu}, which calculates the precision of n-gram matches between the candidate and reference, with a brevity penalty \cite{papineni-etal-2002-bleu}; \gls{meteor}, which computes a weighted F-score based on exact, stem, synonym, and paraphrase matches between the candidate and reference \cite{banerjee-lavie-2005-meteor}; and \gls{ter}, which measures the minimum number of edits (insertions, deletions, substitutions, and shifts) required to transform the candidate text into the reference \cite{snover-etal-2006-study}.
-However, all reference-based metrics share some common limitations. 
-They require high-quality reference simplifications, which may be difficult and expensive to obtain, especially for large biomedical corpora. 
-They also assume that the references represent the only valid simplifications, penalizing alternative paraphrases that may be equally fluent and meaningful. 
-Furthermore, these metrics do not directly measure the readability or accessibility of the simplified text for the target audience, only its similarity to the references. 
-\cite{sottana2023evaluationmetricseragpt4, huang-kochmar-2024-referee, lyu2024scigispynovelmetricbiomedical} argues that reference-based metrics may not adequately capture the full range of valid simplifications, especially for complex technical texts like those in the biomedical domain.
+Other reference-based metrics that have been used for text simplification include the \gls{bleu}, which calculates the precision of n-gram matches between the candidate and reference, with a brevity penalty \cite{papineni-etal-2002-bleu}; \gls{meteor}, which computes a weighted F-score based on exact, stem, synonym, and paraphrase matches between the candidate and reference \cite{banerjee-lavie-2005-meteor}; and \gls{ter}, which measures the minimum number of edits (insertions, deletions, substitutions, and shifts) required to transform the candidate text into the reference \cite{snover-etal-2006-study}.
+All reference-based metrics require high-quality reference simplifications, which may be difficult and expensive to obtain, especially for large biomedical corpora \cite{alva-manchego-etal-2021-un}. 
+They also assume that the references represent the only valid simplifications, penalizing alternative paraphrases that may be equally fluent and meaningful \cite{sottana2023evaluationmetricseragpt4, huang-kochmar-2024-referee, lyu2024scigispynovelmetricbiomedical}. 
+Furthermore, these metrics do not directly measure the readability or accessibility of the simplified text for the target audience, only its similarity to the references.
 
 \subsection{Reference-Free Evaluation Metrics}
 
-To address the limitations of reference-based methods, some researchers have proposed reference-free evaluation metrics for text simplification. These metrics aim to assess the quality of the simplified text directly, without relying on comparisons to reference simplifications.
+Recently, there has been growing interest in developing reference-free (context-based) evaluation metrics for text simplification that can assess output quality without relying on human-written reference simplifications. 
+Reference-free metrics are appealing because collecting high-quality human reference simplifications is time-consuming, expensive, and may not always be feasible \cite{alva-manchego-etal-2021-un, 94205144dd7945cc99b5a6544451b668, deutsch-etal-2022-limitations}.
 
-LENS (Learnable Evaluation Metric for Simplification) is a recently proposed reference-free metric that uses transfer learning to capture different aspects of simplification quality \cite{maddela-etal-2023-lens}. LENS fine-tunes a pre-trained language model (e.g., BERT) on synthetic training data with relevant features such as readability variables and text coherence measures. The fine-tuned model can then predict simplification quality scores for new texts. LENS has shown strong correlations with human judgments of fluency, meaning preservation, and simplicity, outperforming previous reference-free metrics.
+One such metric is \gls{samsa} \cite{sulem-etal-2018-semantic} that uses the semantic annotations in the \gls{ucca} framework to measure the structural simplicity of a text. 
+It stipulates that an optimal simplification should assign each event in the input sentence to its own output sentence. 
+The metric then computes the extent to which this is achieved by comparing the semantic parse of the original and simplified texts. 
+By focusing on meaning-preserving structural changes, \gls{samsa} addresses some of the limitations of surface-level readability formulas and n-gram based metrics. 
+However, it is designed primarily for sentence splitting and does not assess other simplification operations like lexical substitution or paraphrasing.
+
+More recently, several metrics have been proposed that leverage large pre-trained language models to evaluate simplification quality. 
+Maddela et al. \cite{maddela-etal-2023-lens} introduced \gls{lens}, a metric trained on human ratings of simplification to predict overall quality. 
+It uses the RoBERTa model to encode the original and simplified sentences, and a new component to weigh the similarity of the simplified sentence to different possible references. 
+\gls{lens} has shown high correlation with human judgments on both overall and aspect-level simplification quality.
+Building on this work, Huang and Kochmar \cite{huang-kochmar-2024-referee} proposed REFeREE, which incorporates a curriculum learning approach with synthetic data to further improve performance.
+
+\gls{siera} \cite{yamanaka-tokunaga-2024-siera} is another reference-free metric specifically designed for sentence simplification. 
+It trains a ranking model to determine the relative simplicity between sentence pairs and uses a data augmentation technique to expand the training data with simplification edit operations. 
+In experiments, \gls{siera} outperformed reference-based and traditional readability metrics on evaluating sentence simplification.
+
+\gls{salsa} \cite{heineman-etal-2023-dancing} takes a different approach by combining error and quality evaluation into an edit-based reference-free framework. 
+It defines 21 edit types covering lexical, syntactic and conceptual simplification operations, and uses human annotation to train a model to predict sentence-level quality from these fine-grained edits. 
+\gls{salsa} provides an interpretable way to identify specific strengths and weaknesses of simplification systems. 
+The authors also used the \gls{salsa} annotations to train an improved version of \gls{lens} called \gls{lens}-\gls{salsa} that can predict both overall and fine-grained edit-level quality.
+
+Other reference-free metrics include QuestEval \cite{scialom-etal-2021-rethinking}, which uses a question-answering approach to measure information preservation, and \gls{sle} \cite{kriz-etal-2020-simple} which evaluates relative readability improvements using contrastive texts.
 
 Other reference-free approaches include using pre-trained language models to estimate the probability or perplexity of the simplified text \cite{ke-etal-2022-ctrleval}, calculating readability scores based on lexical and syntactic features \cite{Truica2023-au}, and measuring the text's similarity to a corpus of simple or complex language \cite{Truica2023-au}.
 However, reference-free metrics also have some limitations. They may not capture all aspects of simplification quality, such as information preservation or target audience appropriateness. They also require careful selection and validation of features or training data to ensure their relevance and generalizability to the biomedical domain.

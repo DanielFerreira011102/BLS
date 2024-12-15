@@ -13,6 +13,89 @@
   issn={2049-4637},
   month=apr,
 }
+~
+@inproceedings{tanprasert-kauchak-2021-flesch,
+    title = "Flesch-Kincaid is Not a Text Simplification Evaluation Metric",
+    author = "Tanprasert, Teerapaun  and
+      Kauchak, David",
+    editor = "Bosselut, Antoine  and
+      Durmus, Esin  and
+      Gangal, Varun Prashant  and
+      Gehrmann, Sebastian  and
+      Jernite, Yacine  and
+      Perez-Beltrachini, Laura  and
+      Shaikh, Samira  and
+      Xu, Wei",
+    booktitle = "Proceedings of the 1st Workshop on Natural Language Generation, Evaluation, and Metrics (GEM 2021)",
+    month = aug,
+    year = "2021",
+    address = "Online",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2021.gem-1.1",
+    doi = "10.18653/v1/2021.gem-1.1",
+    pages = "1--14",
+    abstract = "Sentence-level text simplification is currently evaluated using both automated metrics and human evaluation. For automatic evaluation, a combination of metrics is usually employed to evaluate different aspects of the simplification. Flesch-Kincaid Grade Level (FKGL) is one metric that has been regularly used to measure the readability of system output. In this paper, we argue that FKGL should not be used to evaluate text simplification systems. We provide experimental analyses on recent system output showing that the FKGL score can easily be manipulated to improve the score dramatically with only minor impact on other automated metrics (BLEU and SARI). Instead of using FKGL, we suggest that the component statistics, along with others, be used for posthoc analysis to understand system behavior.",
+}
+
+@ARTICLE{Ko2024-dd,
+  title     = "Evaluation of the quality and readability of web-based
+               information regarding foreign bodies of the ear, nose, and
+               throat: Qualitative content analysis",
+  author    = "Ko, Tsz Ki and Tan, Denise Jia Yun and Fan, Ka Siu",
+  abstract  = "BACKGROUND: Foreign body (FB) inhalation, ingestion, and
+               insertion account for 11\% of emergency admissions for ear,
+               nose, and throat conditions. Children are disproportionately
+               affected, and urgent intervention may be needed to maintain
+               airway patency and prevent blood vessel occlusion. High-quality,
+               readable online information could help reduce poor outcomes from
+               FBs. OBJECTIVE: We aim to evaluate the quality and readability
+               of available online health information relating to FBs. METHODS:
+               In total, 6 search phrases were queried using the Google search
+               engine. For each search term, the first 30 results were
+               captured. Websites in the English language and displaying health
+               information were included. The provider and country of origin
+               were recorded. The modified 36-item Ensuring Quality Information
+               for Patients tool was used to assess information quality.
+               Readability was assessed using a combination of tools: Flesch
+               Reading Ease score, Flesch-Kincaid Grade Level, Gunning-Fog
+               Index, and Simple Measure of Gobbledygook. RESULTS: After the
+               removal of duplicates, 73 websites were assessed, with the
+               majority originating from the United States (n=46, 63\%).
+               Overall, the quality of the content was of moderate quality,
+               with a median Ensuring Quality Information for Patients score of
+               21 (IQR 18-25, maximum 29) out of a maximum possible score of
+               36. Precautionary measures were not mentioned on 41\% (n=30) of
+               websites and 30\% (n=22) did not identify disk batteries as a
+               risky FB. Red flags necessitating urgent care were identified on
+               95\% (n=69) of websites, with 89\% (n=65) advising patients to
+               seek medical attention and 38\% (n=28) advising on safe FB
+               removal. Readability scores (Flesch Reading Ease score=12.4,
+               Flesch-Kincaid Grade Level=6.2, Gunning-Fog Index=6.5, and
+               Simple Measure of Gobbledygook=5.9 years) showed most websites
+               (56\%) were below the recommended sixth-grade level.
+               CONCLUSIONS: The current quality and readability of information
+               regarding FBs is inadequate. More than half of the websites were
+               above the recommended sixth-grade reading level, and important
+               information regarding high-risk FBs such as disk batteries and
+               magnets was frequently excluded. Strategies should be developed
+               to improve access to high-quality information that informs
+               patients and parents about risks and when to seek medical help.
+               Strategies to promote high-quality websites in search results
+               also have the potential to improve outcomes.",
+  journal   = "JMIR Form. Res.",
+  publisher = "JMIR Publications Inc.",
+  volume    =  8,
+  pages     = "e55535",
+  month     =  aug,
+  year      =  2024,
+  keywords  = "EQIP; Ensuring Quality Information for Patients; evaluation;
+               evaluations; foreign body; grade level; health information;
+               information resource; information resources; medical
+               informatics; online information; quality; quality of internet
+               information; readability; readability of internet information;
+               readable; reading level; website; websites",
+  language  = "en"
+}
 
 @misc{lyu2024scigispynovelmetricbiomedical,
       title={SciGisPy: a Novel Metric for Biomedical Text Simplification via Gist Inference Score}, 
@@ -52,6 +135,96 @@
       archivePrefix={arXiv},
       primaryClass={cs.CL},
       url={https://arxiv.org/abs/2310.13800}, 
+}
+
+@inproceedings{heineman-etal-2023-dancing,
+    title = "Dancing Between Success and Failure: Edit-level Simplification Evaluation using {SALSA}",
+    author = "Heineman, David  and
+      Dou, Yao  and
+      Maddela, Mounica  and
+      Xu, Wei",
+    editor = "Bouamor, Houda  and
+      Pino, Juan  and
+      Bali, Kalika",
+    booktitle = "Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing",
+    month = dec,
+    year = "2023",
+    address = "Singapore",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2023.emnlp-main.211",
+    doi = "10.18653/v1/2023.emnlp-main.211",
+    pages = "3466--3495",
+    abstract = "Large language models (e.g., GPT-4) are uniquely capable of producing highly rated text simplification, yet current human evaluation methods fail to provide a clear understanding of systems{'} specific strengths and weaknesses. To address this limitation, we introduce SALSA, an edit-based human annotation framework that enables holistic and fine-grained text simplification evaluation. We develop twenty one linguistically grounded edit types, covering the full spectrum of success and failure across dimensions of conceptual, syntactic and lexical simplicity. Using SALSA, we collect 19K edit annotations on 840 simplifications, revealing discrepancies in the distribution of simplification strategies performed by fine-tuned models, prompted LLMs and humans, and find GPT-3.5 performs more quality edits than humans, but still exhibits frequent errors. Using our fine-grained annotations, we develop LENS-SALSA, a reference-free automatic simplification metric, trained to predict sentence- and word-level quality simultaneously. Additionally, we introduce word-level quality estimation for simplification and report promising baseline results. Our data, new metric, and annotation toolkit are available at https://salsa-eval.com.",
+}
+
+@inproceedings{sulem-etal-2018-semantic,
+    title = "Semantic Structural Evaluation for Text Simplification",
+    author = "Sulem, Elior  and
+      Abend, Omri  and
+      Rappoport, Ari",
+    editor = "Walker, Marilyn  and
+      Ji, Heng  and
+      Stent, Amanda",
+    booktitle = "Proceedings of the 2018 Conference of the North {A}merican Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 1 (Long Papers)",
+    month = jun,
+    year = "2018",
+    address = "New Orleans, Louisiana",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/N18-1063",
+    doi = "10.18653/v1/N18-1063",
+    pages = "685--696",
+    abstract = "Current measures for evaluating text simplification systems focus on evaluating lexical text aspects, neglecting its structural aspects. In this paper we propose the first measure to address structural aspects of text simplification, called SAMSA. It leverages recent advances in semantic parsing to assess simplification quality by decomposing the input based on its semantic structure and comparing it to the output. SAMSA provides a reference-less automatic evaluation procedure, avoiding the problems that reference-based methods face due to the vast space of valid simplifications for a given sentence. Our human evaluation experiments show both SAMSA{'}s substantial correlation with human judgments, as well as the deficiency of existing reference-based measures in evaluating structural simplification.",
+}
+
+@inproceedings{maddela-etal-2023-lens,
+    title = "{LENS}: A Learnable Evaluation Metric for Text Simplification",
+    author = "Maddela, Mounica  and
+      Dou, Yao  and
+      Heineman, David  and
+      Xu, Wei",
+    editor = "Rogers, Anna  and
+      Boyd-Graber, Jordan  and
+      Okazaki, Naoaki",
+    booktitle = "Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)",
+    month = jul,
+    year = "2023",
+    address = "Toronto, Canada",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2023.acl-long.905",
+    doi = "10.18653/v1/2023.acl-long.905",
+    pages = "16383--16408",
+    abstract = "Training learnable metrics using modern language models has recently emerged as a promising method for the automatic evaluation of machine translation. However, existing human evaluation datasets for text simplification have limited annotations that are based on unitary or outdated models, making them unsuitable for this approach. To address these issues, we introduce the SimpEval corpus that contains: SimpEval{\_}past, comprising 12K human ratings on 2.4K simplifications of 24 past systems, and SimpEval{\_}2022, a challenging simplification benchmark consisting of over 1K human ratings of 360 simplifications including GPT-3.5 generated text. Training on SimpEval, we present LENS, a Learnable Evaluation Metric for Text Simplification. Extensive empirical results show that LENS correlates much better with human judgment than existing metrics, paving the way for future progress in the evaluation of text simplification. We also introduce Rank {\&} Rate, a human evaluation framework that rates simplifications from several models in a list-wise manner using an interactive interface, which ensures both consistency and accuracy in the evaluation process and is used to create the SimpEval datasets.",
+}
+
+@inproceedings{deutsch-etal-2022-limitations,
+    title = "On the Limitations of Reference-Free Evaluations of Generated Text",
+    author = "Deutsch, Daniel  and
+      Dror, Rotem  and
+      Roth, Dan",
+    editor = "Goldberg, Yoav  and
+      Kozareva, Zornitsa  and
+      Zhang, Yue",
+    booktitle = "Proceedings of the 2022 Conference on Empirical Methods in Natural Language Processing",
+    month = dec,
+    year = "2022",
+    address = "Abu Dhabi, United Arab Emirates",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2022.emnlp-main.753",
+    doi = "10.18653/v1/2022.emnlp-main.753",
+    pages = "10960--10977",
+    abstract = "There is significant interest in developing evaluation metrics which accurately estimate the quality of generated text without the aid of a human-written reference text, which can be time consuming and expensive to collect or entirely unavailable in online applications. However, in this work, we demonstrate that these reference-free metrics are inherently biased and limited in their ability to evaluate generated text, and we argue that they should not be used to measure progress on tasks like machine translation or summarization. We show how reference-free metrics are equivalent to using one generation model to evaluate another, which has several limitations: (1) the metrics can be optimized at test time to find the approximate best-possible output, (2) they are inherently biased toward models which are more similar to their own, and (3) they can be biased against higher-quality outputs, including those written by humans. Therefore, we recommend that reference-free metrics should be used as diagnostic tools for analyzing and understanding model behavior instead of measures of how well models perform a task, in which the goal is to achieve as high of a score as possible.",
+}
+
+@inproceedings{94205144dd7945cc99b5a6544451b668,
+title = "From humans to machines: can ChatGPT-like LLMs effectively replace human annotators in NLP tasks",
+author = "Surendrabikram Thapa and Usman Naseem and Mehwish Nasim",
+year = "2023",
+month = jun,
+doi = "10.36190/2023.15",
+language = "English",
+booktitle = "Workshop Proceedings of the 17th International AAAI Conference on Web and Social Media",
+publisher = "Association for the Advancement of Artificial Intelligence (AAAI)",
+note = "17th International AAAI Conference on Web and Social Media, ICWSM 2023 ; Conference date: 05-06-2023 Through 08-06-2023",
 }
 
 @article{alva-manchego-etal-2021-un,
@@ -381,6 +554,24 @@
   journal  = "medRxiv",
   month    =  jun,
   year     =  2023
+}
+
+@inproceedings{yamanaka-tokunaga-2024-siera,
+    title = "{SIERA}: An Evaluation Metric for Text Simplification using the Ranking Model and Data Augmentation by Edit Operations",
+    author = "Yamanaka, Hikaru  and
+      Tokunaga, Takenobu",
+    editor = "Wilkens, Rodrigo  and
+      Cardon, R{\'e}mi  and
+      Todirascu, Amalia  and
+      Gala, N{\'u}ria",
+    booktitle = "Proceedings of the 3rd Workshop on Tools and Resources for People with REAding DIfficulties (READI) @ LREC-COLING 2024",
+    month = may,
+    year = "2024",
+    address = "Torino, Italia",
+    publisher = "ELRA and ICCL",
+    url = "https://aclanthology.org/2024.readi-1.5",
+    pages = "47--58",
+    abstract = "Automatic evaluation metrics are indispensable for text simplification (TS) research. The past TS research adopts three evaluation aspects: fluency, meaning preservation and simplicity. However, there is little consensus on a metric to measure simplicity, a unique aspect of TS compared with other text generation tasks. In addition, many of the existing metrics require reference simplified texts for evaluation. Thus, the cost of collecting reference texts is also an issue. This study proposes a new automatic evaluation metric, SIERA, for sentence simplification. SIERA employs a ranking model for the order relation of simplicity, which is trained by pairs of the original and simplified sentences. It does not require reference sentences for either training or evaluation. The sentence pairs for training are further augmented by the proposed method that utlizes edit operations to generate intermediate sentences with the simplicity between the original and simplified sentences. Using three evaluation datasets for text simplification, we compare SIERA with other metrics by calculating the correlations between metric values and human ratings. The results showed SIERA{'}s superiority over other metrics with a reservation that the quality of evaluation sentences is consistent with that of the training data.",
 }
 
 @ARTICLE{Varli2023-ma,
@@ -714,6 +905,29 @@ author = {Lih-Wern Wang and Michael J. Miller and Michael R. Schmitt and Frances
   language = "en"
 }
 
+@article{ZHANG2024121364,
+title = {ROUGE-SEM: Better evaluation of summarization using ROUGE combined with semantics},
+journal = {Expert Systems with Applications},
+volume = {237},
+pages = {121364},
+year = {2024},
+issn = {0957-4174},
+doi = {https://doi.org/10.1016/j.eswa.2023.121364},
+url = {https://www.sciencedirect.com/science/article/pii/S0957417423018663},
+author = {Ming Zhang and Chengzhang Li and Meilin Wan and Xuejun Zhang and Qingwei Zhao},
+keywords = {Automatic summarization evaluation, Semantic similarity, Lexical similarity, Contrastive learning, Back-translation},
+abstract = {With the development of pre-trained language models and large-scale datasets, automatic text summarization has attracted much attention from the community of natural language processing, but the progress of automatic summarization evaluation has stagnated. Although there have been efforts to improve automatic summarization evaluation, ROUGE has remained one of the most popular metrics for nearly 20 years due to its competitive evaluation performance. However, ROUGE is not perfect, there are studies have shown that it is suffering from inaccurate evaluation of abstractive summarization and limited diversity of generated summaries, both caused by lexical bias. To avoid the bias of lexical similarity, more and more meaningful embedding-based metrics have been proposed to evaluate summaries by measuring semantic similarity. Due to the challenge of accurately measuring semantic similarity, none of them can fully replace ROUGE as the default automatic evaluation toolkit for text summarization. To address the aforementioned problems, we propose a compromise evaluation framework (ROUGE-SEM) for improving ROUGE with semantic information, which compensates for the lack of semantic awareness through a semantic similarity module. According to the differences in semantic similarity and lexical similarity, summaries are classified into four categories for the first time, including good-summary, pearl-summary, glass-summary, and bad-summary. In particular, the back-translation technique is adopted to rewrite pearl-summary and glass-summary that are inaccurately evaluated by ROUGE to alleviate lexical bias. Through this pipeline framework, summaries are first classified by candidate summary classifier, then rewritten by categorized summary rewriter, and finally scored by rewritten summary scorer, which are efficiently evaluated in a manner consistent with human behavior. When measured using Pearson, Spearman, and Kendall rank coefficients, our proposal achieves comparable or higher correlations with human judgments than several state-of-the-art automatic summarization evaluation metrics in dimensions of coherence, consistency, fluency, and relevance. This also suggests that improving ROUGE with semantics is a promising direction for automatic summarization evaluation.}
+}
+
+@misc{ganesan2018rouge20updatedimproved,
+      title={ROUGE 2.0: Updated and Improved Measures for Evaluation of Summarization Tasks}, 
+      author={Kavita Ganesan},
+      year={2018},
+      eprint={1803.01937},
+      archivePrefix={arXiv},
+      primaryClass={cs.IR},
+      url={https://arxiv.org/abs/1803.01937}, 
+}
 
 @ARTICLE{Fung2024-uh,
   title    = "Internet health resources on nocturnal enuresis: A readability,
