@@ -7,7 +7,133 @@ This chapter presents some basic tips and a few examples on how to use \LaTeX.
 \section{Language Models}
 \label{c2:s:language-models}
 
-\section{Measuring Readability in the Biomedical Domain}
+
+
+\section{Controlled Text Generation}
+\label{c2:s:controlled-text-generation}
+
+\gls{ctg} is a growing area of \gls{nlp} research that focuses on developing techniques to guide language models in producing outputs with specific desired attributes or properties \cite{liang2024controllabletextgenerationlarge, keskar2019ctrlconditionaltransformerlanguage, dathathri2020plugplaylanguagemodels}. 
+The goal is to enable fine-grained control over various aspects of the generated text, such as style, sentiment, topic, or complexity level, without compromising the fluency, coherence, and relevance of the output. 
+This is in contrast to traditional language generation where the model has little control over the nature of the generated text beyond the input prompt.
+
+Formally, \gls{ctg} can be defined as the task of generating a sequence of tokens $Y = \{y_1, y_2, ..., y_m\}$ that maximizes the conditional probability distribution $P(Y|X, A)$, given an input context $X$ and a set of control attributes $A = \{a_1, a_2, ..., a_k\}$. 
+Mathematically, this can be expressed as:
+
+\begin{equation}
+    \label{eq:controlled-generation}
+    \argmax_Y P(Y | X, A) = \argmax_Y \prod_{i = 1}^{m} P(y_i | y_{<i}, X, A)
+\end{equation}
+
+where $y_{<i}$ represents the tokens generated before position $i$. 
+The control attributes $A$ can represent any definable text property, and each attribute can be assigned different values based on the specific generation task and desired level of granularity.
+
+The primary challenge in \gls{ctg} lies in effectively integrating the control attributes into the generation process while preserving the quality of the output. 
+Researchers have proposed various approaches that can be broadly categorized into training-phase methods and inference-phase methods \cite{liang2024controllabletextgenerationlarge, he-etal-2022-ctrlsum}, which will be explored in detail in the following sections.
+
+\subsection{Training-Phase Methods}
+Training-phase methods focus on adapting the language model's architecture, training objective, or training data to incorporate the desired control attributes. 
+These methods aim to directly encode the control attributes into the model parameters during the training process, which often results in better control and output quality compared to inference-phase methods while requiring no additional computation at runtime.
+However, they may require substantial amounts of labeled data and can be less flexible in adapting to new control attributes.
+
+\subsubsection{Retrain/Refactoring}
+Retraining or refactoring methods involve either training a new model from scratch or fundamentally modifying its architecture to better accommodate specific control conditions \cite{liang2024controllabletextgenerationlarge}. 
+This approach is typically used when existing pre-trained models fail to meet new, more stringent control requirements or when the desired attributes are too complex to be effectively integrated using other methods.
+Retraining ensures that the model intrinsically adapts at both the architectural and parameter levels to generate text that conforms to the desired control attributes, but it can be computationally expensive and time-consuming, especially for large-scale models like GPT-3 or T5.
+
+Keskar et al. \cite{keskar2019ctrlconditionaltransformerlanguage} introduced \gls{ctrl}, a 1.63 billion parameter conditional transformer language model trained on 140GB of text data with over 50 control codes that can be used to condition the generation process on attributes such as the source domain (e.g., Wikipedia, books), website URLs, and even specific Reddit communities (e.g., r/science, r/jokes).
+Each text sequence in the training data is prepended with a control code that serves as an explicit metadata tag, allowing the model to learn the association between the text and specific attributes through natural co-occurrence during training.
+For instance, a control code like "Wikipedia" indicates that the subsequent text is in the style of a Wikipedia article, while "Reviews Rating: 5.0" prompts the model to generate a positive product review.
+While conceptually simple and effective, training a model like \gls{ctrl} requires massive amounts of data and computational resources. 
+Collecting datasets with explicit control codes for every desired attribute is often unfeasible.
+CTRL may also struggle with more nuanced control, such as fine-grained sentiment or complexity levels.
+
+Building upon the idea of CTRL, Chan et al. \cite{chan2021cocontentcontrollertextgeneration} developed Content-Conditioner (CoCon), a self-supervised framework for fine-grained controllable text generation. 
+CoCon introduces a content-conditioning layer into a pre-trained language model (e.g., GPT-2), allowing the model to generate text that incorporates specific content inputs at the word and phrase-level. 
+The CoCon layer is trained using a self-reconstruction objective, where the model learns to reconstruct text sequences by conditioning on content extracted from the target sequence itself, rather than relying on external control codes.
+Thus, removing the need for large-scale labeled datasets.
+CoCon demonstrates strong performance in controlling semantic attributes (e.g., sentiment, topic) and integrating content-level constraints.
+At the same time, by keeping the original language model intact and only adding a lightweight content-conditioning module, CoCon largely preserves the diversity and fluency of the pre-trained model.
+
+Zhang et al. \cite{zhang2020pointerconstrainedprogressivetext} proposed PrOgressive INsertion-based TransformER (POINTER), an insertion-based transformer architecture for hard-constrained text generation.
+Unlike traditional left-to-right language models, POINTER generates text by progressively inserting new tokens between existing ones. 
+This allows for precise control over the inclusion of specified keywords or phrases in the output. 
+The model is trained from scratch on a large corpus using an insertion-based objective function. 
+During inference, POINTER first inserts the target keywords into the input sequence and then fills in the remaining tokens to produce a coherent output.
+POINTER offers a promising solution for generating medical text with strict lexical constraints, such as including specific medical terms or phrases. 
+However, the insertion-based generation process may struggle to maintain long-range coherence and fluency, especially for longer medical responses. 
+Additionally, the model's reliance on keyword insertion limits its ability to control more abstract attributes like text complexity, which often depends on factors beyond vocabulary choice.
+
+\subsubsection{Fine-tuning}
+Fine-tuning is another common training-phase method, where a pre-trained language model is adjusted on a smaller, task-specific dataset to learn the desired control attributes \cite{dathathri2020plugplaylanguagemodels}.
+The purpose of fine-tuning is to make slight adjustments to the model's parameters to better align with the target task or control conditions, while preserving the knowledge learned during pre-training.
+This is generally more efficient than retraining from scratch, as it requires less data and computation. 
+However, if the dataset is too small or overly specific, the model may overfit and lose the general knowledge it initially had.
+
+\subsubsection{Reinforcement Learning}
+\gls{rl} offers a more flexible and dynamic approach to \gls{ctg}, where the language model learns to optimize its output based on feedback or reward signals that indicate the quality and alignment of the generated text with the desired attributes \cite{liang2024controllabletextgenerationlarge}. 
+It is particularly well-suited for scenarios where the control attributes are complex, subjective, or difficult to explicitly define, such as generating text with specific styles, tones, or linguistic properties. 
+RL-based methods formulate the generation process as a sequential decision-making problem, where the model learns to take actions (i.e., generate tokens) that maximize the expected reward, using algorithms such as REINFORCE \cite{williams1992reinforce}, Proximal Policy Optimization (PPO) \cite{schulman2017ppo}, Q-Learning \cite{watkins1992qlearning}, and Advantage Actor-Critic (A2C) \cite{mnih2016a3c}.
+
+
+\subsection{Inference-Phase Methods}
+Inference-phase methods aim to steer the generation process at inference time without changing the language model's parameters.
+They dynamically manipulate the model's output probabilities or embedding space in real-time to align the generated text with the desired attributes or control conditions.
+Compared to training-phase approaches, inference-phase methods are more flexible, avoiding the need for retraining or fine-tuning the model.
+This makes them an alternative or complementary solution, especially for applications requiring on-the-fly output adjustments.
+
+\subsubsection{Prompt Engineering}
+Prompt engineering refers to the practice of designing input prompts that guide the language model to generate text with specific attributes or properties. 
+The idea is to provide the model with explicit instructions or cues that signal the desired control conditions, such as keywords, phrases, or templates, which the model can then use to shape the output.
+Prompt engineering is an effective and easy way to control the output of language models without having to change the model architecture or training data.
+The main challenge is in trying to design informative yet unambiguous prompts that the model can accurately interpret and follow.
+To find the right prompts, researchers often rely on human intuition, trial-and-error, and, more recently, automated methods like AutoPrompt \cite{shin2022autoprompt} and P-tuning \cite{peng2022ptuning}.
+
+\subsubsection{Guided Decoding}
+Guided decoding is a technique used during the decoding process of a language model to bias the generated text towards the desired control attributes. 
+It works by manipulating the logits or probability distribution of the model to favor tokens that align with the control conditions.
+This is often done using classifiers or reward models that provide additional supervision signals to guide the generation process.
+Guided decoding approaches are often plug-and-play, meaning they can be easily integrated into existing language models without requiring extensive retraining or fine-tuning.
+However, the use of external guiding models can slow down the generation process and make the text sound less natural and coherent.
+
+\subsubsection{Latent Space Manipulation}
+The assumption behind this approach is that language models organize semantic and stylistic information in their hidden layers - similar to how our brains encode different aspects of language understanding in different neural regions.
+
+Latent space in large language models (LLMs) is an abstract, lower-dimensional space where complex, high-dimensional data is represented in a compressed and meaningful way
+
+The latent space is a compressed, abstract representation of the text the model has processed. It encodes high-level features and patterns learned by the model.
+
+Latent space compresses vast amounts of linguistic information into a more compact form. 
+It captures and represents the relationships between words, phrases, and concepts. 
+Words and concepts are represented as vectors in this multidimensional space.
+
+In the context of LLMs, latent space involves transforming language tokens into embeddings that represent word concepts. 
+These embeddings, combined with positional vectors, are used by the model's encoder to map data into a latent space that captures linguistic and conceptual patterns. 
+The decoder then uses this latent space to predict the next most likely token, iteratively generating language output.
+Put simply, the model takes words and sentences, turns them into mathematical representations (like coordinates on a map), and uses these to understand the meaning and relationships between different parts of language. 
+When generating text, it uses this “map” to find the most likely next word or phrase.
+
+Consider language models, aka LLMs, such as ChatGPT and GPT-4 and LLaMA. We feed them words, and they embed those words, mapping them into N-dimensional space so that similar words/concepts are closer together. 
+That map of embedded language is called “latent space.”
+One of the many semi-miraculous things about LLMs is that such a language map will spontaneously emerge if/when a neural network is “trained to predict the context in which a given word appears.”
+Furthermore, transformers — the architecture with which ~all LLMs are built — don't merely learn how to map words; their “attention heads” also learn higher-order language structure, such as grammar and the typical structure/flow of phrases, sentences, paragraphs, even documents.
+Put another way, LLMs construct a map of our language, then learn the structures of recurring patterns in that space. 
+To stretch an analogy, but not so much that it's wrong, you might think of words embedded in latent space as places on a map, and the discovered grammatical and conceptual patterns as the roads and rivers and pathways which can connect those places. 
+LLMS are not trained to be chatbots. What they are trained to do — because it's the only thing we know how to train them to do! — is take an existing set of words, the "prompt," and continue it. 
+In other words, given the start of a journey on that language map, they guess how and where that journey is most likely to continue. 
+And they have gotten shockingly good at this.
+But it's important to understand this is all “just” math. The only inputs an LLM actually receives are numbers, which it transforms into other numbers. 
+It's humans who convert those numbers to/from language, and then, of course, meaning.
+
+Latent Space Manipulation[87, 132, 137] controls the generated text by adjusting activation states within the model's hidden layers. 
+By adding or modifying latent vectors, this approach allows for precise control of the text generation process without altering the model's weights. 
+Latent space manipulation is especially effective for attribute control, such as making subtle adjustments in sentiment or style.
+
+Latent Space Manipulation, also known as activation engineering, involves adding guiding vectors to the activations in certain layers of LLMs to direct the model in generating a target sentence x from a null input. 
+The fundamental principle is that the information required to generate the target sentence is already encoded in the underlying structure of the neural network. 
+Therefore, this method does not require retraining or fine-tuning the model itself.
+
+
+\section{Language Complexity}
 \label{c2:s:linguistic-complexity}
 
 The complexity of biomedical terminology represents a unique challenge for language complexity measurement. 
@@ -23,16 +149,26 @@ Many medical concepts can be expressed through either technical or lay terms (e.
 Readability formulas are designed to estimate the difficulty of a text based on surface-level features such as average sentence length, average word length, and the proportion of difficult or unfamiliar words. While originally developed for general-domain texts, some of these metrics have been applied to biomedical literature to assess the accessibility and suitability of patient education materials, consent forms, and other health-related documents. For example, researchers have used these metrics to evaluate the readability of online patient education materials for conditions such as nocturnal enuresis \cite{Fung2024-uh}, bariatric surgery \cite{Lucy2023-zi}, and female pelvic floor disorders \cite{Varli2023-ma}. Moreover, these metrics have been used to assess the readability of discharge instructions for heart failure patients \cite{Tuan2023-wc} and to analyze the quality of information provided by intensive and critical care societies \cite{Hanci2024-wv}.
 
 The most popular readability metric is the \gls{fkgl}. This formula estimates the U.S. grade level required to understand a given text, calculated as follows:
-$$FKGL = 0.39 \times \left(\frac{\text{words}}{\text{sentences}}\right) + 11.8 \times \left(\frac{\text{syllables}}{\text{words}}\right) - 15.59$$
+\begin{equation}
+    \label{eq:fkgl}
+    FKGL = 0.39 \times \left(\frac{\text{words}}{\text{sentences}}\right) + 11.8 \times \left(\frac{\text{syllables}}{\text{words}}\right) - 15.59
+\end{equation}
 \gls{fkgl} scores typically vary from 0 to 18, with higher scores indicating more difficult text. For example, a score of 9.2 would suggest that the text is suitable for an average 9th-grade student. Text that scores above 12 suggest college-level or domain-specific expertise.
 
 Another commonly used readability formula is the \gls{smog}. 
 This metric estimates the years of education needed to understand a piece of writing based on the number of polysyllabic words (i.e., those with three or more syllables) in a sample of 30 sentences, using the following formula:
-$$SMOG = 1.0430 \times \sqrt{\text{polysyllables} \times \left(\frac{30}{\text{sentences}}\right)} + 3.1291$$
-Like \gls{fkgl}, \gls{smog} scores correspond to U.S. grade levels. A score of 13 indicates a college freshman reading level, while scores below 6 are considered easily understood by most readers. The \gls{smog} formula has gained popularity in healthcare settings due to its relative ease of use and focus on vocabulary complexity. Its widespread use in healthcare is supported by a 2010 study published in the Journal of the Royal College of Physicians of Edinburgh, which recommended \gls{smog} as the preferred measure for evaluating consumer-oriented healthcare material \cite{Fitzsimmons2010-mq}.
+\begin{equation}
+    \label{eq:smog}
+    SMOG = 1.0430 \times \sqrt{\text{polysyllables} \times \left(\frac{30}{\text{sentences}}\right)} + 3.1291
+\end{equation}
+Like \gls{fkgl}, \gls{smog} scores correspond to U.S. grade levels. 
+The \gls{smog} formula has gained popularity in healthcare settings due to its relative ease of use and focus on vocabulary complexity. Its widespread use in healthcare is supported by a 2010 study published in the Journal of the Royal College of Physicians of Edinburgh, which recommended \gls{smog} as the preferred measure for evaluating consumer-oriented healthcare material \cite{Fitzsimmons2010-mq}.
 
 The \gls{dcrs} is another well-known readability metric that assesses text difficulty based on the average sentence length and the percentage of ``difficult'' words not found on a list of 3,000 familiar words. The original \gls{dcrs} formula is:
-$$DCRS = 0.1579 \times \left(\frac{\text{difficult words}}{\text{total words}} \times 100\right) + 0.0496 \times \left(\frac{\text{total words}}{\text{total sentences}}\right)$$
+\begin{equation}
+    \label{eq:dcrs}
+    DCRS = 0.1579 \times \left(\frac{\text{difficult words}}{\text{total words}} \times 100\right) + 0.0496 \times \left(\frac{\text{total words}}{\text{total sentences}}\right)
+\end{equation}
 If the percentage of difficult words exceeds 5\%, an additional constant of 3.6365 is added to the raw score to get the final \gls{dcrs}. Scores range from 4.9 or below for easily understood text to 10 or above for very challenging text.
 
 In addition to \gls{fkgl}, \gls{smog}, and \gls{dcrs}, there are many other readability formulas, such as the \gls{ari}, \gls{cli}, \gls{gfi}, and Linsear Write Formula. While the specific calculations differ, they all aim to estimate text difficulty based on factors like word length, sentence length, and syllable counts.
