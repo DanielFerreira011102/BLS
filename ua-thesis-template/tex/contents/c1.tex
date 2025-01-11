@@ -1,48 +1,17 @@
 \chapter{Introduction}
 \label{c1}
 
-This chapter presents briefly how to use the \verb+uathesis+ package.
-fef
+\gls{nlp} has witnessed remarkable progress in recent years, largely driven by the development of powerful language models that can generate human-like text. These models, such as BERT \cite{devlin2018bert}, GPT-3 \cite{brown2020language}, and T5 \cite{raffel2020exploring}, have demonstrated impressive performance across various language tasks, from question answering to text summarization. However, despite their undeniable potential, current language models often struggle to generate outputs with fine-grained control over the complexity and technical depth of the content \cite{zhang2022survey, liuControllingNeuralText2022}. This limitation poses significant challenges in domains like healthcare, where effective communication requires tailoring information to different levels of expertise, from patients to medical professionals \cite{wittenberg2017simplifying}.
 
-\section{UA thesis \LaTeX\ style file}
-\label{c1:s:uathesis-style-file}
-
-The \verb+uathesis+ \LaTeX\ style file was originally created by professor Tomás Oliveira e Silva~\parencite*{oliveiraesilva2012a}, and it is currently available at his home page\footnote{\url{http://sweet.ua.pt/tos/TeX.html}}.
-In this template it is used a new version modified by Rui Antunes\footnote{\url{https://github.com/ruiantunes/ua-thesis-template}}.
-
-
-\subsection{Options}
-\label{c1:ss:options}
-
-The following options are supported:
+Controlled text generation is an area of research that aims to address this challenge by developing language models that can produce outputs at different levels of complexity while maintaining semantic consistency. Early approaches to controlled text generation relied on rule-based methods \cite{kukich1983design}, which used hand-crafted rules and templates to generate text with specific properties. However, these methods were limited in their ability to capture the nuances and diversity of human language. With the advent of deep learning, neural network-based approaches have become more prevalent in controlled text generation \cite{gatt2018survey}. These models learn to generate text by conditioning on various attributes, such as sentiment or topic \cite{hu2017toward, keskar2019ctrl}.
+Despite the progress made by these approaches, there are still challenges in achieving fine-grained control over the complexity of generated text. Existing methods often rely on discrete attributes or pre-defined complexity levels, which limit the model's ability to generate outputs with continuous variations in complexity \cite{zhang2022survey}. Additionally, maintaining semantic consistency across different complexity levels is a significant challenge, as models may generate text that deviates from the intended meaning when the complexity is altered \cite{liu2022controlling}. Evaluating the quality and effectiveness of controlled text generation systems is also difficult, as it requires assessing both the linguistic quality and the appropriateness of the generated text for the target audience \cite{liu2022controlling}.
+The main objective of this dissertation is to investigate a new approach to controlled text generation that enables fine-grained control over the complexity of generated text while maintaining semantic consistency, specifically in the context of biomedical and consumer health text.
+The proposed approach will explore the use of a continuous space of complexity levels, allowing for smooth transitions between different levels of technical depth. This continuous complexity control mechanism will be incorporated into a unified language model architecture to generate text that can be easily adapted to various levels of expertise without compromising the intended meaning.
+To achieve this objective, the dissertation will focus on the following key aspects:
 
 \begin{itemize}
-
-\item
-\texttt{oldLogo}: to use the old logo of University of Aveiro.
-
-\item
-\texttt{newLogo}: to use the new logo of University of Aveiro (default behavior).
-
-\item
-\texttt{MAP}: for MAP joint doctoral programmes. The logos from the three universities (Aveiro, Minho, Porto) are used.
-
-\item
-\texttt{draft}: it prints ``DOCUMENTO PROVISÓRIO'' in the first two front pages.
-
-\item
-\texttt{draftPT}: same as \texttt{draft}.
-
-\item
-\texttt{draftEN}: same as \texttt{draft}, but instead it prints ``DRAFT DOCUMENT''.
-
-\item
-As of May 29, 2021, the department name shall not appear in the cover and the first page (top header).
-A new option, \texttt{NODEPT} (no department), was created to suppress the department name (now this is the default behavior).\\
-However, formerly the department name would appear in the cover and first page, therefore the old options were kept for the sake of preservation.
-Any department name can be shown by using one of the following options: \texttt{DAO}, \texttt{DBIO}, \texttt{DCM}, \texttt{DCSPT}, \texttt{DECA}, \texttt{DECIVIL}, \texttt{DEGEIT}, \texttt{DEM}, \texttt{DEMAC}, \texttt{DEP}, \texttt{DETI}, \texttt{DFIS}, \texttt{DGEO}, \texttt{DLC}, \texttt{DMAT}, \texttt{DQ}.
-
-\item
-The color of the top bar, in the cover page, is defined by specifying one of the following scientific areas: \texttt{accounting}, \texttt{arts}, \texttt{arts+humanities}, \texttt{economy}, \texttt{education}, \texttt{engineering}, \texttt{health}, \texttt{humanities}, \texttt{misc}, \texttt{sciences}.
-
+\item Investigating existing approaches to controlled text generation and identifying their limitations in achieving fine-grained complexity control and maintaining semantic consistency.
+\item Developing a novel controlled text generation approach that incorporates a continuous complexity control mechanism into a unified language model architecture.
+\item Evaluating the proposed approach on various text generation tasks, assessing both the linguistic quality and the appropriateness of the generated text for different target audiences.
+\item Exploring potential applications of the proposed approach in real-world scenarios, such as patient education materials, medical chatbots, and health information websites.
 \end{itemize}
