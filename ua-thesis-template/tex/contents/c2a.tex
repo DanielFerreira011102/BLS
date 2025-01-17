@@ -12,7 +12,7 @@ This chapter presents some basic tips and a few examples on how to use \LaTeX.
 \section{Controlled Text Generation}
 \label{c2:s:controlled-text-generation}
 
-\gls{ctg} is a growing area of \gls{nlp} research that focuses on developing techniques to guide language models in producing outputs with specific desired attributes or properties \cite{liang2024controllabletextgenerationlarge, keskar2019ctrlconditionaltransformerlanguage, dathathri2020plugplaylanguagemodels}. 
+\gls{ctg} is a growing area of \gls{nlp} research that focuses on developing techniques to guide language models in producing outputs with specific desired attributes or properties \cite{liang2024controllabletextgenerationlarge, keskar2019ctrlconditionaltransformerlanguage, dathathri2020plugplaylanguagemodels}.
 The goal is to enable fine-grained control over various aspects of the generated text, such as style, sentiment, topic, or complexity level, without compromising the fluency, coherence, and relevance of the output. 
 This is in contrast to traditional language generation where the model has little control over the nature of the generated text beyond the input prompt.
 
@@ -36,19 +36,21 @@ These methods aim to directly encode the control attributes into the model param
 However, they may require substantial amounts of labeled data and can be less flexible in adapting to new control attributes.
 
 \subsubsection{Retrain/Refactoring}
-Retraining or refactoring methods involve either training a new model from scratch or fundamentally modifying its architecture to better accommodate specific control conditions \cite{liang2024controllabletextgenerationlarge}. 
+Retraining or refactoring methods involve either training a new model from scratch or fundamentally modifying its architecture to better accommodate specific control conditions. 
 This approach is typically used when existing pre-trained models fail to meet new, more stringent control requirements or when the desired attributes are too complex to be effectively integrated using other methods.
 Retraining ensures that the model intrinsically adapts at both the architectural and parameter levels to generate text that conforms to the desired control attributes, but it can be computationally expensive and time-consuming, especially for large-scale models like GPT-3 or T5.
 
 Keskar et al. \cite{keskar2019ctrlconditionaltransformerlanguage} introduced \gls{ctrl}, a 1.63 billion parameter conditional transformer language model trained on 140GB of text data with over 50 control codes that can be used to condition the generation process on attributes such as the source domain (e.g., Wikipedia, books), website URLs, and even specific Reddit communities (e.g., r/science, r/jokes).
 Each text sequence in the training data is prepended with a control code that serves as an explicit metadata tag, allowing the model to learn the association between the text and specific attributes through natural co-occurrence during training.
-For instance, a control code like "Wikipedia" indicates that the subsequent text is in the style of a Wikipedia article, while "Reviews Rating: 5.0" prompts the model to generate a positive product review.
+For instance, a control code like ``Wikipedia'' indicates that the subsequent text is in the style of a Wikipedia article, while ``Reviews Rating: 5.0'' prompts the model to generate a positive product review.
 While conceptually simple and effective, training a model like \gls{ctrl} requires massive amounts of data and computational resources. 
 Collecting datasets with explicit control codes for every desired attribute is often unfeasible.
 CTRL may also struggle with more nuanced control, such as fine-grained sentiment or complexity levels.
 
+FAST
+
 Building upon the idea of CTRL, Chan et al. \cite{chan2021cocontentcontrollertextgeneration} developed Content-Conditioner (CoCon), a self-supervised framework for fine-grained controllable text generation. 
-CoCon introduces a content-conditioning layer into a pre-trained language model (e.g., GPT-2), allowing the model to generate text that incorporates specific content inputs at the word and phrase-level. 
+CoCon adds a content-conditioning layer to GPT-2, allowing it to generate text that incorporates specific content inputs at the word and phrase level. 
 The CoCon layer is trained using a self-reconstruction objective, where the model learns to reconstruct text sequences by conditioning on content extracted from the target sequence itself, rather than relying on external control codes.
 Thus, removing the need for large-scale labeled datasets.
 CoCon demonstrates strong performance in controlling semantic attributes (e.g., sentiment, topic) and integrating content-level constraints.
@@ -60,20 +62,30 @@ This allows for precise control over the inclusion of specified keywords or phra
 The model is trained from scratch on a large corpus using an insertion-based objective function. 
 During inference, POINTER first inserts the target keywords into the input sequence and then fills in the remaining tokens to produce a coherent output.
 POINTER offers a promising solution for generating medical text with strict lexical constraints, such as including specific medical terms or phrases. 
-However, the insertion-based generation process may struggle to maintain long-range coherence and fluency, especially for longer medical responses. 
-Additionally, the model's reliance on keyword insertion limits its ability to control more abstract attributes like text complexity, which often depends on factors beyond vocabulary choice.
+However, the model's reliance on keyword insertion limits its ability to control more abstract attributes like text complexity, which often depends on factors beyond vocabulary choice.
 
 \subsubsection{Fine-tuning}
-Fine-tuning is another common training-phase method, where a pre-trained language model is adjusted on a smaller, task-specific dataset to learn the desired control attributes \cite{dathathri2020plugplaylanguagemodels}.
-The purpose of fine-tuning is to make slight adjustments to the model's parameters to better align with the target task or control conditions, while preserving the knowledge learned during pre-training.
-This is generally more efficient than retraining from scratch, as it requires less data and computation. 
-However, if the dataset is too small or overly specific, the model may overfit and lose the general knowledge it initially had.
+Fine-tuning is another common training-phase method, where a pre-trained language model is further trained on a smaller, task-specific dataset to learn the desired control attributes. 
+Fine-tuning makes slight adjustments to the model's parameters to better align with the target task or control conditions, while aiming to preserve the general knowledge learned during pre-training. 
+Compared to retraining from scratch, fine-tuning is more computationally efficient as it requires less data and computation.
+However, if the dataset is too small or narrow in scope, the model may overfit and lose some of the general knowledge acquired during pre-training.
+
+Zeldes et al. \cite{zeldes2020auxiliarytuning} proposed Auxiliary Tuning, where an auxiliary model is trained to augment a frozen pre-trained language model.
+The auxiliary model takes the same input as the pre-trained model, along with additional task-specific information or control codes. It produces a set of logits that are added to the logits of the pre-trained model before applying the softmax function to obtain the final output probabilities.
+Intuitively, the auxiliary model learns the residual logits needed to shift the probability distribution of the pre-trained model towards the target distribution.
+There are no constraints on the auxiliary model architecture, except that it must output logits over the same vocabulary as the original model.
+It is typically much smaller than the pre-trained model (e.g., a few Transformer layers) and can be trained efficiently on a small amount of data.
+In experiments on keyword-conditioned generation, auxiliary tuning achieved similar performance to training from scratch, while being more parameter-efficient and avoiding the risk of catastrophic forgetting.
+
+
+LiFi
+FLAN
+InstructCTG
 
 \subsubsection{Reinforcement Learning}
-\gls{rl} offers a more flexible and dynamic approach to \gls{ctg}, where the language model learns to optimize its output based on feedback or reward signals that indicate the quality and alignment of the generated text with the desired attributes \cite{liang2024controllabletextgenerationlarge}. 
+\gls{rl} offers a more flexible and dynamic approach to \gls{ctg}, where the language model learns to optimize its output based on feedback or reward signals that indicate the quality and alignment of the generated text with the desired attributes. 
 It is particularly well-suited for scenarios where the control attributes are complex, subjective, or difficult to explicitly define, such as generating text with specific styles, tones, or linguistic properties. 
 RL-based methods formulate the generation process as a sequential decision-making problem, where the model learns to take actions (i.e., generate tokens) that maximize the expected reward, using algorithms such as REINFORCE \cite{williams1992reinforce}, Proximal Policy Optimization (PPO) \cite{schulman2017ppo}, Q-Learning \cite{watkins1992qlearning}, and Advantage Actor-Critic (A2C) \cite{mnih2016a3c}.
-
 
 \subsection{Inference-Phase Methods}
 Inference-phase methods aim to steer the generation process at inference time without changing the language model's parameters.
@@ -88,6 +100,8 @@ Prompt engineering is an effective and easy way to control the output of languag
 The main challenge is in trying to design informative yet unambiguous prompts that the model can accurately interpret and follow.
 To find the right prompts, researchers often rely on human intuition, trial-and-error, and, more recently, automated methods like AutoPrompt \cite{shin2022autoprompt} and P-tuning \cite{peng2022ptuning}.
 
+DAs (Dialogue Acts)
+
 \subsubsection{Guided Decoding}
 Guided decoding is a technique used during the decoding process of a language model to bias the generated text towards the desired control attributes. 
 It works by manipulating the logits or probability distribution of the model to favor tokens that align with the control conditions.
@@ -95,43 +109,30 @@ This is often done using classifiers or reward models that provide additional su
 Guided decoding approaches are often plug-and-play, meaning they can be easily integrated into existing language models without requiring extensive retraining or fine-tuning.
 However, the use of external guiding models can slow down the generation process and make the text sound less natural and coherent.
 
+PPLM
+GeDi
+DExperts
+MUCOCO
+Mix&Match
+LM-Steer
+
 \subsubsection{Latent Space Manipulation}
-The assumption behind this approach is that language models organize semantic and stylistic information in their hidden layers - similar to how our brains encode different aspects of language understanding in different neural regions.
+Latent space manipulation is a technique for controlling the attributes of machine-generated text by strategically adjusting the hidden representations within a pre-trained language model. 
+These hidden representations exist in a high-dimensional space called the latent space, which can be thought of as a compressed representation of the input text, capturing its essential features and characteristics.
+Similar words, phrases, and concepts are clustered together in this space, allowing for semantic relationships to be encoded in the form of geometric distances and directions between points.
+% continue this text, including the term "guiding vector"
+By identifying specific directions or vectors in this latent space, 
 
-Latent space in large language models (LLMs) is an abstract, lower-dimensional space where complex, high-dimensional data is represented in a compressed and meaningful way
+By identifying and extracting these semantic patterns, we can create guiding vectors that represent specific attributes or styles in the latent space.
+Common approaches to find these guiding vectors include ...
+Once identified, these guiding vectors can be used to steer the model's hidden representations during text generation, effectively pushing the output toward or away from certain attributes.
+The magnitude of the vector determines how strongly the attribute is expressed in the text, allowing for fine-grained and continuous control over the output.
 
-The latent space is a compressed, abstract representation of the text the model has processed. It encodes high-level features and patterns learned by the model.
+GENhance
+ICV
+MIRACLE
 
-Latent space compresses vast amounts of linguistic information into a more compact form. 
-It captures and represents the relationships between words, phrases, and concepts. 
-Words and concepts are represented as vectors in this multidimensional space.
-
-In the context of LLMs, latent space involves transforming language tokens into embeddings that represent word concepts. 
-These embeddings, combined with positional vectors, are used by the model's encoder to map data into a latent space that captures linguistic and conceptual patterns. 
-The decoder then uses this latent space to predict the next most likely token, iteratively generating language output.
-Put simply, the model takes words and sentences, turns them into mathematical representations (like coordinates on a map), and uses these to understand the meaning and relationships between different parts of language. 
-When generating text, it uses this “map” to find the most likely next word or phrase.
-
-Consider language models, aka LLMs, such as ChatGPT and GPT-4 and LLaMA. We feed them words, and they embed those words, mapping them into N-dimensional space so that similar words/concepts are closer together. 
-That map of embedded language is called “latent space.”
-One of the many semi-miraculous things about LLMs is that such a language map will spontaneously emerge if/when a neural network is “trained to predict the context in which a given word appears.”
-Furthermore, transformers — the architecture with which ~all LLMs are built — don't merely learn how to map words; their “attention heads” also learn higher-order language structure, such as grammar and the typical structure/flow of phrases, sentences, paragraphs, even documents.
-Put another way, LLMs construct a map of our language, then learn the structures of recurring patterns in that space. 
-To stretch an analogy, but not so much that it's wrong, you might think of words embedded in latent space as places on a map, and the discovered grammatical and conceptual patterns as the roads and rivers and pathways which can connect those places. 
-LLMS are not trained to be chatbots. What they are trained to do — because it's the only thing we know how to train them to do! — is take an existing set of words, the "prompt," and continue it. 
-In other words, given the start of a journey on that language map, they guess how and where that journey is most likely to continue. 
-And they have gotten shockingly good at this.
-But it's important to understand this is all “just” math. The only inputs an LLM actually receives are numbers, which it transforms into other numbers. 
-It's humans who convert those numbers to/from language, and then, of course, meaning.
-
-Latent Space Manipulation[87, 132, 137] controls the generated text by adjusting activation states within the model's hidden layers. 
-By adding or modifying latent vectors, this approach allows for precise control of the text generation process without altering the model's weights. 
-Latent space manipulation is especially effective for attribute control, such as making subtle adjustments in sentiment or style.
-
-Latent Space Manipulation, also known as activation engineering, involves adding guiding vectors to the activations in certain layers of LLMs to direct the model in generating a target sentence x from a null input. 
-The fundamental principle is that the information required to generate the target sentence is already encoded in the underlying structure of the neural network. 
-Therefore, this method does not require retraining or fine-tuning the model itself.
-
+There are also other methods for \gls{ctg} that do not fit into any of the aforementioned categories.
 
 \section{Language Complexity}
 \label{c2:s:linguistic-complexity}
@@ -214,7 +215,7 @@ Different \gls{rouge} variants focus on various aspects of n-gram matching:
 \end{itemize}
 These \gls{rouge} variants can capture lexical and structural similarities at different granularities, but they do not explicitly measure semantic similarity, potentially missing differences in meaning between the original and simplified texts, and do not account for readability factors such as vocabulary or syntax, which are crucial for text simplification \cite{xu2024reasoningcomparisonllmenhancedsemantic}.
 Ganesan \cite{ganesan2018rouge20updatedimproved} addressed some of these shortcomings in \gls{rouge} 2.0, which improves upon the original metric by incorporating WordNet-based synonym matching and allowing evaluation of specific topics through \gls{pos} based filtering. Similarly, Zhang et al. \cite{ZHANG2024121364} proposed \gls{rouge}-SEM, which combines \gls{rouge} with a Siamese-BERT network to measure semantic similarity and uses back-translation to rewrite texts that are semantically similar but lexically different.
-Still, other metrics specifically targeting readability aspects may still be necessary for a more well-rounded evaluation of simplification quality \cite{li2024largelanguagemodelsbiomedical}.
+Despite that, other metrics specifically targeting readability aspects may still be necessary for a more well-rounded evaluation of simplification quality \cite{li2024largelanguagemodelsbiomedical}.
 
 Other reference-based metrics that have been used for text simplification include the \gls{bleu}, which calculates the precision of n-gram matches between the candidate and reference, with a brevity penalty \cite{papineni-etal-2002-bleu}; \gls{meteor}, which computes a weighted F-score based on exact, stem, synonym, and paraphrase matches between the candidate and reference \cite{banerjee-lavie-2005-meteor}; and \gls{ter}, which measures the minimum number of edits (insertions, deletions, substitutions, and shifts) required to transform the candidate text into the reference \cite{snover-etal-2006-study}.
 All reference-based metrics require high-quality reference simplifications, which may be difficult and expensive to obtain, especially for large biomedical corpora \cite{alva-manchego-etal-2021-un}. 

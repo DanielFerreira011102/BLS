@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "notes.md",
+                "file": "collection/@liu-etal-2021-dexperts.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "notes"
+              "title": "@liu-etal-2021-dexperts"
             }
           }
         ],
@@ -63,7 +63,7 @@
       {
         "id": "40252d87e6aa89ed",
         "type": "tabs",
-        "dimension": 21.810250817884405,
+        "dimension": 21.81025081788441,
         "children": [
           {
             "id": "c7a084cf6dae830f",
@@ -99,7 +99,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 436.5
+    "width": 435.5
   },
   "right": {
     "id": "b2b797a78cbab6e1",
@@ -116,10 +116,10 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "notes.md"
+                "file": "collection/@liu-etal-2021-dexperts.md"
               },
               "icon": "lucide-list",
-              "title": "Outline of notes"
+              "title": "Outline of @liu-etal-2021-dexperts"
             }
           }
         ]
@@ -149,7 +149,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "notes.md",
+                "file": "collection/@liu-etal-2021-dexperts.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -159,7 +159,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for notes"
+              "title": "Backlinks for @liu-etal-2021-dexperts"
             }
           }
         ],
@@ -176,7 +176,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "tag:discriminators",
+                "query": "tag:healthcare",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": true,
@@ -191,7 +191,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300.5
+    "width": 304.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -201,38 +201,38 @@
       "templates:Insert template": false,
       "command-palette:Open command palette": false,
       "omnisearch:Omnisearch": false,
-      "obsidian-excalidraw-plugin:Create new drawing": false,
-      "graph:Open graph view": false
+      "graph:Open graph view": false,
+      "obsidian-excalidraw-plugin:Create new drawing": false
     }
   },
   "active": "c10caedb63fe374a",
   "lastOpenFiles": [
+    "collection/@10.1145-3442695.md",
+    "collection/@liu-etal-2021-dexperts.md",
+    "collection/@liu2024decodingtimerealignmentlanguagemodels.md",
+    "collection/@10.1093-jamia-ocac149.md",
+    "collection/@kim-etal-2023-critic.md",
+    "collection/@ke-etal-2022-ctrleval.md",
+    "collection/@keskar2019ctrlconditionaltransformerlanguage.md",
+    "collection/@dekoninck2024controlledtextgenerationlanguage.md",
+    "collection/@martin-etal-2020-controllable.md",
+    "collection/@sheang-saggion-2021-controllable.md",
+    "collection/@shulev-simaan-2024-continual.md",
+    "collection/@chan2022coconselfsupervisedapproachcontrolled.md",
+    "collection/@Luo_2022.md",
+    "collection/@10.2196-16795.md",
+    "collection/@Badarudeen2010-ak.md",
+    "collection/@aeb0059a49724db4821a5a48a022d3e3.md",
+    "collection/@agrawal-etal-2021-non.md",
+    "collection/@zhang2023surveycontrollabletextgeneration.md",
+    "collection/Untitled.md",
+    "notes.md",
     "collection/@chai2022fastimprovingcontrollabilitytext.md",
     "collection/@bi-etal-2021-simple-complex.md",
     "collection/@bao-etal-2024-ctyun.md",
-    "notes.md",
     "collection/@singhal2023expertlevelmedicalquestionanswering.md",
     "collection/@saab2024capabilitiesgeminimodelsmedicine.md",
     "collection/@maharjan2024openmedlmpromptengineeringoutperform.md",
-    "collection/@luo-etal-2022-readability.md",
-    "collection/@Luo_2022.md",
-    "collection/@lovelace2024diffusionguidedlanguagemodeling.md",
-    "collection/@liang2024controllabletextgenerationlarge.md",
-    "collection/@kim-etal-2024-saama-technologies.md",
-    "collection/@keskar2019ctrlconditionaltransformerlanguage.md",
-    "collection/@aeb0059a49724db4821a5a48a022d3e3.md",
-    "collection/@deng-raffel-2023-reward.md",
-    "collection/@dathathri2020plugplaylanguagemodels.md",
-    "collection/@chen2023meditron70bscalingmedicalpretraining.md",
-    "collection/@zhou-etal-2024-team.md",
-    "collection/@yu2024rankragunifyingcontextranking.md",
-    "collection/@you-etal-2024-uiuc.md",
-    "summary.md",
-    "collection/@taylor2022galacticalargelanguagemodel.md",
-    "collection/@su2024knowledgegraphbasedagent.md",
-    "collection/@Varshney2023KnowledgeGM.md",
-    "collection/@vishwanath2024medmobilemobilesizedlanguagemodel.md",
-    "collection/@modi-karthikeyan-2024-eulerian.md",
     "research-papers/FAST - Improving Controllability for Text Generation with Feedback Aware Self-Training.pdf",
     "FAST - Improving Controllability for Text Generation with Feedback Aware Self-Training.pdf",
     "research-papers/Diffusion Guided Language Modeling.pdf",
