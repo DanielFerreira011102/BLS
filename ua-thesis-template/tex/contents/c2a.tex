@@ -47,16 +47,14 @@ While conceptually simple and effective, training a model like \gls{ctrl} requir
 Collecting datasets with explicit control codes for every desired attribute is often unfeasible.
 CTRL may also struggle with more nuanced control, such as fine-grained sentiment or complexity levels.
 
-FAST
-
-Building upon the idea of CTRL, Chan et al. \cite{chan2021cocontentcontrollertextgeneration} developed Content-Conditioner (CoCon), a self-supervised framework for fine-grained controllable text generation. 
+Building upon the idea of CTRL, Chan et al. \cite{chan2022coconselfsupervisedapproachcontrolled} developed Content-Conditioner (CoCon), a self-supervised framework for fine-grained controllable text generation. 
 CoCon adds a content-conditioning layer to GPT-2, allowing it to generate text that incorporates specific content inputs at the word and phrase level. 
 The CoCon layer is trained using a self-reconstruction objective, where the model learns to reconstruct text sequences by conditioning on content extracted from the target sequence itself, rather than relying on external control codes.
 Thus, removing the need for large-scale labeled datasets.
 CoCon demonstrates strong performance in controlling semantic attributes (e.g., sentiment, topic) and integrating content-level constraints.
 At the same time, by keeping the original language model intact and only adding a lightweight content-conditioning module, CoCon largely preserves the diversity and fluency of the pre-trained model.
 
-Zhang et al. \cite{zhang2020pointerconstrainedprogressivetext} proposed PrOgressive INsertion-based TransformER (POINTER), an insertion-based transformer architecture for hard-constrained text generation.
+Zhang et al. \cite{zhang-etal-2020-pointer} proposed PrOgressive INsertion-based TransformER (POINTER), an insertion-based transformer architecture for hard-constrained text generation.
 Unlike traditional left-to-right language models, POINTER generates text by progressively inserting new tokens between existing ones. 
 This allows for precise control over the inclusion of specified keywords or phrases in the output. 
 The model is trained from scratch on a large corpus using an insertion-based objective function. 
@@ -64,28 +62,92 @@ During inference, POINTER first inserts the target keywords into the input seque
 POINTER offers a promising solution for generating medical text with strict lexical constraints, such as including specific medical terms or phrases. 
 However, the model's reliance on keyword insertion limits its ability to control more abstract attributes like text complexity, which often depends on factors beyond vocabulary choice.
 
+XXX 
+FAST
+XXX
+
 \subsubsection{Fine-tuning}
 Fine-tuning is another common training-phase method, where a pre-trained language model is further trained on a smaller, task-specific dataset to learn the desired control attributes. 
 Fine-tuning makes slight adjustments to the model's parameters to better align with the target task or control conditions, while aiming to preserve the general knowledge learned during pre-training. 
 Compared to retraining from scratch, fine-tuning is more computationally efficient as it requires less data and computation.
 However, if the dataset is too small or narrow in scope, the model may overfit and lose some of the general knowledge acquired during pre-training.
 
-Zeldes et al. \cite{zeldes2020auxiliarytuning} proposed Auxiliary Tuning, where an auxiliary model is trained to augment a frozen pre-trained language model.
+Zeldes et al. \cite{zeldes2020technicalreportauxiliarytuning} proposed Auxiliary Tuning, where an auxiliary model is trained to augment a frozen pre-trained language model.
 The auxiliary model takes the same input as the pre-trained model, along with additional task-specific information or control codes. It produces a set of logits that are added to the logits of the pre-trained model before applying the softmax function to obtain the final output probabilities.
 Intuitively, the auxiliary model learns the residual logits needed to shift the probability distribution of the pre-trained model towards the target distribution.
+To further improve training efficiency, the lower layers of the pre-trained model can also be used as a feature extractor for the auxiliary model inputs. 
 There are no constraints on the auxiliary model architecture, except that it must output logits over the same vocabulary as the original model.
-It is typically much smaller than the pre-trained model (e.g., a few Transformer layers) and can be trained efficiently on a small amount of data.
-In experiments on keyword-conditioned generation, auxiliary tuning achieved similar performance to training from scratch, while being more parameter-efficient and avoiding the risk of catastrophic forgetting.
+It is typically much smaller than the pre-trained model (e.g., a few Transformer layers) and can be trained on a small amount of data.
+In experiments on keyword-conditioned generation, auxiliary tuning achieved similar performance to full fine-tuning, while being more parameter-efficient and avoiding the risk of catastrophic forgetting.
 
+More recently, Shi et al. \cite{shi2024lifilightweightcontrolledtext} introduced Lightweight Fine-grained Control (LiFi). 
+Instead of using discrete, categorical control codes, LiFi uses continuous, relative control signals that come from an attribute classifier. 
+For example, instead of simply labeling a movie review as positive or negative, LiFi captures the degree of positivity or negativity on a continuous scale.
+The attribute classifier is initially trained on a small labeled dataset and later fine-tuned with unlabeled data to improve its performance. 
+It outputs continuous control vectors that represent attribute strengths. 
+These control vectors guide the generation process through lightweight neural modules called adapters, which are integrated into each layer of the pre-trained language model. 
+The adapters use a bottleneck architecture with a reduction factor of 16 for feedforward modules and 4 for multi-head attention, balancing control strength and computational efficiency.
+A major advantage of LiFi is that it only needs to train these small adapter modules, leaving the base pre-trained model frozen. 
+This significantly reduces computational demands, as the adapters constitute only about 0.04\% of the model's parameters. 
+During generation, LiFi combines multiple adapters using a position-specific fusion mechanism, enabling smooth transitions between attributes and precise control over the generated content.
+% For instance, a generated movie review could have a specific level of positivity while maintaining a particular writing style.
+Shi et al. evaluated LiFi on sentiment control and topic control, alongside a newly proposed stylistic novel-writing task. 
+They used GPT-2 Medium as the base model and a variety of automated and human evaluation metrics to assess control strength, fluency, and diversity. 
+LiFi achieved superior performance in control tasks, notably excelling in polarity reversal scenarios (e.g., positive to negative sentiment) and maintaining fluency.
 
-LiFi
+XXX
 FLAN
 InstructCTG
+XXX
 
 \subsubsection{Reinforcement Learning}
 \gls{rl} offers a more flexible and dynamic approach to \gls{ctg}, where the language model learns to optimize its output based on feedback or reward signals that indicate the quality and alignment of the generated text with the desired attributes. 
 It is particularly well-suited for scenarios where the control attributes are complex, subjective, or difficult to explicitly define, such as generating text with specific styles, tones, or linguistic properties. 
-RL-based methods formulate the generation process as a sequential decision-making problem, where the model learns to take actions (i.e., generate tokens) that maximize the expected reward, using algorithms such as REINFORCE \cite{williams1992reinforce}, Proximal Policy Optimization (PPO) \cite{schulman2017ppo}, Q-Learning \cite{watkins1992qlearning}, and Advantage Actor-Critic (A2C) \cite{mnih2016a3c}.
+\gls{rl}-based methods formulate the generation process as a sequential decision-making problem, where the model learns to take actions (i.e., generate tokens) that maximize the expected reward, using algorithms such as REINFORCE \cite{10.1007/BF00992696}, Q-Learning \cite{Watkins1992-pa}, Advantage Actor-Critic (A2C) \cite{mnih2016asynchronousmethodsdeepreinforcement}, and Proximal Policy Optimization (PPO) \cite{schulman2017proximalpolicyoptimizationalgorithms}.
+
+Stiennon et al. \Cite{stiennon2022learningsummarizehumanfeedback} showed how \gls{rlhf} could be used to train language models to generate better summaries.
+Their method consisted of three main steps: collecting human feedback, training a reward model, and optimizing a policy using reinforcement learning.
+The process began by collecting a large dataset of human preferences between pairs of summaries. 
+Human evaluators compared two summaries and indicated which one better represented the original text. To ensure high-quality feedback, the researchers implemented careful quality control procedures and maintained close communication with evaluators through a dedicated website and chat system.
+Using this human preference data, they trained a reward model to predict which summary humans would prefer. 
+The reward model builds on a supervised baseline and adds a scalar output head that predicts the log odds of one summary being preferred over another.
+The model was trained using a cross-entropy loss function and was normalized so that reference summaries achieved a mean score of 0.
+They then used reinforcement learning, specifically the PPO algorithm, to fine-tune a policy (language model) to maximize the reward predicted by the reward model. 
+To prevent the policy from diverging too far from the initial supervised model, they included a KL penalty term in the reward function. 
+Importantly, they used separate networks for the policy and value function to prevent value function updates from degrading the pretrained policy early in training.
+The results showed that the 1.3B parameter model trained with human feedback outperformed standard supervised models up to 10 times larger, and their 6.7B parameter model produced summaries that humans preferred over the original reference summaries. 
+The method also demonstrated strong transfer learning capabilities, performing well on news article summarization without specific training on news data.
+
+Building on Stiennon's work, Dai et al. \cite{dai2023saferlhfsafereinforcement} proposed Safe \gls{rlhf} to address a fundamental tension in language model alignment: balancing helpfulness with harmlessness. 
+Traditional \gls{rlhf} approaches often struggle when these objectives conflict, as a model being maximally helpful (e.g., providing detailed information about dangerous topics) might compromise safety.
+Safe \gls{rlhf}'s key innovation is explicitly decoupling these two objectives during both data collection and training. 
+During annotation, crowdworkers separately evaluate responses for helpfulness and harmlessness, rather than providing a single preference score. 
+This separation helps avoid annotator confusion and produces cleaner training signals. 
+For harmlessness evaluation, responses are additionally labeled across 14 predefined harm categories, with a response considered ``safe'' only if it poses no risks across all categories.
+The method trains two separate preference models: a Reward Model (RM) for helpfulness and a Cost Model (CM) for harmlessness. 
+The CM combines binary safety classification with preference learning, allowing it to both rank responses by relative safety and identify harmful content. 
+The training process formulates safety alignment as a constrained optimization problem, where the objective is to maximize the expected reward (helpfulness) while keeping the expected cost (potential harm) below a threshold. 
+This is solved using the Lagrangian method, which introduces a multiplier $\lambda$ that dynamically adjusts the balance between objectives. 
+When the model becomes less safe, $\lambda$ increases to prioritize harmlessness, and when safety improves, $\lambda$ decreases to focus more on helpfulness.
+Through three rounds of iterative training, each incorporating red-team testing to identify vulnerabilities, Safe \gls{rlhf} demonstrated superior results compared to standard \gls{rlhf} and reward shaping approaches. 
+Using Alpaca-7B as the base model, they achieved significant improvements in both helpfulness and harmlessness according to human evaluations, reducing harmful outputs from 53.08\% to 2.45\% while maintaining or improving helpful behavior.
+
+Phatak et al. developed TESLEA to address the challenge of making complex medical literature more accessible while maintaining semantic accuracy. 
+Their method focuses specifically on medical text simplification, where the goal is to generate simplified versions of complex medical paragraphs while preserving the original meaning.
+For that, they used a dataset from the Cochrane Database of Scientific Reviews, which contains paired complex medical paragraphs and their simplified versions written by medical professionals.
+
+Their method applies reinforcement learning to train a language model to generate simplified text from complex medical paragraphs.
+
+dataset from the Cochrane Database of Scientific Reviews, which contains paired complex medical paragraphs and their simplified versions written by medical professionals.
+
+
+XXX
+TESLEA
+Efficient RL for Unsupervised Controlled Text Generation
+
+Token-level Direct Preference Optimization
+Quark
+XXX
 
 \subsection{Inference-Phase Methods}
 Inference-phase methods aim to steer the generation process at inference time without changing the language model's parameters.
@@ -98,7 +160,7 @@ Prompt engineering refers to the practice of designing input prompts that guide 
 The idea is to provide the model with explicit instructions or cues that signal the desired control conditions, such as keywords, phrases, or templates, which the model can then use to shape the output.
 Prompt engineering is an effective and easy way to control the output of language models without having to change the model architecture or training data.
 The main challenge is in trying to design informative yet unambiguous prompts that the model can accurately interpret and follow.
-To find the right prompts, researchers often rely on human intuition, trial-and-error, and, more recently, automated methods like AutoPrompt \cite{shin2022autoprompt} and P-tuning \cite{peng2022ptuning}.
+To find the right prompts, researchers often rely on human intuition, trial-and-error, and, more recently, automated methods like AutoPrompt \cite{shin-etal-2020-autoprompt} and P-tuning \cite{liu-etal-2022-p}.
 
 DAs (Dialogue Acts)
 
@@ -109,40 +171,42 @@ This is often done using classifiers or reward models that provide additional su
 Guided decoding approaches are often plug-and-play, meaning they can be easily integrated into existing language models without requiring extensive retraining or fine-tuning.
 However, the use of external guiding models can slow down the generation process and make the text sound less natural and coherent.
 
+XXX
 PPLM
 GeDi
 DExperts
+Arithmetic
 MUCOCO
-Mix&Match
+MixAndMatch
 LM-Steer
+XXX
 
 \subsubsection{Latent Space Manipulation}
 Latent space manipulation is a technique for controlling the attributes of machine-generated text by strategically adjusting the hidden representations within a pre-trained language model. 
 These hidden representations exist in a high-dimensional space called the latent space, which can be thought of as a compressed representation of the input text, capturing its essential features and characteristics.
 Similar words, phrases, and concepts are clustered together in this space, allowing for semantic relationships to be encoded in the form of geometric distances and directions between points.
 % continue this text, including the term "guiding vector"
-By identifying specific directions or vectors in this latent space, 
-
-By identifying and extracting these semantic patterns, we can create guiding vectors that represent specific attributes or styles in the latent space.
+By identifying specific directions or vectors in this latent space, we can steer the model's hidden representations during text generation, effectively pushing the output toward or away from certain attributes.
+The magnitude of these guiding vectors determines how strongly the attribute is expressed in the text, allowing for fine-grained and continuous control over the output.
 Common approaches to find these guiding vectors include ...
-Once identified, these guiding vectors can be used to steer the model's hidden representations during text generation, effectively pushing the output toward or away from certain attributes.
-The magnitude of the vector determines how strongly the attribute is expressed in the text, allowing for fine-grained and continuous control over the output.
 
+XXX
 GENhance
 ICV
 MIRACLE
+XXX
 
 There are also other methods for \gls{ctg} that do not fit into any of the aforementioned categories.
 
 \section{Language Complexity}
 \label{c2:s:linguistic-complexity}
 
-The complexity of biomedical terminology represents a unique challenge for language complexity measurement. 
-Medical terms often combine elements from multiple languages, primarily Greek and Latin, creating systematic patterns that affect both structural and cognitive complexity. 
-These patterns follow predictable rules but can create significant processing challenges for non-expert readers.
-
-The relationship between professional and lay terminology adds another layer of complexity. 
-Many medical concepts can be expressed through either technical or lay terms (e.g., ``myocardial infarction'' vs. ``heart attack''), creating parallel vocabularies that must be considered in complexity measurement. 
+% The complexity of biomedical terminology represents a unique challenge for language complexity measurement. 
+% Medical terms often combine elements from multiple languages, primarily Greek and Latin, creating systematic patterns that affect both structural and cognitive complexity. 
+% These patterns follow predictable rules but can create significant processing challenges for non-expert readers.
+% 
+% The relationship between professional and lay terminology adds another layer of complexity. 
+% Many medical concepts can be expressed through either technical or lay terms (e.g., ``myocardial infarction'' vs. ``heart attack''), creating parallel vocabularies that must be considered in complexity measurement. 
 
 % The title should be either "Statistical Readability Metrics" or "Traditional Readability Metrics"
 \subsection{Traditional Readability Metrics}
@@ -218,14 +282,14 @@ Ganesan \cite{ganesan2018rouge20updatedimproved} addressed some of these shortco
 Despite that, other metrics specifically targeting readability aspects may still be necessary for a more well-rounded evaluation of simplification quality \cite{li2024largelanguagemodelsbiomedical}.
 
 Other reference-based metrics that have been used for text simplification include the \gls{bleu}, which calculates the precision of n-gram matches between the candidate and reference, with a brevity penalty \cite{papineni-etal-2002-bleu}; \gls{meteor}, which computes a weighted F-score based on exact, stem, synonym, and paraphrase matches between the candidate and reference \cite{banerjee-lavie-2005-meteor}; and \gls{ter}, which measures the minimum number of edits (insertions, deletions, substitutions, and shifts) required to transform the candidate text into the reference \cite{snover-etal-2006-study}.
-All reference-based metrics require high-quality reference simplifications, which may be difficult and expensive to obtain, especially for large biomedical corpora \cite{alva-manchego-etal-2021-un}. 
+All reference-based metrics require high-quality reference simplifications, which may be difficult and expensive to obtain, especially for large biomedical corpora \cite{alva-manchego-etal-2021-un, 94205144dd7945cc99b5a6544451b668, deutsch-etal-2022-limitations}. 
 They also assume that the references represent the only valid simplifications, penalizing alternative paraphrases that may be equally fluent and meaningful \cite{sottana2023evaluationmetricseragpt4, huang-kochmar-2024-referee, lyu2024scigispynovelmetricbiomedical}. 
 Furthermore, these metrics do not directly measure the readability or accessibility of the simplified text for the target audience, only its similarity to the references.
 
 \subsection{Reference-Free Evaluation Metrics}
 
 Recently, there has been growing interest in developing reference-free (context-based) evaluation metrics for text simplification that can assess output quality without relying on human-written reference simplifications. 
-Reference-free metrics are appealing because collecting high-quality human reference simplifications is time-consuming, expensive, and may not always be feasible \cite{alva-manchego-etal-2021-un, 94205144dd7945cc99b5a6544451b668, deutsch-etal-2022-limitations}.
+Reference-free metrics are appealing because collecting high-quality human reference simplifications is time-consuming, expensive, and may not always be feasible.
 
 One such metric is \gls{samsa} \cite{sulem-etal-2018-semantic} that uses the semantic annotations in the \gls{ucca} framework to measure the structural simplicity of a text. 
 It stipulates that an optimal simplification should assign each event in the input sentence to its own output sentence. 
