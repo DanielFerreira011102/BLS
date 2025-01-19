@@ -113,7 +113,6 @@ This division reflects when control mechanisms are integrated into the text gene
             \item Prompt design and engineering
             \item Guided decoding strategies
             \item Latent state manipulation
-            \item Post-generation editing 
         \end{itemize}
 \end{itemize}
 
@@ -156,10 +155,10 @@ Integration layers then combine the conditioned and base representations to infl
 To train this architecture effectively, CoCon implements multiple complementary loss functions:
 
 \begin{itemize}
-   \item \textbf{Primary Reconstruction Loss ($\mathcal{L}_{recon}$):} Ensures the model can accurately generate text that incorporates the given control signals
-   \item \textbf{Null Content Loss ($\mathcal{L}_{null}$):} Helps the model maintain robust performance even when control signals are absent, which is important for practical applications
+   \item \textbf{Primary Reconstruction Loss ($\mathcal{L}_{recon}$):} Ensures the model can accurately generate text that incorporates the given control signals.
+   \item \textbf{Null Content Loss ($\mathcal{L}_{null}$):} Helps the model maintain robust performance even when control signals are absent, which is important for practical applications.
    \item \textbf{Cycle Reconstruction Loss ($\mathcal{L}_{cycle}$):} Promotes consistency in how control signals are applied. It ensures that if we extract control signals from a generated text and use them to condition another generation, we obtain similar results.
-   \item \textbf{Adversarial Loss ($\mathcal{L}_{adv}$):} Improves the naturalness of the generated text by training the model to produce outputs that are indistinguishable from human-written text while maintaining the desired control attributes
+   \item \textbf{Adversarial Loss ($\mathcal{L}_{adv}$):} Improves the naturalness of the generated text by training the model to produce outputs that are indistinguishable from human-written text while maintaining the desired control attributes.
 \end{itemize}
 
 The total loss function for training the CoCon model is a weighted combination of these four components:
@@ -218,7 +217,7 @@ To further improve training efficiency, the lower layers of the pre-trained mode
 There are no constraints on the auxiliary model architecture, except that it must output logits over the same vocabulary as the original model.
 It is typically much smaller than the pre-trained model (e.g., a few Transformer layers) and can be trained on a small amount of data.
 
-DisCup \cite{zhang2022discupdiscriminatorcooperativeunlikelihood} combines discriminator guidance with prompt-tuning.
+DisCup \cite{zhang-song-2022-discup} combines discriminator guidance with prompt-tuning.
 The training objective includes both likelihood and unlikelihood terms:
 
 \begin{equation}
@@ -230,7 +229,7 @@ $\mathcal{L}_{like}$ maximizes the probability of positively-scored tokens, whil
 The unlikelihood training helps prevent the model from learning spurious correlations present in training data.
 Furthermore, by operating on self-generated candidates rather than ground-truth tokens, DisCup maintains output diversity while improving attribute control.
 
-LiFi \cite{shi2024lifilightweightcontrolledtext} proposes an efficient approach using lightweight adapters guided by attribute classifiers. The adapters are added to each transformer layer while keeping the base model frozen:
+LiFi \cite{shi2024lifilightweightcontrolledtext} proposes an different approach using lightweight adapters guided by attribute classifiers. The adapters are added to each transformer layer while keeping the base model frozen:
 
 \begin{equation}
     h' = h + \text{Adapter}(h, c)
@@ -244,17 +243,284 @@ During generation, multiple adapters can be combined through a weighted fusion m
     h'_t = h_t + \sum_{i=1}^k w_i \text{Adapter}_i(h_t, c_i)
 \end{equation}
 
-where $w_i$ are learnable weights balancing different control signals. This allows LiFi to handle multiple control attributes while maintaining computational efficiency.
+where $w_i$ are learnable weights balancing different control signals, and $k$ is the number of adapters. This allows LiFi to handle multiple control attributes while maintaining computational efficiency.
 
 \subsubsection{Data-Driven Fine-Tuning}
 
-FLAN \cite{wei2022finetunedaszeroshotlearners} takes a different approach by converting control tasks into natural language instructions. Rather than adding model components, FLAN fine-tunes the language model to follow text instructions that specify desired attributes and constraints. This instruction-based approach enables zero-shot generalization to new control tasks that can be expressed through natural language prompts.
+Data-driven methods focus on creating better datasets to teach language models about control through fine-tuning. 
 
-Instruction tuning improves further with InstructCTG \cite{zhou2023controllabletextgenerationnatural}, which builds specialized instruction datasets for controlled generation. The method converts various types of constraints into clear instructions:
+FLAN \cite{wei2022finetunedlanguagemodelszeroshot} showed that turning NLP tasks into natural language instructions helps models learn new tasks without examples. 
+For instance, instead of training a model to summarize text, FLAN trains it to follow instructions like "Summarize the text" or "Write a positive review about the product".
+This helps the model understand what it needs to do through clear directions, enabling zero-shot generalization to new tasks.
 
-\begin{verbatim}
-Write a [positive] review about [topic]:
-Generate text containing keywords [x, y, z]:
-\end{verbatim}
+Building on this idea, InstructCTG \cite{zhou2023controlledtextgenerationnatural} applies instruction-based fine-tuning specifically to controlled text generation. 
+It turns control constraints into natural instructions and uses them to fine-tune language models. This makes the control process more intuitive, as the model learns to follow human-like directions rather than abstract control signals.
 
-This explicit instruction format helps the model learn generalizable control strategies that can be applied across different tasks and domains.
+CHRT \cite{kumar-etal-2023-controlled} uses contrastive learning to control multiple attributes at once. 
+It works by comparing texts that have different attributes (e.g., positive vs negative sentiment) and learning how these differences appear in the model's hidden layers. 
+This helps the model understand how to change its output to match desired attributes without changing its basic structure.
+CHRT combines two loss functions to balance attribute control and text quality:
+
+\begin{itemize}
+   \item \textbf{Contrastive Loss ($\mathcal{L}_c$):} Uses triplet loss to guide the transformed hidden representations towards a model fine-tuned on desired attributes and away from one fine-tuned on undesired attributes. For example, when controlling toxicity, it pushes the representations closer to a non-toxic model and farther from a toxic one.
+   
+   \item \textbf{Preservation Loss ($\mathcal{L}_p$):} Maintains the model's original language capabilities by minimizing the distance between the transformed representations and the base model's representations.
+\end{itemize}
+
+The total loss is a weighted combination of these two omponents:
+
+\begin{equation}
+    \mathcal{L}_{total} = \lambda\mathcal{L}_p + (1-\lambda)\mathcal{L}_c
+\end{equation}
+
+where $\lambda$ balances between preserving the original model's capabilities and achieving strong attribute control. One advantage of CHRT is that it can control multiple attributes by combining different transformation blocks during inference, without needing to retrain the model.
+
+\subsection{Reinforcement Learning}
+
+Reinforcement learning methods optimize text generation by providing feedback signals that indicate how well the generated text satisfies the control objectives. 
+These methods can handle complex, non-differentiable control criteria and adapt to human preferences. 
+The RL optimization adjusts model parameters $\Theta$ according to:
+
+\begin{equation}
+   \Theta^* = \Theta + \alpha\nabla_\Theta \mathbb{E}_{\pi_\Theta}[R(X)]
+\end{equation}
+
+where $\alpha$ is the learning rate, $\pi_\Theta$ is the policy defined by the model parameters, and $R(X)$ is the reward for generated text $X$. 
+Since the exact reward function is often unknown, in practice, RL methods like REINFORCE \cite{10.1007/BF00992696} use the policy gradient to estimate the gradient of the expected reward:
+
+\begin{equation}
+   \nabla_\Theta \mathbb{E}_{\pi_\Theta}[R(X)] \approx \sum_{t=1}^T \nabla_\Theta \log P(x_t|x_{<t}, C) R(X)
+\end{equation}
+
+RL methods fall into two categories based on how they get their feedback: from humans or from automated systems.
+
+\subsubsection{Human Feedback Methods}
+
+Human feedback methods use human evaluators to provide reward signals for the generated text.
+These methods are particularly useful for subjective control attributes that are hard to define algorithmically.
+
+\gls{rlhf} \cite{stiennon2022learningsummarizehumanfeedback} combines human feedback with reinforcement learning to control text summarization.
+The method consists of three stages: collecting human feedback, training a reward model, and optimizing the language model using RL.
+
+The first stage creates a dataset of human preferences by presenting annotators with pairs of model outputs and asking them to select the better summary.
+This process generates a dataset $D$ of preferences $(x, y_0, y_1, i)$, where $x$ is the input text, $y_0$ and $y_1$ are the two generated summaries, and $i$ indicates the preferred summary.
+
+The reward model $r_\theta(x, y)$ is then trained to predict human preferences:
+\begin{equation}
+    \mathcal{L}_{reward} = -\mathbb{E}_{(x,y_0,y_1,i)\sim D}[\log(\sigma(r_\theta(x, y_i) - r_\theta(x, y_{1-i}))]
+\end{equation}
+This loss function encourages the reward model to assign higher scores to summaries preferred by humans.
+
+Finally, the language model is fine-tuned using Proximal Policy Optimization (PPO) to maximize the predicted reward while staying close to the original model's behavior through a KL penalty:
+\begin{equation}
+    R(x, y) = r_\theta(x, y) - \beta \text{ KL}(\pi_{RL}, \pi_{base})
+\end{equation}
+where $\beta$ balances between maximizing the predicted reward and maintaining the original model's behavior.
+
+
+Safe RLHF \cite{dai2023saferlhfsafereinforcement} extends RLHF to address a fundamental tension in language model alignment: balancing helpfulness with harmlessness. 
+Traditional \gls{rlhf} approaches often struggle when these objectives conflict, as a model being maximally helpful (e.g., providing detailed information about dangerous topics) might compromise safety.
+Safe RLHF decouples these two objectives by introducing a cost model $C_\psi(y, x)$ that penalizes harmful content. The optimization objective becomes:
+
+\begin{equation}
+\begin{aligned}
+    \text{maximize}_\theta & \quad \mathbb{E}_{x,y}[R_\phi(y,x)] \\
+    \text{subject to} & \quad C_\psi(y,x) \leq 0
+\end{aligned}
+\end{equation}
+
+where $R_\phi$ is the reward model and $C_\psi$ is the cost model. This constraint ensures generated text remains helpful while avoiding harmful content.
+
+The problem is solved using Lagrangian relaxation:
+
+\begin{equation}
+    \min_{\lambda \geq 0} \max_\theta [-J_R(\theta) + \lambda J_C(\theta)]
+\end{equation}
+
+where $J_R$ and $J_C$ are the expected reward and cost, and $\lambda$ balances between helpfulness and safety. The parameter $\lambda$ adjusts dynamically during training, increasing when the model becomes less safe and decreasing when safety improves.
+
+\subsubsection{Automated Feedback Methods}
+
+Automated feedback methods guide language model training using predefined reward functions rather than human feedback. 
+These methods scale better since they don't require collecting human preferences. 
+
+Distributional approaches like GDC \cite{khalifa2021distributionalapproachcontrolledtext} treat controlled generation as a constrained optimization problem. 
+The goal is to find a text distribution that satisfies the control requirements while staying close to the original model distribution. This prevents the model from generating unnatural text when trying to meet control conditions. 
+GDC solves this by finding:
+
+\begin{equation}
+P(x) = \argmin_{c \in C} D_{KL}(c | a)
+\end{equation}
+
+where $P$ is the target distribution, $C$ contains distributions meeting the constraints, and $a$ is the original model distribution. The solution takes an energy-based form:
+
+\begin{equation}
+P(x) \propto a(x) e^{\sum_i \lambda_i \phi_i(x)}
+\end{equation}
+
+Here $\phi_i(x)$ are feature functions encoding control conditions and $\lambda_i$ are learned parameters. 
+GDC learns these parameters through importance sampling, making it more efficient than direct optimization.
+
+A major challenge in reinforcement learning for text generation is the sparse reward problem, where models only receive feedback after generating complete sequences. 
+DRL \cite{upadhyay2022efficientreinforcementlearningunsupervised} addresses this by providing dense rewards at each generation step. The method combines three types of token-level rewards:
+
+\begin{equation}
+r_t = \lambda_s r_t^s + \lambda_c r_t^c + \lambda_f r_t^f
+\end{equation}
+
+The style reward $r_t^s$ uses attention scores from a classifier to identify style-relevant tokens. 
+Content preservation reward $r_t^c$ measures n-gram overlap with the input. 
+Fluency reward $r_t^f$ comes from a language model to maintain natural text. 
+This dense feedback helps the model learn more effectively than with sparse sentence-level rewards.
+
+% TDPO \cite{zeng2024tokenlevel} improves on previous work by optimizing at the token level while preserving generation diversity. The method maximizes:
+% 
+% \begin{equation}
+% \mathbb{E}_{x,y_{<t},z \sim \pi_\theta} [A_{\pi_{ref}}([x,y_{<t}], z) - \beta D_{KL}(\pi_\theta \| \pi_{ref})]
+% \end{equation}
+% 
+% where $A_{\pi_{ref}}$ measures improvement over a reference policy $\pi_{ref}$. 
+% The key innovation is using sequential KL divergence to maintain diversity while optimizing for control. 
+% 
+% \begin{equation}
+% D_{SeqKL}(x,y;\pi_1\|\pi_2) = \sum_{t=1}^T D_{KL}(\pi_1(\cdot|[x,y_{<t}]) \| \pi_2(\cdot|[x,y_{<t}]))
+% \end{equation}
+% 
+% This prevents the model from collapsing to a limited set of outputs while still meeting control objectives.
+
+For medical text simplification, TESLEA \cite{info:doi/10.2196/38095} combines fine-tuning and reinforcement learning. After initial training on paired medical reviews, the method optimizes three rewards:
+
+\begin{itemize}
+    \item \textbf{Relevance Reward ($R_{cosine}$):} Uses BioSentVec embeddings \cite{Chen_2019} to measure semantic similarity between original and simplified text, preserving medical meaning.
+    
+    \item \textbf{Readability Reward ($R_{Flesch}$):} Encourages text to reach a target grade level using Flesch-Kincaid readability scores.
+    
+    \item \textbf{Lexical Simplicity Reward ($R_{lexical}$):} Promotes common and accessible vocabulary based on word frequency statistics following Zipf's law.
+\end{itemize}
+
+The total reward combines these components:
+
+\begin{equation}
+    R_{total} = \alpha R_{cosine} + \beta R_{Flesch} + \gamma R_{lexical}
+\end{equation}
+
+TESLEA uses Self-Critical Sequence Training \cite{8099614}, generating two versions of each simplification through greedy and sampling-based decoding. The final loss balances reinforcement learning against MLE to prevent drift:
+
+\begin{equation}
+    \mathcal{L}_{total} = \lambda \mathcal{L}_{RL} + (1-\lambda)\mathcal{L}_{MLE}
+\end{equation}
+
+The method effectively reduced text complexity by 2.5 FKGL points, while maintaining comparable ROUGE and SARI scores with existing baselines. 
+Human evaluations showed strong agreement (>70\%) among domain experts on the quality of generated simplifications across multiple dimensions including fluency, coherence, and factual accuracy.
+The outputs from TESLEA were consistently shorter than those produced by baseline models and the input paragraphs themselves, suggesting it learned to remove unnecessary technical details while retaining the most relevant content.
+
+\subsection{Inference-time Methods}
+
+Unlike training-time methods, inference-time methods control text generation without changing the model's parameters. They work by adjusting how the model generates text at runtime. These methods are more flexible since they don't need additional training, but they can be slower during generation.
+
+\subsubsection{Prompt Engineering}
+
+Prompt engineering controls text generation by designing specific input instructions. The method comes in two types:
+
+\begin{itemize}
+    \item \textbf{Hard prompts} use natural language instructions like "Write a positive review" or "Explain this in simple terms".
+    \item \textbf{Soft prompts} use trainable vectors that are added to the input embeddings.
+\end{itemize}
+
+P-tuning adds trainable vectors to the input using a bidirectional LSTM:
+
+\begin{equation}
+    h_t = \text{LSTM}(e_t, h_{t-1})
+\end{equation}
+
+where $e_t$ is the embedding of token $t$ and $h_t$ is the hidden state. The model then uses these hidden states as soft prompts to guide generation. This method works better than hard prompts since the vectors can capture more nuanced control signals.
+
+\subsubsection{Guided Decoding}
+
+Guided decoding changes the probability distribution of the next token during generation. The basic idea is to adjust the logits (scores) before selecting each new token.
+
+One approach uses classifier guidance. For a classifier $C$ that measures some attribute (like toxicity or sentiment), we modify the generation probabilities:
+
+\begin{equation}
+    P'(x_t|x_{<t}) = \frac{P(x_t|x_{<t})C(x_{\leq t})^\alpha}{\sum_{x'} P(x'|x_{<t})C(x_{\leq t}')^\alpha}
+\end{equation}
+
+where $\alpha$ controls how strongly the classifier influences generation. Higher $\alpha$ values make the text follow the classifier's preferences more strictly.
+
+Another method uses expert models. DExperts runs the text through both an expert model trained on good examples and an anti-expert trained on bad examples. The logits from these models adjust the main model's output:
+
+\begin{equation}
+    l'_t = l_t + \alpha(l^{\text{expert}}_t - l^{\text{anti}}_t)
+\end{equation}
+
+where $l_t$ are the original logits and $l'_t$ are the adjusted logits. This helps the model avoid generating unwanted content while keeping the text natural.
+
+\subsubsection{Latent Space Manipulation}
+
+This method works by changing the model's internal representations during generation. The key idea is to find directions in the model's hidden space that correspond to specific attributes.
+
+For a hidden state $h_t$, we can add a guidance vector $v$ that pushes the generation toward desired attributes:
+
+\begin{equation}
+    h'_t = h_t + \alpha v
+\end{equation}
+
+These guidance vectors can come from different sources:
+\begin{itemize}
+    \item Comparing the hidden states of examples with and without the desired attribute
+    \item Training a small network to predict attribute-specific changes
+    \item Using gradients from attribute classifiers
+\end{itemize}
+
+One advantage of this method is that it can make smooth adjustments to the text's attributes by changing $\alpha$. However, finding good guidance vectors can be difficult, and the method needs careful tuning to keep the text coherent.
+
+
+You're right, I should preserve all the key information and citations while making it clearer. Here's a revised version that maintains the depth while being more readable:
+
+\subsection{Traditional Readability Metrics}
+\label{subsec:traditional-metrics}
+
+Readability formulas estimate text difficulty using surface-level features such as average sentence length, word length, and proportion of complex words. These metrics help evaluate many types of medical content, from patient education materials for conditions like nocturnal enuresis \cite{Fung2024-uh} and bariatric surgery \cite{Lucy2023-zi}, to discharge instructions \cite{Tuan2023-wc} and critical care information \cite{Hanci2024-wv}.
+
+\textbf{Flesch-Kincaid Grade Level (FKGL)} estimates the U.S. grade level needed to understand a text:
+
+\begin{equation}
+    \text{FKGL} = 0.39 \times \left(\frac{\text{words}}{\text{sentences}}\right) + 11.8 \times \left(\frac{\text{syllables}}{\text{words}}\right) - 15.59
+\end{equation}
+
+FKGL scores typically range from 0 to 18, with higher scores indicating more difficult text. A score of 9.2 suggests text suitable for ninth-grade students, while scores above 12 indicate college-level or specialized content.
+
+\textbf{Simple Measure of Gobbledygook (SMOG)} calculates text difficulty based on polysyllabic words in a 30-sentence sample:
+
+\begin{equation}
+    \text{SMOG} = 1.0430 \times \sqrt{\text{polysyllables} \times \left(\frac{30}{\text{sentences}}\right)} + 3.1291
+\end{equation}
+
+Like \gls{fkgl}, \gls{smog} scores correspond to U.S. grade levels. 
+SMOG has gained wide adoption in healthcare settings due to its relative ease of use and focus on vocabulary complexity. Its widespread use in healthcare is supported by a 2010 study published in the Journal of the Royal College of Physicians of Edinburgh, which recommended \gls{smog} as the preferred measure for evaluating consumer-oriented healthcare material \cite{Fitzsimmons2010-mq}.
+
+\textbf{Dale-Chall Readability Score (DCRS)} measures text difficulty by calculating the percentage of words not found in a list of 3,000 familiar words:
+
+\begin{equation}
+    \text{DCRS} = 0.1579 \times \left(\frac{\text{difficult words}}{\text{total words}} \times 100\right) + 0.0496 \times \left(\frac{\text{total words}}{\text{total sentences}}\right)
+\end{equation}
+
+If the percentage of difficult words exceeds 5\%, an additional constant of 3.6365 is added to the raw score to get the final \gls{dcrs}. Scores range from 4.9 or below for easily understood text to 10 or above for very challenging text.
+
+Other commonly used metrics include the \textbf{Automated Readability Index (ARI)}, \textbf{Coleman-Liau Index (CLI)}, \textbf{Gunning Fog Index (GFI)}, and \textbf{Linsear Write Formula}. 
+hile the specific calculations differ, they all aim to estimate text difficulty based on factors like word length, sentence length, and syllable counts.
+
+Traditional readability formulas face several limitations when applied to medical texts:
+
+\begin{itemize}
+    \item They only examine surface-level features, missing deeper aspects of conceptual complexity in medical information \cite{Crossley2022, WANG2013503, Singh2024}.
+    
+    \item They treat the text as a ``bag of words'', ignoring features like information density, organization, coherence, and syntax.
+    
+    \item They do consider the cognitive load imposed by specific terms \cite{Swanson2024}. Short terms like ``polyp'' and ``apnea'' may be challenging for lay readers, while longer words like ``gastrointestinal'' and ``cardiovascular'' may be more familiar in a medical context.
+    
+    \item These formulas were developed using general reading materials, often geared towards children's education levels. The assumptions and thresholds used in these formulas may not generalize well to the specialized language and adult literacy levels of biomedical texts \cite{Crossley2022}.
+
+\end{itemize}
+
+Despite these limitations, readability formulas provide a quantitative starting point for improving medical text clarity. Experts generally recommend using them alongside other evaluation approaches, combining multiple metrics with expert review and user testing \cite{Ko2024-dd, tanprasert-kauchak-2021-flesch}.
