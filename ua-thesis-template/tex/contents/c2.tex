@@ -12,7 +12,7 @@ This chapter presents some basic tips and a few examples on how to use \LaTeX.
 \section{Controlled Text Generation}
 \label{c2:s:controlled-text-generation}
 
-\gls{ctg} is a growing area of \gls{nlp} research that focuses on developing techniques to guide language models in producing outputs with specific desired attributes or properties \cite{liang2024controllabletextgenerationlarge, keskar2019ctrlconditionaltransformerlanguage, dathathri2020plugplaylanguagemodels}.
+\gls{ctg} is a growing area of \gls{nlp} research that focuses on developing techniques to guide language models in producing outputs with specific desired attributes or properties \cite{liang2024controllabletextgenerationlarge, 10.1145/3617680, keskar2019ctrlconditionaltransformerlanguage, dathathri2020plugplaylanguagemodels}.
 The goal is to enable fine-grained control over various aspects of the generated text, such as style, sentiment, topic, or complexity level, without compromising the fluency, coherence, and relevance of the output. 
 This is in contrast to traditional language generation where the model has little control over the nature of the generated text beyond the input prompt.
 
@@ -28,7 +28,7 @@ where $y_{<i}$ represents the tokens generated before position $i$.
 The control attributes $A$ can represent any definable text property, and each attribute can be assigned different values based on the specific generation task and desired level of granularity.
 
 The primary challenge in \gls{ctg} lies in effectively integrating the control attributes into the generation process while preserving the quality of the output. 
-Researchers have proposed various approaches that can be broadly categorized into training-phase methods and inference-phase methods \cite{liang2024controllabletextgenerationlarge, he-etal-2022-ctrlsum}, which will be explored in detail in the following sections.
+Current approaches can be broadly categorized into training-phase and inference-phase methods \cite{liang2024controllabletextgenerationlarge, he-etal-2022-ctrlsum}, which will be explored in detail in the following sections.
 
 \subsection{Training-Phase Methods}
 Training-phase methods focus on adapting the language model's architecture, training objective, or training data to incorporate the desired control attributes. 
@@ -62,9 +62,7 @@ During inference, POINTER first inserts the target keywords into the input seque
 POINTER offers a promising solution for generating medical text with strict lexical constraints, such as including specific medical terms or phrases. 
 However, the model's reliance on keyword insertion limits its ability to control more abstract attributes like text complexity, which often depends on factors beyond vocabulary choice.
 
-XXX 
-FAST
-XXX
+% FAST
 
 \subsubsection{Fine-tuning}
 Fine-tuning is another common training-phase method, where a pre-trained language model is further trained on a smaller, task-specific dataset to learn the desired control attributes. 
@@ -95,15 +93,15 @@ Shi et al. evaluated LiFi on sentiment control and topic control, alongside a ne
 They used GPT-2 Medium as the base model and a variety of automated and human evaluation metrics to assess control strength, fluency, and diversity. 
 LiFi achieved superior performance in control tasks, notably excelling in polarity reversal scenarios (e.g., positive to negative sentiment) and maintaining fluency.
 
-XXX
-FLAN
-InstructCTG
-XXX
+% FLAN
+% InstructCTG
 
 \subsubsection{Reinforcement Learning}
 \gls{rl} offers a more flexible and dynamic approach to \gls{ctg}, where the language model learns to optimize its output based on feedback or reward signals that indicate the quality and alignment of the generated text with the desired attributes. 
 It is particularly well-suited for scenarios where the control attributes are complex, subjective, or difficult to explicitly define, such as generating text with specific styles, tones, or linguistic properties. 
-\gls{rl}-based methods formulate the generation process as a sequential decision-making problem, where the model learns to take actions (i.e., generate tokens) that maximize the expected reward, using algorithms such as REINFORCE \cite{10.1007/BF00992696}, Q-Learning \cite{Watkins1992-pa}, Advantage Actor-Critic (A2C) \cite{mnih2016asynchronousmethodsdeepreinforcement}, and Proximal Policy Optimization (PPO) \cite{schulman2017proximalpolicyoptimizationalgorithms}.
+\gls{rl}-based methods formulate the generation process as a sequential decision-making problem, where the model learns to take actions (i.e., generate tokens) that maximize the expected reward, using algorithms such as REINFORCE \cite{10.1007/BF00992696}, Q-Learning \cite{Watkins1992-pa}, 
+%Advantage Actor-Critic (A2C) \cite{mnih2016asynchronousmethodsdeepreinforcement}, 
+and Proximal Policy Optimization (PPO) \cite{schulman2017proximalpolicyoptimizationalgorithms}.
 
 Stiennon et al. \Cite{stiennon2022learningsummarizehumanfeedback} showed how \gls{rlhf} could be used to train language models to generate better summaries.
 Their method consisted of three main steps: collecting human feedback, training a reward model, and optimizing a policy using reinforcement learning.
@@ -132,28 +130,20 @@ When the model becomes less safe, $\lambda$ increases to prioritize harmlessness
 Through three rounds of iterative training, each incorporating red-team testing to identify vulnerabilities, Safe \gls{rlhf} demonstrated superior results compared to standard \gls{rlhf} and reward shaping approaches. 
 Using Alpaca-7B as the base model, they achieved significant improvements in both helpfulness and harmlessness according to human evaluations, reducing harmful outputs from 53.08\% to 2.45\% while maintaining or improving helpful behavior.
 
-Phatak et al. developed TESLEA to address the challenge of making complex medical literature more accessible to a broader audience.
-Their method focuses specifically on medical text simplification, where the goal is to generate simplified versions of complex medical paragraphs while preserving the original meaning.
-To achieve this, the authors first fine-tuned a BART-based transformer language model on a dataset from the Cochrane Database of Systematic Reviews, which contains paired complex medical paragraphs and their simplified versions written by medical professionals.
-Each pair in this dataset consists of a technical abstract and its "plain language summary" containing fewer than 1024 tokens.
-     
-This fine-tuning process allows the model to learn the specific characteristics and patterns of effective simplification in the medical domain.
+Phatak et al. \cite{info:doi/10.2196/38095} developed TESLEA to address the challenge of making complex medical literature more accessible to a broader audience. 
+Their method focuses specifically on medical text simplification, where the goal is to generate simplified versions of complex medical paragraphs while preserving the original meaning. 
+To achieve this, the authors first fine-tuned a BART-based language model using the standard maximum likelihood estimation (MLE) on a dataset from the Cochrane Database of Scientific Reviews, which contains paired complex medical paragraphs and their simplified versions written by medical professionals.
+This adaptation step helps the model learn the general characteristics of the simplification task and the medical domain, including terminology and writing patterns. 
+The fine-tuned model then undergoes further training using reinforcement learning guided by three custom rewards designed to measure different aspects of text simplification quality: a relevance reward ($R_{cosine}$) that measures semantic similarity using BioSentVec embeddings \cite{Chen_2019}, a \gls{fkgl} reward ($R_{Flesch}$) that optimizes readability, and a lexical simplicity reward ($R_{lexical}$) based on word frequency distributions following Zipf's law. 
+In each \gls{rl} step, the model generates two sets of simplified outputs, one using greedy decoding and another using multinomial sampling. 
+The rewards are computed for both sets of outputs, and the \gls{rl} loss is calculated using the Self-Critical Sequence Training (SCST) algorithm \cite{8099614}, which uses the greedily decoded outputs as baselines to stabilize learning and reduce variance.
+To prevent the model from deviating too far from the initial fine-tuned parameters, the final loss is a weighted sum of the RL loss and the MLE loss.
+TESLEA demonstrated significant improvements in readability, reducing the FKGL by approximately 2.5 points compared to the original text, while maintaining comparable ROUGE and SARI scores with existing baselines. Human evaluations showed strong agreement (>70\%) among domain experts on the quality of generated simplifications across multiple dimensions including fluency, coherence, and factual accuracy.
+The outputs from TESLEA were consistently shorter than those produced by baseline models and the input paragraphs themselves, suggesting it learned to remove unnecessary technical details while retaining the most relevant content.
 
-
-For that, they used a dataset from the Cochrane Database of Scientific Reviews, which contains paired complex medical paragraphs and their simplified versions written by medical professionals.
-
-Their method applies reinforcement learning to train a language model to generate simplified text from complex medical paragraphs.
-
-dataset from the Cochrane Database of Scientific Reviews, which contains paired complex medical paragraphs and their simplified versions written by medical professionals.
-
-
-XXX
-TESLEA
-Efficient RL for Unsupervised Controlled Text Generation
-
-Token-level Direct Preference Optimization
-Quark
-XXX
+% Efficient RL for Unsupervised Controlled Text Generation
+% Token-level Direct Preference Optimization
+% Quark
 
 \subsection{Inference-Phase Methods}
 Inference-phase methods aim to steer the generation process at inference time without changing the language model's parameters.
@@ -163,26 +153,90 @@ This makes them an alternative or complementary solution, especially for applica
 
 \subsubsection{Prompt Engineering}
 Prompt engineering refers to the practice of designing input prompts that guide the language model to generate text with specific attributes or properties. 
-The idea is to provide the model with explicit instructions or cues that signal the desired control conditions, such as keywords, phrases, or templates, which the model can then use to shape the output.
+The idea is to provide the model with explicit instructions or cues that signal the desired control conditions, such as keywords, phrases, or templates, which the model can then use to adjust its output accordingly.
 Prompt engineering is an effective and easy way to control the output of language models without having to change the model architecture or training data.
-The main challenge is in trying to design informative yet unambiguous prompts that the model can accurately interpret and follow.
-To find the right prompts, researchers often rely on human intuition, trial-and-error, and, more recently, automated methods like AutoPrompt \cite{shin-etal-2020-autoprompt} and P-tuning \cite{liu-etal-2022-p}.
+The primary challenge lies in designing informative yet unambiguous prompts that the model can accurately interpret and follow.
+To find the right prompts, researchers often rely on human intuition, trial and error, and, more recently, automated methods.
 
-DAs (Dialogue Acts)
+% Prompt engineering uses either hard prompts (natural language instructions) or soft prompts (trainable vectors) to guide the model's outputs.
+
+AutoPrompt \cite{shin-etal-2020-autoprompt} provides an automated way to find effective discrete prompts for controlling language models. 
+Instead of manually writing prompts, which can be time-consuming and error-prone, AutoPrompt uses a gradient-based algorithm to automatically discover effective trigger tokens. 
+The method starts with a template containing [MASK] tokens and iteratively replaces them with words from the vocabulary by computing which tokens would maximize the probability of desired outputs. 
+To prevent selecting irrelevant tokens, AutoPrompt filters candidates using token statistics and limits the search to a subset of the vocabulary. 
+While originally developed for probing tasks like sentiment analysis, AutoPrompt showed that automatically discovered discrete prompts could effectively control language model behavior without modifying the model itself.
+
+Ramirez et al. \cite{ramirez-etal-2023-controllable} tackled the challenge of controlling dialogue generation through Dialogue Acts (DAs).
+When generating conversational responses, we often want to control not just what is said, but how it is said, whether it's a question, a statement, or a suggestion. 
+However, traditional methods struggle to maintain both the desired dialogue style and semantic accuracy when working with limited examples. 
+Their solution generates multiple candidate responses for a given input using few-shot prompting, and uses a set of six carefully designed ranking functions to select the response that best matches both the intended dialogue act and semantic content. 
+For instance, when aiming to generate a question about a specific topic, their method ensures the response is both properly formed as a question and contains accurate information about the topic.
+
+Zhang et al. \cite{zhang-etal-2023-pcfg} proposed Probabilistic Context-Free Grammar (PCFG) to address an important limitation in \gls{ctg}, specifically the inability to handle new types of controls that weren't seen during training.
+Most systems can only handle a fixed set of control options (e.g., positive or negative sentiment), but PCFG uses a flexible grammar system to understand and process new control instructions. 
+The grammar can combine basic elements in various ways to create diverse natural language commands. 
+For example, from basic elements about style and topic, it can understand new combinations like ``write a formal email about climate change'' even if that exact combination wasn't seen before. 
+The system has three steps: it creates a basic template, fills in the specific control details, and ensures the final command is grammatically correct.
+
+For soft prompts, Prefix-Tuning \cite{li-liang-2021-prefix} adds trainable vectors called ``prefixes'' at every layer of a language model while keeping the model's original parameters frozen. 
+For each layer, the prefix vectors are added before the input sequence, allowing them to influence how that layer processes the text. 
+To improve training stability, the prefixes are generated through a small feedforward neural network rather than being optimized directly. 
+When tested on table-to-text generation and summarization tasks, Prefix-Tuning achieved similar performance to fine-tuning the entire model while using only 0.1\%-2\% of the parameters. 
+The method worked particularly well with limited training data and showed better ability to generalize to new topics compared to standard fine-tuning.
+
+Prompt Tuning \cite{lester-etal-2021-power} takes a simpler approach by only adding trainable vectors at the input layer of the model. 
+These vectors are prepended to the input embeddings and trained through backpropagation to adapt to different tasks. 
+The authors found that with smaller language models, this method performed worse than fine-tuning. 
+However, as model size increased, the performance gap disappeared. 
+At 10 billion parameters, Prompt Tuning matched fine-tuning performance across multiple tasks. 
+This finding is particularly useful for deploying large language models, as it means we can use a single frozen model for many tasks by just storing small sets of trained prompt vectors.
+
+P-tuning \cite{liu-etal-2022-p} improves soft prompting by using a bi-directional LSTM network to convert discrete prompt tokens into trainable embeddings. 
+Instead of directly optimizing the embeddings, which can be unstable, P-tuning first processes them through the LSTM network. 
+The method combines continuous prompts at both the embedding layer and middle layers of the model. 
+P-tuning demonstrated strong performance across various tasks, particularly excelling in few-shot scenarios.
+Its ability to handle both classification and generation tasks effectively proved that continuous prompts can be as powerful as discrete prompts, with the added benefit of being more stable and easier to optimize through backpropagation.
+
+% like AutoPrompt \cite{shin-etal-2020-autoprompt} and P-tuning \cite{liu-etal-2022-p}.
 
 \subsubsection{Guided Decoding}
 Guided decoding is a technique used during the decoding process of a language model to bias the generated text towards the desired control attributes. 
 It works by manipulating the logits or probability distribution of the model to favor tokens that align with the control conditions.
 This is often done using classifiers or reward models that provide additional supervision signals to guide the generation process.
 Guided decoding approaches are often plug-and-play, meaning they can be easily integrated into existing language models without requiring extensive retraining or fine-tuning.
-However, the use of external guiding models can slow down the generation process and make the text sound less natural and coherent.
+However, the use of external guiding models can slow down the generation process and often makes the text sound less natural and coherent.
+
+Dathathri et al. (2020) introduced Plug and Play Language Models (PPLM), which enable controlled text generation through gradient updates in a language model's latent space. 
+The authors demonstrated that we can achieve control over topic and sentiment by combining GPT-2 with lightweight attribute controllers, either bag-of-words or simple discriminators. 
+Since the optimization is done retroactively in the activation space, we wouldn't need to retrain or fine-tune our base model, saving us significant computing resources. 
+The method also allows multiple controllers to work together and provides fine-grained control through a strength parameter $\alpha$ that can be tuned to achieve different levels of attribute control.
+To keep the text sounding natural, PPLM also includes a KL-divergence term that prevents the hidden states from changing too drastically. 
+The authors tested PPLM on several control tasks. It could generate text about specific topics like science or politics, with positive or negative sentiment, or without toxic content. 
+While PPLM worked well for controlling these attributes, it is slow because it needs multiple forward and backward passes through both models at each generation step.
+
+GeDi by Krause et al. [65] made guided decoding more efficient by using small class-conditional language models instead of classifiers. 
+The authors first took a small language model (GPT-2 Medium) and fine-tuned separate versions of it for each attribute.
+For example, one model trained on positive text with a ``<positive>'' control code and another on negative text with a ``<negative>'' code. 
+During generation, GeDi uses both models to calculate the probability that each potential next word will lead to text with the desired attribute. 
+It does this by comparing how likely the text sequence is under both the positive and negative models using Bayes' rule. 
+GeDi then uses these probabilities to adjust how likely each word is to be chosen next by the main language model. 
+The method includes a weighting parameter that controls how much these probabilities influence the final word selection. 
+By comparing the predictions of models trained on opposite attributes, GeDi can effectively control generation while being much faster than PPLM. 
+However, it requires training new conditional models for each attribute you want to control.
+
+DExperts by Liu et al. [85] simplified this idea further. 
+Instead of computing classification probabilities, DExperts directly combines the predictions from three models: a base language model, an "expert" model trained on text with the desired attribute (like non-toxic text), and an "anti-expert" model trained on text with the undesired attribute (like toxic text). 
+At each step, DExperts adds the expert's prediction scores to the base model's scores while subtracting the anti-expert's scores. 
+A control parameter determines how strongly these expert models influence the generation. 
+The authors showed this simple approach was very effective at making GPT-2 and GPT-3's text less toxic while staying fluent and natural. 
+They also found that small expert models (125M parameters) could successfully guide much larger base models (1.5B parameters). 
+Like GeDi, DExperts needs separate expert models for each attribute, but these can be much smaller than the base model.
 
 XXX
 PPLM
 GeDi
 DExperts
 Arithmetic
-MUCOCO
 MixAndMatch
 LM-Steer
 XXX
@@ -250,7 +304,6 @@ Second, readability formulas often treat all words equally based on length or sy
 Polysyllabic medical terms may be familiar to experts but challenging for lay readers. Conversely, short words like ``apnea'' or ``polyp'' may also be difficult for average adults to understand.
 Third, these formulas were developed using general reading materials, often geared towards children's education levels. 
 The assumptions and thresholds used in these formulas may not generalize well to the specialized language and adult literacy levels of biomedical texts \cite{Crossley2022}.
-Finally, readability scores are typically reported as a single average or grade level for an entire text, obscuring any variability in difficulty within the document.
 Despite these drawbacks, readability formulas provide an objective, quantitative measure of text complexity that can serve as a starting point for improving the clarity and accessibility of health-related materials. 
 However, experts generally recommend using these formulas as part of a more holistic approach, combining multiple metrics with expert evaluation and user testing to ensure that health information is truly accessible and understandable for the intended audience \cite{Ko2024-dd, tanprasert-kauchak-2021-flesch}.
 
@@ -278,14 +331,13 @@ Furthermore, BERTScore's greedy alignment approach may allow system outputs to r
 \gls{rouge} measures the n-gram overlap between the simplified text and the references, with higher scores indicating greater lexical similarity.
 Different \gls{rouge} variants focus on various aspects of n-gram matching:
 \begin{itemize}
-    \item \gls{rouge}-N calculates the recall based on the ratio of matching n-grams (e.g., unigrams for \gls{rouge}-1, bigrams for \gls{rouge}-2) to total reference n-grams, but it does not account for the order or contiguity of the matches. 
+    \item \gls{rouge}-N calculates the recall based on the ratio of matching n-grams (e.g., unigrams for \gls{rouge}-1, bigrams for \gls{rouge}-2) to the total reference n-grams, but it does not account for the order or contiguity of the matches. 
     \item \gls{rouge}-L addresses this by considering the precision, recall, and F-measure of the largest common subsequence, which preserves order but allows gaps. 
     \item \gls{rouge}-S offers a more flexible matching by measuring the overlap of skip-bigrams, capturing both local and long-range sentence structure similarities. 
     \item \gls{rouge}-W is a weighted version of \gls{rouge}-L that assigns higher importance to consecutive matches, favoring longer common subsequences.
 \end{itemize}
 These \gls{rouge} variants can capture lexical and structural similarities at different granularities, but they do not explicitly measure semantic similarity, potentially missing differences in meaning between the original and simplified texts, and do not account for readability factors such as vocabulary or syntax, which are crucial for text simplification \cite{xu2024reasoningcomparisonllmenhancedsemantic}.
 Ganesan \cite{ganesan2018rouge20updatedimproved} addressed some of these shortcomings in \gls{rouge} 2.0, which improves upon the original metric by incorporating WordNet-based synonym matching and allowing evaluation of specific topics through \gls{pos} based filtering. Similarly, Zhang et al. \cite{ZHANG2024121364} proposed \gls{rouge}-SEM, which combines \gls{rouge} with a Siamese-BERT network to measure semantic similarity and uses back-translation to rewrite texts that are semantically similar but lexically different.
-Despite that, other metrics specifically targeting readability aspects may still be necessary for a more well-rounded evaluation of simplification quality \cite{li2024largelanguagemodelsbiomedical}.
 
 Other reference-based metrics that have been used for text simplification include the \gls{bleu}, which calculates the precision of n-gram matches between the candidate and reference, with a brevity penalty \cite{papineni-etal-2002-bleu}; \gls{meteor}, which computes a weighted F-score based on exact, stem, synonym, and paraphrase matches between the candidate and reference \cite{banerjee-lavie-2005-meteor}; and \gls{ter}, which measures the minimum number of edits (insertions, deletions, substitutions, and shifts) required to transform the candidate text into the reference \cite{snover-etal-2006-study}.
 All reference-based metrics require high-quality reference simplifications, which may be difficult and expensive to obtain, especially for large biomedical corpora \cite{alva-manchego-etal-2021-un, 94205144dd7945cc99b5a6544451b668, deutsch-etal-2022-limitations}. 

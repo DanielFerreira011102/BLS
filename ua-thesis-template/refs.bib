@@ -14,6 +14,144 @@
   month=apr,
 }
 
+@inproceedings{Chen_2019,
+   title={BioSentVec: creating sentence embeddings for biomedical texts},
+   url={http://dx.doi.org/10.1109/ICHI.2019.8904728},
+   DOI={10.1109/ichi.2019.8904728},
+   booktitle={2019 IEEE International Conference on Healthcare Informatics (ICHI)},
+   publisher={IEEE},
+   author={Chen, Qingyu and Peng, Yifan and Lu, Zhiyong},
+   year={2019},
+   month=jun 
+}
+
+@inproceedings{lester-etal-2021-power,
+    title = "The Power of Scale for Parameter-Efficient Prompt Tuning",
+    author = "Lester, Brian  and
+      Al-Rfou, Rami  and
+      Constant, Noah",
+    editor = "Moens, Marie-Francine  and
+      Huang, Xuanjing  and
+      Specia, Lucia  and
+      Yih, Scott Wen-tau",
+    booktitle = "Proceedings of the 2021 Conference on Empirical Methods in Natural Language Processing",
+    month = nov,
+    year = "2021",
+    address = "Online and Punta Cana, Dominican Republic",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2021.emnlp-main.243/",
+    doi = "10.18653/v1/2021.emnlp-main.243",
+    pages = "3045--3059",
+    abstract = "In this work, we explore {\textquotedblleft}prompt tuning,{\textquotedblright} a simple yet effective mechanism for learning {\textquotedblleft}soft prompts{\textquotedblright} to condition frozen language models to perform specific downstream tasks. Unlike the discrete text prompts used by GPT-3, soft prompts are learned through backpropagation and can be tuned to incorporate signals from any number of labeled examples. Our end-to-end learned approach outperforms GPT-3`s few-shot learning by a large margin. More remarkably, through ablations on model size using T5, we show that prompt tuning becomes more competitive with scale: as models exceed billions of parameters, our method {\textquotedblleft}closes the gap{\textquotedblright} and matches the strong performance of model tuning (where all model weights are tuned). This finding is especially relevant because large models are costly to share and serve and the ability to reuse one frozen model for multiple downstream tasks can ease this burden. Our method can be seen as a simplification of the recently proposed {\textquotedblleft}prefix tuning{\textquotedblright} of Li and Liang (2021) and we provide a comparison to this and other similar approaches. Finally, we show that conditioning a frozen model with soft prompts confers benefits in robustness to domain transfer and enables efficient {\textquotedblleft}prompt ensembling.{\textquotedblright} We release code and model checkpoints to reproduce our experiments."
+}
+
+@inproceedings{li-liang-2021-prefix,
+    title = "Prefix-Tuning: Optimizing Continuous Prompts for Generation",
+    author = "Li, Xiang Lisa  and
+      Liang, Percy",
+    editor = "Zong, Chengqing  and
+      Xia, Fei  and
+      Li, Wenjie  and
+      Navigli, Roberto",
+    booktitle = "Proceedings of the 59th Annual Meeting of the Association for Computational Linguistics and the 11th International Joint Conference on Natural Language Processing (Volume 1: Long Papers)",
+    month = aug,
+    year = "2021",
+    address = "Online",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2021.acl-long.353/",
+    doi = "10.18653/v1/2021.acl-long.353",
+    pages = "4582--4597",
+    abstract = "Fine-tuning is the de facto way of leveraging large pretrained language models for downstream tasks. However, fine-tuning modifies all the language model parameters and therefore necessitates storing a full copy for each task. In this paper, we propose prefix-tuning, a lightweight alternative to fine-tuning for natural language generation tasks, which keeps language model parameters frozen and instead optimizes a sequence of continuous task-specific vectors, which we call the prefix. Prefix-tuning draws inspiration from prompting for language models, allowing subsequent tokens to attend to this prefix as if it were {\textquotedblleft}virtual tokens{\textquotedblright}. We apply prefix-tuning to GPT-2 for table-to-text generation and to BART for summarization. We show that by learning only 0.1{\%} of the parameters, prefix-tuning obtains comparable performance in the full data setting, outperforms fine-tuning in low-data settings, and extrapolates better to examples with topics that are unseen during training."
+}
+
+@inproceedings{zhang-etal-2023-pcfg,
+    title = "{PCFG}-Based Natural Language Interface Improves Generalization for Controlled Text Generation",
+    author = "Zhang, Jingyu  and
+      Glass, James  and
+      He, Tianxing",
+    editor = "Palmer, Alexis  and
+      Camacho-collados, Jose",
+    booktitle = "Proceedings of the 12th Joint Conference on Lexical and Computational Semantics (*SEM 2023)",
+    month = jul,
+    year = "2023",
+    address = "Toronto, Canada",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2023.starsem-1.27/",
+    doi = "10.18653/v1/2023.starsem-1.27",
+    pages = "295--313",
+    abstract = "Existing work on controlled text generation (CTG) assumes a control interface of categorical attributes. In this work, we propose a natural language (NL) interface, where we craft a PCFG to embed the control attributes into natural language commands, and propose variants of existing CTG models that take commands as input. In our experiments, we design tailored setups to test the model`s generalization abilities. We find our PCFG-based command generation approach is effective for handling unseen commands compared to fix-set templates. Further, our proposed NL models can effectively generalize to unseen attributes (a new ability enabled by the NL interface), as well as unseen attribute combinations. Interestingly, in model comparisons, the simple conditional generation approach, enhanced with our proposed NL interface, is shown to be a strong baseline in those challenging settings."
+}
+
+@inproceedings{ramirez-etal-2023-controllable,
+    title = "Controllable Generation of Dialogue Acts for Dialogue Systems via Few-Shot Response Generation and Ranking",
+    author = "Ramirez, Angela  and
+      Agarwal, Kartik  and
+      Juraska, Juraj  and
+      Garg, Utkarsh  and
+      Walker, Marilyn",
+    editor = "Stoyanchev, Svetlana  and
+      Joty, Shafiq  and
+      Schlangen, David  and
+      Dusek, Ondrej  and
+      Kennington, Casey  and
+      Alikhani, Malihe",
+    booktitle = "Proceedings of the 24th Annual Meeting of the Special Interest Group on Discourse and Dialogue",
+    month = sep,
+    year = "2023",
+    address = "Prague, Czechia",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2023.sigdial-1.32/",
+    doi = "10.18653/v1/2023.sigdial-1.32",
+    pages = "355--369",
+    abstract = "Dialogue systems need to produce responses that realize multiple types of dialogue acts (DAs) with high semantic fidelity. In the past, natural language generators (NLGs) for dialogue were trained on large parallel corpora that map from a domain-specific DA and its semantic attributes to an output utterance. Recent work shows that pretrained language models (LLMs) offer new possibilities for controllable NLG using prompt-based learning. Here we develop a novel few-shot overgenerate-and-rank approach that achieves the controlled generation of DAs. We compare eight few-shot prompt styles that include a novel method of generating from textual pseudo-references using a textual style transfer approach. We develop six automatic ranking functions that identify outputs with both the correct DA and high semantic accuracy at generation time. We test our approach on three domains and four LLMs. To our knowledge, this is the first work on NLG for dialogue that automatically ranks outputs using both DA and attribute accuracy. For completeness, we compare our results to fine-tuned few-shot models trained with 5 to 100 instances per DA. Our results show that several prompt settings achieve perfect DA accuracy, and near perfect semantic accuracy (99.81{\%}) and perform better than few-shot fine-tuning."
+}
+
+@Article{info:doi/10.2196/38095,
+author="Phatak, Atharva
+and Savage, David W
+and Ohle, Robert
+and Smith, Jonathan
+and Mago, Vijay",
+title="Medical Text Simplification Using Reinforcement Learning (TESLEA): Deep Learning--Based Text Simplification Approach",
+journal="JMIR Med Inform",
+year="2022",
+month="Nov",
+day="18",
+volume="10",
+number="11",
+pages="e38095",
+keywords="medical text simplification; reinforcement learning; natural language processing; manual evaluation",
+abstract="Background: In most cases, the abstracts of articles in the medical domain are publicly available. Although these are accessible by everyone, they are hard to comprehend for a wider audience due to the complex medical vocabulary. Thus, simplifying these complex abstracts is essential to make medical research accessible to the general public. Objective: This study aims to develop a deep learning--based text simplification (TS) approach that converts complex medical text into a simpler version while maintaining the quality of the generated text. Methods: A TS approach using reinforcement learning and transformer--based language models was developed. Relevance reward, Flesch-Kincaid reward, and lexical simplicity reward were optimized to help simplify jargon-dense complex medical paragraphs to their simpler versions while retaining the quality of the text. The model was trained using 3568 complex-simple medical paragraphs and evaluated on 480 paragraphs via the help of automated metrics and human annotation. Results: The proposed method outperformed previous baselines on Flesch-Kincaid scores (11.84) and achieved comparable performance with other baselines when measured using ROUGE-1 (0.39), ROUGE-2 (0.11), and SARI scores (0.40). Manual evaluation showed that percentage agreement between human annotators was more than 70{\%} when factors such as fluency, coherence, and adequacy were considered. Conclusions: A unique medical TS approach is successfully developed that leverages reinforcement learning and accurately simplifies complex medical paragraphs, thereby increasing their readability. The proposed TS approach can be applied to automatically generate simplified text for complex medical text data, which would enhance the accessibility of biomedical research to a wider audience. ",
+issn="2291-9694",
+doi="10.2196/38095",
+url="https://medinform.jmir.org/2022/11/e38095",
+url="https://doi.org/10.2196/38095",
+url="http://www.ncbi.nlm.nih.gov/pubmed/36399375"
+}
+
+
+@INPROCEEDINGS{8099614,
+  author={Rennie, Steven J. and Marcheret, Etienne and Mroueh, Youssef and Ross, Jerret and Goel, Vaibhava},
+  booktitle={2017 IEEE Conference on Computer Vision and Pattern Recognition (CVPR)}, 
+  title={Self-Critical Sequence Training for Image Captioning}, 
+  year={2017},
+  volume={},
+  number={},
+  pages={1179-1195},
+  keywords={Training;Inference algorithms;Measurement;Logic gates;Predictive models;Learning (artificial intelligence)},
+  doi={10.1109/CVPR.2017.131}
+}
+
+@misc{brown2020languagemodelsfewshotlearners,
+      title={Language Models are Few-Shot Learners}, 
+      author={Tom B. Brown and Benjamin Mann and Nick Ryder and Melanie Subbiah and Jared Kaplan and Prafulla Dhariwal and Arvind Neelakantan and Pranav Shyam and Girish Sastry and Amanda Askell and Sandhini Agarwal and Ariel Herbert-Voss and Gretchen Krueger and Tom Henighan and Rewon Child and Aditya Ramesh and Daniel M. Ziegler and Jeffrey Wu and Clemens Winter and Christopher Hesse and Mark Chen and Eric Sigler and Mateusz Litwin and Scott Gray and Benjamin Chess and Jack Clark and Christopher Berner and Sam McCandlish and Alec Radford and Ilya Sutskever and Dario Amodei},
+      year={2020},
+      eprint={2005.14165},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2005.14165}, 
+}
+
 @misc{dai2023saferlhfsafereinforcement,
       title={Safe RLHF: Safe Reinforcement Learning from Human Feedback}, 
       author={Josef Dai and Xuehai Pan and Ruiyang Sun and Jiaming Ji and Xinbo Xu and Mickel Liu and Yizhou Wang and Yaodong Yang},
@@ -781,6 +919,26 @@ note = "17th International AAAI Conference on Web and Social Media, ICWSM 2023 ;
       archivePrefix={arXiv},
       primaryClass={cs.CL},
       url={https://arxiv.org/abs/1912.02164}, 
+}
+
+@article{10.1145/3617680,
+author = {Zhang, Hanqing and Song, Haolin and Li, Shaoyu and Zhou, Ming and Song, Dawei},
+title = {A Survey of Controllable Text Generation Using Transformer-based Pre-trained Language Models},
+year = {2023},
+issue_date = {March 2024},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {56},
+number = {3},
+issn = {0360-0300},
+url = {https://doi.org/10.1145/3617680},
+doi = {10.1145/3617680},
+abstract = {Controllable Text Generation (CTG) is an emerging area in the field of natural language generation (NLG). It is regarded as crucial for the development of advanced text generation technologies that better meet the specific constraints in practical applications. In recent years, methods using large-scale pre-trained language models (PLMs), in particular the widely used Transformer-based PLMs, have become a new paradigm of NLG, allowing generation of more diverse and fluent text. However, due to the limited level of interpretability of deep neural networks, the controllability of these methods needs to be guaranteed. To this end, controllable text generation using Transformer-based PLMs has become a rapidly growing yet challenging new research hotspot. A diverse range of approaches have emerged in the past 3 to 4 years, targeting different CTG tasks that require different types of controlled constraints. In this article, we present a systematic critical review on the common tasks, main approaches, and evaluation methods in this area. Finally, we discuss the challenges that the field is facing, and put forward various promising future directions. To the best of our knowledge, this is the first survey article to summarize the state-of-the-art CTG techniques from the perspective of Transformer-based PLMs. We hope it can help researchers and practitioners in the related fields to quickly track the academic and technological frontier, providing them with a landscape of the area and a roadmap for future research.},
+journal = {ACM Comput. Surv.},
+month = oct,
+articleno = {64},
+numpages = {37},
+keywords = {systematic review, controllability, Transformer, pre-trained language models, Controllable text generation}
 }
 
 @misc{liang2024controllabletextgenerationlarge,

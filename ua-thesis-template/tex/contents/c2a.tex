@@ -1,0 +1,831 @@
+\chapter{Background}
+\label{c2}
+
+This chapter presents the foundational concepts and current research in controlled text generation. We begin with an overview of large language models and their text generation capabilities, followed by a detailed examination of controlled text generation methods. The chapter concludes with an analysis of language complexity measurement approaches, which are essential for evaluating text simplification systems.
+
+\section{Language Models}
+\label{c2:s:language-models}
+
+Language models are statistical models that learn to predict the probability distribution of words or tokens in a sequence. Modern neural language models, particularly those based on the Transformer architecture, process text through multiple layers of self-attention mechanisms that capture relationships between words at different positions in the sequence.
+
+The text generation process in these models follows an autoregressive approach, where each token is predicted based on previously generated tokens. Given a sequence of tokens $X = \{x_1, x_2, ..., x_n\}$, the model computes the probability of the next token as:
+
+\begin{equation}
+    P(X) = P(x_1, x_2, ..., x_n) = \prod_{i=1}^n p(x_i|x_{<i})
+\end{equation}
+
+where $x_{<i}$ represents all tokens before position $i$. This formulation allows the model to generate text by iteratively sampling tokens from the predicted probability distribution.
+
+Pre-trained language models learn these probability distributions through self-supervised training on large text corpora. During pre-training, models can acquire various types of knowledge:
+
+\begin{itemize}
+    \item Syntactic patterns and grammatical rules
+    \item Semantic relationships between words
+    \item Domain-specific terminology and conventions
+    \item Common facts and world knowledge
+\end{itemize}
+
+However, the standard generation process provides limited control over the attributes of the generated text. The model generates tokens based solely on learned probabilities, making it difficult to ensure specific characteristics in the output, such as maintaining a consistent style, following a particular format, or adhering to domain-specific constraints.
+
+\section{Controlled Text Generation}
+\label{c2:s:controlled-text-generation}
+
+Controlled text generation addresses the challenge of guiding language models to produce text with specific desired properties while maintaining fluency and coherence \cite{liang2024controllabletextgenerationlarge, 10.1145/3617680, keskar2019ctrlconditionaltransformerlanguage, dathathri2020plugplaylanguagemodels}. Unlike standard text generation, controlled generation explicitly incorporates additional constraints or conditions into the generation process.
+
+The task involves generating text that satisfies specified control conditions $C$ while preserving the quality of the original language model output. When we incorporate these control conditions into the generation process, the probability distribution becomes:
+
+\begin{equation}
+    P(X|C) = P(x_1, x_2, ..., x_n|C) = \prod_{i=1}^n p(x_i|x_{<i}, C)
+\end{equation}
+
+Control conditions $C$ can represent any definable text property and take various forms depending on the specific task requirements and application domain.
+
+\subsection{Control Conditions and Types}
+
+Control conditions in text generation serve different purposes based on the application requirements. These conditions broadly fall into three categories: semantic control, structural control, and lexical control.
+
+\subsubsection{Semantic Control}
+
+Semantic control focuses on abstract properties of the generated text:
+
+\begin{itemize}
+   \item \textbf{Safety:} Text generation systems must avoid producing harmful, toxic, or biased content. This includes detecting and preventing discriminatory language, hate speech, or misleading information. For example, when generating dialogue responses, the system should avoid suggesting harmful actions or expressing biased views.
+   
+   \item \textbf{Sentiment:} Applications often need to control the emotional tone of generated text. A customer service chatbot might need to maintain a positive tone, while a news article generator should maintain neutral sentiment. The sentiment control extends beyond simple positive/negative classification to include fine-grained emotional states.
+   
+   \item \textbf{Topic:} Topic control ensures the generated text remains focused on specific subject matter. For instance, when generating scientific text, the system should maintain relevant terminology and concepts while avoiding unrelated topics. Topic control becomes particularly important in long-form text generation where maintaining thematic coherence is crucial.
+\end{itemize}
+
+\subsubsection{Structural Control}
+
+Structural control manages the organization and format of generated text:
+
+\begin{itemize}
+   \item \textbf{Format Specifications:} Many applications require text to follow specific formats. This includes generating poetry with particular rhyme schemes and meter, creating structured documents like academic papers or technical reports, or producing code with specific syntax requirements. The system must understand and maintain these format constraints throughout the generation process.
+   
+   \item \textbf{Document Organization:} Long-form text often requires specific organizational structures. This includes section ordering, paragraph breaks, and hierarchical relationships between different parts of the text. For example, a scientific paper generator needs to maintain standard sections like introduction, methods, results, and discussion.
+   
+   \item \textbf{Length Control:} Applications may need to generate text of specific lengths, from concise summaries to detailed explanations. Length control involves more than simple truncation - it requires generating complete, coherent text that naturally fits within the specified length constraints.
+\end{itemize}
+
+\subsubsection{Lexical Control}
+
+Lexical control operates at the vocabulary level:
+
+\begin{itemize}
+   \item \textbf{Keyword Inclusion:} Some applications require the generated text to incorporate specific keywords or phrases. This is common in search engine optimization, technical documentation, or domain-specific content generation. The challenge lies in naturally integrating these keywords while maintaining text fluency.
+   
+   \item \textbf{Vocabulary Constraints:} Text generation systems often need to restrict their vocabulary based on the target audience or domain. For example, text simplification systems must avoid complex terminology when generating content for general audiences. Similarly, technical writing might require using standardized terminology from a controlled vocabulary.
+   
+   \item \textbf{Term Consistency:} In technical or specialized writing, maintaining consistent terminology throughout the text is crucial. This includes using the same terms for specific concepts and avoiding synonyms that might cause confusion.
+\end{itemize}
+
+\subsection{Challenges in Control Integration}
+
+Integrating control conditions into text generation presents several technical challenges:
+
+\begin{itemize}
+   \item \textbf{Control-Quality Trade-off:} Stronger control over text attributes often comes at the cost of reduced fluency or naturalness. Finding the right balance between control strength and text quality remains an ongoing challenge.
+   
+   \item \textbf{Multiple Constraint Interaction:} When multiple control conditions are applied simultaneously, they may conflict with each other. For example, maintaining a specific sentiment while including required keywords, or following a strict format while ensuring topic relevance.
+   
+   \item \textbf{Long-range Consistency:} As text length increases, maintaining consistent control becomes more difficult. Models may drift from the specified attributes or lose coherence over longer sequences.
+   
+   \item \textbf{Implicit Control Factors:} Some control aspects, like style or tone, are difficult to specify explicitly and may depend on subtle linguistic features that are hard to capture and manipulate.
+\end{itemize}
+
+\subsection{Methods Overview}
+
+Methods for implementing controlled text generation can be divided into two main approaches: training-time methods and inference-time methods. 
+This division reflects when control mechanisms are integrated into the text generation process \cite{liang2024controllabletextgenerationlarge, he-etal-2022-ctrlsum}.
+
+\begin{itemize}
+   \item \textbf{Training-time Methods:} These methods modify the language model during the training phase through various techniques:
+        \begin{itemize}
+            \item Complete model retraining with control-specific objectives
+            \item Fine-tuning to adapt existing models
+            \item Training additional modules or adapters
+            \item Reinforcement learning with feedback signals
+        \end{itemize}
+       
+   \item \textbf{Inference-time Methods:} These methods guide text generation during inference without modifying the base model:
+       \begin{itemize}
+            \item Prompt design and engineering
+            \item Guided decoding strategies
+            \item Latent state manipulation
+            \item Post-generation editing 
+        \end{itemize}
+\end{itemize}
+
+\section{Training-time Methods}
+\label{c2:s:training-time}
+
+Training-time methods directly incorporate control mechanisms into the model's parameters or architecture. These methods aim to teach the model to recognize and respond to control signals during the training process.
+
+\subsection{Model Retraining}
+
+Complete model retraining is one of the earliest approaches to controlled text generation.
+This method involves training a language model from scratch with control-specific architectures or objectives.
+
+The CTRL model \cite{keskar2019ctrlconditionaltransformerlanguage} exemplifies this approach, introducing control codes to guide text generation. During training, each text segment in the dataset is paired with a control code that specifies attributes like style, domain, or topic. For example:
+
+\begin{verbatim}
+[Science] The study found significant correlations...
+[Reviews Rating: 5.0] This product exceeded my expectations...
+[Wikipedia] The Industrial Revolution began...
+\end{verbatim}
+
+CTRL learns to associate these codes with specific text characteristics through natural co-occurrence during training. 
+The model processes control codes as special tokens that influence the entire generation process. 
+The training data preparation involves:
+
+\begin{itemize}
+   \item Identifying relevant control attributes
+   \item Creating consistent control code formats
+   \item Collecting and labeling large-scale training data
+   \item Ensuring balanced representation of different control codes
+\end{itemize}
+
+While CTRL demonstrates effective high-level control, the model cannot easily adapt to new control attributes without retraining, and the discrete nature of control codes limits the level of precision it can achieve.
+
+The CoCon architecture \cite{chan2022coconselfsupervisedapproachcontrolled} addresses these limitations by introducing a more flexible content-conditioning mechanism. 
+Instead of relying on discrete control codes, CoCon embeds control signals directly into the model's hidden states. 
+The architecture combines a base language model with a dedicated content-conditioning module that processes control signals. 
+Integration layers then combine the conditioned and base representations to influence the generation process.
+
+To train this architecture effectively, CoCon implements multiple complementary loss functions:
+
+\begin{itemize}
+   \item \textbf{Primary Reconstruction Loss ($L_{recon}$):} Ensures the model can accurately generate text that incorporates the given control signals
+   \item \textbf{Null Content Loss ($L_{null}$):} Helps the model maintain robust performance even when control signals are absent, which is important for practical applications
+   \item \textbf{Cycle Reconstruction Loss ($L_{cycle}$):} Promotes consistency in how control signals are applied. It ensures that if we extract control signals from a generated text and use them to condition another generation, we obtain similar results.
+   \item \textbf{Adversarial Loss ($L_{adv}$):} Improves the naturalness of the generated text by training the model to produce outputs that are indistinguishable from human-written text while maintaining the desired control attributes
+\end{itemize}
+
+The total loss function for training the CoCon model is a weighted combination of these four components:
+
+\begin{equation}
+    L_{total} = L_{recon} + \lambda_1 L_{null} + \lambda_2 L_{cycle} + \lambda_3 L_{adv}
+\end{equation}
+
+where the $\lambda$ parameters balance the contribution of each loss term.
+
+This multi-loss training strategy ensures that the model learns to balance control requirements with text fluency and coherence.
+Furthermore, by keeping the original language model intact and only adding a lightweight content-conditioning module, CoCon largely preserves the pre-trained knowledge and capabilities of the base model.
+
+For scenarios requiring precise lexical control, the POINTER model \cite{zhang-etal-2020-pointer} introduces a fundamentally different approach based on insertion-based generation. 
+Unlike traditional left-to-right generation models that predict one token at a time in sequence, POINTER can insert tokens at any position in the sequence. 
+This makes it particularly well-suited for ensuring specific keywords or phrases appear in the generated text.
+
+POINTER operates through a progressive refinement process. 
+The generation begins with an initial sequence containing only the required lexical constraints (i.e., the keywords or phrases that must appear in the final text). The model then iteratively inserts new tokens between existing ones, gradually building up the complete text. At each step, a learned policy determines both which tokens to insert and where to place them, considering the surrounding context and the overall coherence of the sequence.
+
+This insertion-based approach provides several advantages for lexically constrained generation. It guarantees that required keywords will appear in the output since they form the starting point of generation. The ability to insert tokens at any position allows for more flexible text construction compared to strict left-to-right generation. However, this flexibility comes with computational costs, as each insertion operation requires evaluating multiple possible positions and tokens. The process can become particularly intensive for longer sequences where many insertions are needed to complete the text.
+
+\subsection{Fine-tuning}
+
+Fine-tuning adapts a pre-trained language model to handle controlled text generation by adjusting its parameters using specialized datasets or training objectives. 
+This approach preserves the general language generation capabilities of the pre-trained model while improving its ability to respond to specific control signals.
+
+The fine-tuning process modifies the model parameters according to:
+
+\begin{equation}
+    \Theta^* = \Theta + \Delta\Theta
+\end{equation}
+
+where $\Theta$ represents the original parameters of the pre-trained model, and $\Delta\Theta$ represents the updates learned during fine-tuning. The parameter updates are computed by minimizing a task-specific loss:
+
+\begin{equation}
+    \Delta\Theta = \arg\min_{\Theta} L(D_{control}, f(X; \Theta))
+\end{equation}
+
+where $D_{control}$ is a dataset designed for the control task, and $f(X; \Theta)$ represents the model's output for input $X$.
+
+\subsubsection{Adapter-Based Fine-tuning}
+
+Adapter-based fine-tuning introduces specialized neural modules into the pre-trained model while keeping its original parameters frozen. This reduces the risk of catastrophic forgetting, where fine-tuning causes the model to lose previously learned knowledge.
+
+Auxiliary Tuning \cite{zeldes2020technicalreportauxiliarytuning} adds a separate auxiliary model alongside the pre-trained language model. 
+The auxiliary model processes both the input text and control signals, producing logits that are combined with the base model's output through a softmax operation:
+
+\begin{equation}
+    P(y|x,C) = \text{softmax}(f_{LM}(x) + f_{AUX}(x,C))
+\end{equation}
+
+where $f_{LM}$ represents the frozen pre-trained model and $f_{AUX}$ is the trainable auxiliary model. 
+Intuitively, the auxiliary model learns the residual logits needed to shift the probability distribution of the pre-trained model towards the target distribution.
+To further improve training efficiency, the lower layers of the pre-trained model can also be used as a feature extractor for the auxiliary model inputs. 
+There are no constraints on the auxiliary model architecture, except that it must output logits over the same vocabulary as the original model.
+It is typically much smaller than the pre-trained model (e.g., a few Transformer layers) and can be trained on a small amount of data.
+
+% DisCup \cite{discuptodo} extends this approach by incorporating an attribute discriminator and anti-likelihood training.
+% The discriminator evaluates whether generated text exhibits the desired attributes, while anti-likelihood training actively discourages undesired token generations.
+% The method combines three loss components:
+% 
+% \begin{itemize}
+%     \item \textbf{Cross-entropy loss ($L_{CE}$)}: The standard language model training objective, ensuring the model generates coherent text
+%     \item \textbf{Unlikelihood loss ($L_{unlikelihood}$)}: Explicitly penalizes the model for generating tokens that are unlikely under the control attributes
+%     \item \textbf{Discriminator loss ($L_{discriminator}$)}: Trains the attribute discriminator to distinguish between text with and without the desired attributes
+% \end{itemize}
+% 
+% Overall, the DisCup loss function can be expressed as:
+% 
+% \begin{equation}
+%     L_{DisCup} = L_{CE} + \alpha L_{unlikelihood} + \beta L_{discriminator}
+% \end{equation}
+% 
+% where $\alpha$ and $\beta$ are balancing parameters that control the relative strength of each component.
+% DisCup demonstrates improved control performance compared to standard fine-tuning methods, particularly in scenarios where the control attributes are subtle or require precise lexical control.
+
+LiFi \cite{shi2024lifilightweightcontrolledtext} introduces small adapter modules with a bottleneck architecture into the transformer model. 
+These adapters modify the model's behavior while only introducing a small number of additional parameters (i.e., approximately 0.04\% of the original model size).
+The adaptation process works at multiple levels:
+
+\begin{itemize}
+   \item \textbf{Layer-wise Adaptation:} Each transformer layer receives a dedicated adapter module that processes and modifies the hidden states. The adapter consists of:
+       \begin{itemize}
+           \item A down-projection that compresses the hidden state information
+           \item A non-linear activation function
+           \item An up-projection that restores the original dimensionality
+           \item A residual connection that preserves important features
+       \end{itemize}
+   
+   \item \textbf{Control Signal Processing:} The model processes control signals through:
+       \begin{itemize}
+           \item An attribute classifier that provides continuous control signal
+           \item A fusion mechanism that combines multiple control signals
+           \item Position-specific adaptation of control strength (e.g., to emphasize certain parts of the text)
+       \end{itemize}
+\end{itemize}
+
+\subsubsection{Data-driven Methods}
+
+FLAN introduces instruction tuning, converting control objectives into natural language instructions that guide the model's behavior. This method builds on the observation that language models can understand and follow natural language directions. The process involves several key components:
+
+\begin{itemize}
+   \item \textbf{Instruction Creation:} Each control task is reformulated as a natural language instruction. For example:
+       \begin{verbatim}
+       Task: Sentiment control
+       Instruction: "Write a positive review about [topic]"
+       
+       Task: Style transfer
+       Instruction: "Rewrite this text in a formal style"
+       \end{verbatim}
+   
+   \item \textbf{Task Mixing:} The training process combines multiple instruction types, helping the model learn general instruction-following behavior rather than memorizing specific patterns
+   
+   \item \textbf{Zero-shot Generalization:} The model learns to handle new instruction types by understanding the semantic relationship between similar instructions
+\end{itemize}
+
+InstructCTG extends this idea specifically for controlled text generation. The method creates specialized instruction datasets that capture various control constraints. For instance, to control text complexity, instructions might include:
+
+\begin{verbatim}
+"Simplify this medical text for a general audience"
+"Explain this concept using only basic vocabulary"
+"Rewrite this paragraph at a middle-school reading level"
+\end{verbatim}
+
+The training process uses these instructions to teach the model how to:
+\begin{itemize}
+   \item \textbf{Interpret Control Instructions:} The model learns to extract control requirements from natural language descriptions
+   
+   \item \textbf{Apply Multiple Controls:} Instructions can combine multiple constraints, teaching the model to balance different control objectives
+   
+   \item \textbf{Maintain Generation Quality:} The instruction format includes quality requirements alongside control constraints
+\end{itemize}
+
+\subsubsection{Contrastive Learning Methods}
+
+Contrastive learning in controlled text generation focuses on teaching models to distinguish between text with and without desired attributes. This creates a more robust understanding of control requirements through direct comparison of examples.
+
+CHRT modifies hidden representations through contrastive learning to enable multi-attribute control. The method maintains the base model's parameters while learning control-specific transformations of its hidden states. For each attribute, CHRT learns a transformation function that maps hidden states to an attribute-specific space. The contrastive loss compares representations of texts with similar and different attributes:
+
+\begin{equation}
+   L_{contrast} = -\log\frac{\exp(s(h_a, h_p)/\tau)}{\sum_{n \in N} \exp(s(h_a, h_n)/\tau)}
+\end{equation}
+
+where $h_a$ represents the anchor example's hidden state, $h_p$ is a positive example with the same attribute, and $h_n$ represents negative examples with different attributes. The similarity function $s(\cdot,\cdot)$ measures how close two hidden states are in the transformed space, while $\tau$ controls the temperature of the softmax distribution.
+
+Click develops this idea further by applying contrastive learning at the sequence level. The method works with complete sequences rather than individual hidden states, allowing it to capture longer-range attribute relationships. For each training sequence, Click:
+
+\begin{itemize}
+   \item \textbf{Positive Pair Creation:} Generates variations of the input that maintain the target attributes
+   
+   \item \textbf{Negative Sampling:} Identifies sequences that differ in the target attributes but are otherwise similar
+   
+   \item \textbf{Sequence-Level Comparison:} Computes similarity scores between complete sequences rather than individual states or tokens
+\end{itemize}
+
+The training objective maximizes the similarity between sequences with matching attributes while minimizing similarity with sequences that differ in the target attributes:
+
+\begin{equation}
+   L_{Click} = -\log\frac{\exp(s(x, x^+))}{\exp(s(x, x^+)) + \sum_{x^- \in \mathcal{N}} \exp(s(x, x^-))}
+\end{equation}
+
+where $x^+$ represents sequences with matching attributes and $x^-$ represents sequences with different attributes.
+
+CP introduces a perplexity-based contrastive learning strategy. Instead of working directly with hidden states or sequence similarities, CP uses language model perplexity as a measure of attribute alignment. The intuition is that a well-trained language model should find sequences with desired attributes more "natural" (lower perplexity) than sequences without these attributes.
+
+The method calculates perplexity scores for both positive and negative examples:
+
+\begin{equation}
+   \text{PPL}(x) = \exp\left(-\frac{1}{n}\sum_{i=1}^n \log p(x_i|x_{<i})\right)
+\end{equation}
+
+These scores form the basis for a contrastive loss that encourages the model to assign lower perplexity to sequences with desired attributes:
+
+\begin{equation}
+   L_{CP} = -\log\frac{\text{PPL}(x^+)}{\text{PPL}(x^+) + \sum_{x^- \in \mathcal{N}} \text{PPL}(x^-)}
+\end{equation}
+
+By using perplexity as the comparison metric, CP ties attribute control directly to the language model's fundamental text generation capabilities. This helps maintain text fluency while achieving the desired control objectives.
+
+\subsubsection{Multi-attribute Control}
+
+Controlling multiple attributes simultaneously introduces additional challenges beyond single-attribute control. The interactions between different control objectives can lead to conflicts or interference, requiring specialized methods to maintain consistent control.
+
+DCG addresses these challenges through a disentangled prompt-based system. The method separates different attributes into independent control dimensions using a specialized prompting architecture. For each combination of attributes $A_1, ..., A_n$, the generation probability becomes:
+
+\begin{equation}
+    P(y|x, A_1, ..., A_n) = \text{softmax}(\sum_{i=1}^n \alpha_i f_{A_i}(x) + f_{base}(x))
+\end{equation}
+
+where $f_{A_i}(x)$ represents the attribute-specific prompt function for attribute $A_i$, $f_{base}(x)$ is the base language model output, and $\alpha_i$ are learnable weights that balance different attributes. The disentanglement process involves:
+
+\begin{itemize}
+    \item \textbf{Attribute Decomposition:} Each attribute is processed independently through its dedicated prompt function, allowing the model to learn attribute-specific features without interference
+    
+    \item \textbf{Dynamic Weighting:} The $\alpha_i$ parameters adjust automatically during generation, allowing the model to prioritize different attributes based on context
+    
+    \item \textbf{Interference Reduction:} The independent processing paths minimize conflicts between different control objectives
+\end{itemize}
+
+CLMI takes a different approach to multi-attribute control through continuous interpolation between specialized language models. Instead of learning prompts or transformations, CLMI trains separate models for different attribute combinations and learns to interpolate between them. The interpolated probability distribution is:
+
+\begin{equation}
+    P_{interp}(y|x) = \sum_{i=1}^k w_i P_i(y|x)
+\end{equation}
+
+where $P_i$ represents different attribute-specific models and $w_i$ are interpolation weights. The weights are computed dynamically based on the desired attribute combinations:
+
+\begin{equation}
+    w_i = \frac{\exp(g(A_i, A_{target}))}{\sum_{j=1}^k \exp(g(A_j, A_{target}))}
+\end{equation}
+
+Here, $g(A_i, A_{target})$ measures the similarity between model $i$'s attributes and the target attributes. This formulation allows CLMI to:
+
+\begin{itemize}
+    \item \textbf{Handle Novel Combinations:} Generate text with previously unseen attribute combinations by interpolating between known models
+    
+    \item \textbf{Maintain Consistency:} Ensure smooth transitions between different attribute settings through continuous interpolation
+    
+    \item \textbf{Scale Efficiently:} Add new attributes by training additional models without modifying existing ones
+\end{itemize}
+
+The interpolation weights are learned during training using a combination of objectives:
+
+\begin{itemize}
+    \item \textbf{Attribute Accuracy Loss:} Ensures the interpolated output maintains desired attributes
+    
+    \item \textbf{Text Quality Loss:} Preserves fluency and coherence of the generated text
+    
+    \item \textbf{Interpolation Smoothness Loss:} Promotes smooth transitions between different attribute settings
+\end{itemize}
+
+\subsection{Reinforcement Learning}
+\label{c2:s:rl}
+
+Reinforcement learning methods optimize text generation by providing feedback signals that indicate how well the generated text satisfies control objectives. These methods can handle complex, non-differentiable control criteria and adapt to human preferences. The RL optimization adjusts model parameters $\Theta$ according to:
+
+\begin{equation}
+   \Theta^* = \Theta + \alpha\nabla_\Theta \mathbb{E}_{\pi_\Theta}[R(X)]
+\end{equation}
+
+where $\alpha$ is the learning rate, $\pi_\Theta$ is the policy defined by the model parameters, and $R(X)$ is the reward for generated text $X$. 
+
+\subsubsection{Automated Feedback Methods}
+
+GDC addresses a fundamental challenge in RL-based text generation: maintaining the quality of the base language model while optimizing for control objectives. The method frames controlled generation as a constrained optimization problem:
+
+\begin{equation}
+   L_{GDC} = \mathbb{E}_{x\sim p_\theta}[\log p_\theta(x) - \log p_0(x)] + \lambda\sum_i c_i(p_\theta)
+\end{equation}
+
+where $p_\theta$ is the controlled distribution, $p_0$ is the original model distribution, and $c_i$ are constraint functions. This formulation:
+
+\begin{itemize}
+   \item \textbf{Distribution Matching:} The first term keeps the controlled distribution close to the original model's distribution, preserving text quality
+   
+   \item \textbf{Constraint Satisfaction:} The second term ensures the generated text meets specified control criteria
+   
+   \item \textbf{Balance Parameter:} $\lambda$ controls the trade-off between distribution matching and constraint satisfaction
+\end{itemize}
+
+DRL introduces dense reinforcement learning for style transfer, providing token-level feedback during generation. The reward function combines multiple objectives:
+
+\begin{equation}
+   R_t = r_{style}(x_t) + \alpha r_{content}(x_t) + \beta r_{fluency}(x_t)
+\end{equation}
+
+The components measure:
+\begin{itemize}
+   \item \textbf{Style Alignment ($r_{style}$):} How well each token contributes to the target style
+   \item \textbf{Content Preservation ($r_{content}$):} Whether key information is maintained
+   \item \textbf{Language Quality ($r_{fluency}$):} The fluency and grammaticality of the generated text
+\end{itemize}
+
+TDPO optimizes generation using direct preference optimization at the token level. The method minimizes the forward KL divergence between the policy and reference distribution while maintaining closeness to the original model:
+
+\begin{equation}
+   L_{TDPO} = \mathbb{E}_{x\sim\pi_\theta}[-\log\pi_\theta(x) + \lambda D_{KL}(\pi_\theta\|\pi_0)]
+\end{equation}
+
+The token-level optimization allows TDPO to:
+
+\begin{itemize}
+   \item Make fine-grained adjustments to the generation process
+   \item Maintain consistent control throughout the sequence
+   \item Adapt to changing control requirements during generation
+\end{itemize}
+
+TESLEA demonstrates the application of reinforcement learning specifically for medical text simplification. The method combines MLE-based fine-tuning with RL to optimize multiple aspects of text simplification quality. Starting with a BART-based language model fine-tuned on the Cochrane Database of Scientific Reviews, TESLEA introduces three specialized rewards:
+
+\begin{equation}
+    R_{total} = \alpha R_{cosine} + \beta R_{Flesch} + \gamma R_{lexical}
+\end{equation}
+
+Each reward component serves a specific purpose:
+
+\begin{itemize}
+    \item \textbf{Relevance Reward ($R_{cosine}$):} Uses BioSentVec embeddings to measure semantic similarity between the original and simplified text, ensuring that medical meaning is preserved during simplification
+    
+    \item \textbf{Readability Reward ($R_{Flesch}$):} Employs the Flesch-Kincaid Grade Level to guide the model toward generating more readable text while avoiding oversimplification
+    
+    \item \textbf{Lexical Simplicity Reward ($R_{lexical}$):} Based on word frequency distributions following Zipf's law, encouraging the use of more common, accessible vocabulary
+\end{itemize}
+
+The model generates two versions of simplified text at each training step:
+
+\begin{itemize}
+    \item A greedily decoded version serving as a baseline
+    \item A version using multinomial sampling for exploration
+\end{itemize}
+
+TESLEA uses Self-Critical Sequence Training (SCST) to compute the RL loss:
+
+\begin{equation}
+    L_{RL} = -(R(y^s) - R(y^b))\sum_t \log P(y^s_t|y^s_{<t})
+\end{equation}
+
+where $y^s$ is the sampled sequence, $y^b$ is the baseline sequence, and $R(\cdot)$ is the total reward. This formulation:
+
+\begin{itemize}
+    \item Reduces variance in gradient estimates through the baseline comparison
+    \item Allows stable training without requiring a separate critic network
+    \item Maintains exploration through sampling while providing a stable learning signal
+\end{itemize}
+
+To prevent the model from deviating too far from its initial fine-tuned state, TESLEA combines the RL objective with the original MLE loss:
+
+\begin{equation}
+    L_{total} = (1 - \lambda)L_{MLE} + \lambda L_{RL}
+\end{equation}
+
+This combination helps:
+\begin{itemize}
+    \item Preserve the general language generation capabilities
+    \item Maintain domain-specific medical knowledge
+    \item Balance simplification objectives with content accuracy
+\end{itemize}
+
+\subsubsection{Human Feedback Methods}
+
+RLHF introduces a framework for incorporating human preferences into language model training. The method consists of three stages: collecting human feedback, training a reward model, and optimizing the language model using RL.
+
+The first stage creates a dataset of human preferences by presenting annotators with pairs of model outputs $(y_1, y_2)$ for each prompt $x$. Annotators indicate which output better satisfies the desired criteria. This process generates a dataset of preferences $(x, y_w, y_l)$, where $y_w$ and $y_l$ represent preferred and non-preferred outputs.
+
+Using this preference data, RLHF trains a reward model $r_\theta(x,y)$ to predict human preferences:
+
+\begin{equation}
+    L_{RM} = -\mathbb{E}_{(x,y_w,y_l)\sim\mathcal{D}}[\log\sigma(r_\theta(x,y_w) - r_\theta(x,y_l))]
+\end{equation}
+
+This reward model learns to assign higher scores to outputs that humans would prefer. The model architecture typically matches the base language model but with an additional scalar output head.
+
+The final stage uses Proximal Policy Optimization (PPO) to fine-tune the language model using the learned reward function. The PPO objective:
+
+\begin{equation}
+    L_{PPO} = \mathbb{E}_t[\min(r_t(\theta)\hat{A}_t, \text{clip}(r_t(\theta), 1-\epsilon, 1+\epsilon)\hat{A}_t)]
+\end{equation}
+
+where:
+\begin{itemize}
+    \item $r_t(\theta)$ is the probability ratio between new and old policies
+    \item $\hat{A}_t$ is the advantage estimate using the reward model
+    \item $\epsilon$ is the clipping parameter that limits policy updates
+\end{itemize}
+
+Safe RLHF extends this framework by explicitly separating helpfulness and safety objectives. The method recognizes that these goals can conflict - maximizing helpfulness might lead to generating potentially harmful content. To address this, Safe RLHF:
+
+\begin{itemize}
+    \item \textbf{Separates Data Collection:} Gathers separate human annotations for helpfulness and safety, allowing clearer evaluation of each aspect
+    
+    \item \textbf{Trains Distinct Models:} Develops separate reward and cost models for helpfulness and safety respectively
+    
+    \item \textbf{Uses Constrained Optimization:} Maximizes helpfulness while keeping safety costs below specified thresholds
+\end{itemize}
+
+The optimization problem becomes:
+
+\begin{equation}
+    \max_\theta \mathbb{E}_{x\sim\mathcal{D}}[R(x,y)] \text{ subject to } \mathbb{E}_{x\sim\mathcal{D}}[C(x,y)] \leq \tau
+\end{equation}
+
+where $R(x,y)$ is the reward model score (helpfulness), $C(x,y)$ is the cost model score (safety risk), and $\tau$ is a safety threshold. This constrained optimization uses the Lagrangian method:
+
+\begin{equation}
+    L(\theta, \lambda) = \mathbb{E}_{x\sim\mathcal{D}}[R(x,y) - \lambda(C(x,y) - \tau)]
+\end{equation}
+
+The Lagrange multiplier $\lambda$ automatically adjusts to balance helpfulness and safety:
+\begin{itemize}
+    \item $\lambda$ increases when safety constraints are violated
+    \item $\lambda$ decreases when the model becomes overly conservative
+\end{itemize}
+
+\section{Inference-time Methods}
+\label{c2:s:inference}
+
+Inference-time methods control text generation without modifying the base language model's parameters. These methods manipulate the generation process during inference by guiding the model's outputs toward desired attributes. They offer flexibility in adapting to different control requirements without requiring retraining, though often at the cost of increased inference time.
+
+\subsection{Prompt Engineering}
+
+Prompt engineering techniques control text generation through carefully designed input prompts. These prompts can be either discrete tokens (hard prompts) or learned continuous vectors (soft prompts) that guide the model's behavior.
+
+\subsubsection{Hard Prompts}
+
+AutoPrompt introduces an automated method for discovering effective discrete prompts. Instead of manual prompt design, which can be time-consuming and suboptimal, AutoPrompt uses a gradient-based search to find trigger tokens that elicit desired model behaviors. The method:
+
+\begin{itemize}
+    \item Starts with a template containing [MASK] tokens
+    \item Iteratively replaces masks with vocabulary tokens
+    \item Selects tokens that maximize the probability of desired outputs
+    \item Filters candidates using token statistics to ensure relevance
+\end{itemize}
+
+The token selection process optimizes:
+
+\begin{equation}
+    t^* = \arg\max_{t \in \mathcal{V}} P(y_{target}|x, t)
+\end{equation}
+
+where $t$ is a candidate token from vocabulary $\mathcal{V}$, and $y_{target}$ represents the desired output.
+
+\subsubsection{Soft Prompts}
+
+Prefix-Tuning adds trainable continuous vectors called "prefixes" at every layer of a language model. For each layer $l$, the activation $h_l$ becomes:
+
+\begin{equation}
+    h_l = [P_l; h_{l_{orig}}]
+\end{equation}
+
+where $P_l$ is the learned prefix for layer $l$ and $h_{l_{orig}}$ is the original activation. To improve training stability, the prefixes are generated through a small neural network rather than being optimized directly:
+
+\begin{equation}
+    P_l = \text{MLP}_l(z)
+\end{equation}
+
+where $z$ is a shared latent vector and $\text{MLP}_l$ is a layer-specific transformation network.
+
+P-tuning modifies soft prompting by using a bi-directional LSTM to convert discrete prompt tokens into trainable embeddings. Unlike direct embedding optimization, which can be unstable, P-tuning processes the embeddings through an LSTM network:
+
+\begin{equation}
+    e_i = \text{LSTM}(z_i, h_{i-1})
+\end{equation}
+
+where $z_i$ represents the initial embedding for position $i$, and $e_i$ is the processed embedding. The LSTM adds sequential structure to the prompt embeddings, helping maintain consistency across different positions. The method combines prompt embeddings at multiple layers of the model:
+
+\begin{equation}
+    h_l = f_l([e_1, ..., e_n, h_{l_{text}}])
+\end{equation}
+
+where $f_l$ is the layer transformation and $h_{l_{text}}$ represents the text embeddings.
+
+\subsection{Guided Decoding}
+
+Guided decoding methods modify the text generation process by adjusting the model's output probabilities during inference. These methods often use external models or scoring functions to guide the generation toward desired attributes.
+
+PPLM combines pre-trained language models with attribute classifiers to control text generation. At each generation step, PPLM updates the model's hidden activations using gradients from an attribute model. The update process follows:
+
+\begin{equation}
+    \Delta H_t = \Delta H_t + \alpha \frac{\nabla_{\Delta H_t} \log p(a|H_t + \Delta H_t)}{\|\nabla_{\Delta H_t} \log p(a|H_t + \Delta H_t)\|^\gamma}
+\end{equation}
+
+where:
+\begin{itemize}
+    \item $H_t$ represents the hidden states at step $t$
+    \item $\Delta H_t$ is the update to the hidden states
+    \item $p(a|H_t)$ is the probability of the desired attribute $a$
+    \item $\alpha$ controls the strength of the update
+    \item $\gamma$ is a normalization parameter
+\end{itemize}
+
+After updating the hidden states, PPLM performs a forward pass to obtain modified output probabilities:
+
+\begin{equation}
+    \tilde{o}_{t+1}, H_{t+1} = \text{LM}(x_t, \tilde{H_t}), \quad \tilde{H_t} = H_t + \Delta H_t
+\end{equation}
+
+The key components of PPLM include:
+
+\begin{itemize}
+    \item \textbf{Attribute Model:} A lightweight classifier or bag-of-words model that defines the target attributes
+    
+    \item \textbf{Stepwise Optimization:} Iterative updates to hidden states at each generation step
+    
+    \item \textbf{KL Penalty:} A regularization term that prevents the hidden states from deviating too far from their original values
+\end{itemize}
+
+GeDi introduces a different approach to guided decoding by using class-conditional language models as generative discriminators. The method trains a smaller language model to distinguish between text with different attributes, then uses this model to guide a larger language model during generation.
+
+For a sequence of tokens $x_{1:T}$, GeDi computes the probability that the sequence belongs to the desired class $c$:
+
+\begin{equation}
+    P_\theta(c|x_{1:t}) = \frac{P(c)\prod_{j=1}^t P_\theta(x_j|x_{<j}, c)}{\sum_{c' \in \{c,\bar{c}\}} P(c')\prod_{j=1}^t P_\theta(x_j|x_{<j}, c')}
+\end{equation}
+
+where:
+\begin{itemize}
+    \item $P(c)$ represents the prior probability of class $c$
+    \item $\bar{c}$ denotes the anti-class or undesired attribute
+    \item $P_\theta(x_j|x_{<j}, c)$ is the conditional probability from the discriminator
+\end{itemize}
+
+During generation, GeDi combines the base language model probabilities with the discriminator predictions using Bayes' rule:
+
+\begin{equation}
+    P_w(x_t|x_{<t}, c) \propto P_{LM}(x_t|x_{<t})P_\theta(c|x_t, x_{<t})^\omega
+\end{equation}
+
+The parameter $\omega$ controls the strength of attribute guidance, allowing flexible adjustment of control intensity.
+
+DExperts simplifies the guided decoding process by using expert and anti-expert language models. Instead of computing classification probabilities, DExperts directly combines predictions from three models:
+
+\begin{equation}
+    \tilde{P}(x_t|x_{<t}) = \text{softmax}(z_t + \alpha(z'_t - z''_t))
+\end{equation}
+
+where:
+\begin{itemize}
+    \item $z_t$ represents logits from the base language model
+    \item $z'_t$ represents logits from the expert model
+    \item $z''_t$ represents logits from the anti-expert model
+    \item $\alpha$ controls the influence of the expert guidance
+\end{itemize}
+
+The expert models are trained on text that exhibits the desired attributes, while anti-expert models are trained on text with undesired attributes. This approach offers several advantages:
+
+\begin{itemize}
+    \item Simpler implementation compared to GeDi or PPLM
+    \item Lower computational overhead during inference
+    \item Ability to use small expert models (125M parameters) to guide much larger base models (1.5B parameters)
+\end{itemize}
+
+\subsection{Latent Space Manipulation}
+
+Latent space manipulation methods control text generation by modifying the internal representations within the language model. These methods identify and adjust directions in the model's latent space that correspond to specific attributes.
+
+GENhance introduces a method for mapping sequences into a latent space where specific attributes can be controlled. The method trains an encoder to separate the latent vectors into components related and unrelated to target attributes. 
+
+The encoding process creates a split representation:
+
+\begin{equation}
+    z = [z_{attr}; z_{content}]
+\end{equation}
+
+where $z_{attr}$ captures attribute-specific information and $z_{content}$ maintains other content features. The method employs contrastive learning with pairs of sequences that differ in target attributes. The contrastive loss ensures the separation of attribute and content information:
+
+\begin{equation}
+    L_{contrast} = -\log\frac{\exp(s(z_{attr}, z^+_{attr}))}{\sum_{n} \exp(s(z_{attr}, z^n_{attr}))}
+\end{equation}
+
+where $z^+_{attr}$ comes from a sequence with matching attributes and $z^n_{attr}$ from sequences with different attributes.
+
+ICV (In-Context Vectors) generates attribute-specific guiding vectors by analyzing differences in hidden states between example pairs. For each example pair $(x_i, y_i)$, ICV:
+
+\begin{enumerate}
+    \item Obtains hidden states $H(x_i)$ and $H(y_i)$ from the last token of input and output
+    \item Computes the difference between these states:
+    \begin{equation}
+        \Delta H_i = H(y_i) - H(x_i)
+    \end{equation}
+    \item Applies Principal Component Analysis to the differences:
+    \begin{equation}
+        \text{ICV} = \text{PCA}(\{\Delta H_i\})
+    \end{equation}
+\end{enumerate}
+
+During generation, ICV adds this guiding vector to each token's embedding:
+
+\begin{equation}
+    H_{new}(t) = H(t) + \text{ICV}
+\end{equation}
+
+The method offers several advantages:
+\begin{itemize}
+    \item No training required - vectors are extracted directly from examples
+    \item Works with any pre-trained language model
+    \item Can combine multiple attribute vectors for multi-attribute control
+\end{itemize}
+
+MIRACLE addresses multi-attribute control through a Conditional Variational Autoencoder (CVAE) framework combined with an Energy-Based Model (EBM). The CVAE maps text into a structured latent space:
+
+\begin{equation}
+    q_\phi(z|x, a) = \mathcal{N}(\mu_\phi(x, a), \sigma_\phi(x, a))
+\end{equation}
+
+where $x$ is the input text and $a$ represents the desired attributes. The decoder generates text conditioned on both the latent vector and attributes:
+
+\begin{equation}
+    p_\theta(x|z, a) = \prod_{t=1}^T p_\theta(x_t|x_{<t}, z, a)
+\end{equation}
+
+The EBM component scores generated text based on multiple criteria:
+\begin{itemize}
+    \item Attribute satisfaction
+    \item Text coherence
+    \item Response relevance
+\end{itemize}
+
+The energy function combines these scores:
+
+\begin{equation}
+    E(x, a) = \sum_i w_i E_i(x, a)
+\end{equation}
+
+where $E_i$ are individual scoring functions and $w_i$ are learnable weights.
+
+\section{Language Complexity}
+\label{c2:s:linguistic-complexity}
+
+Language complexity measurement plays a crucial role in text simplification tasks, particularly for medical texts where precise communication is essential. Traditional readability metrics and reference-based evaluation methods each offer different insights into text complexity.
+
+\subsection{Traditional Readability Metrics}
+
+Traditional readability formulas estimate text difficulty using surface-level features such as sentence length, word length, and the proportion of complex words. These metrics have been extensively applied to assess medical texts, including patient education materials, consent forms, and discharge instructions.
+
+The Flesch-Kincaid Grade Level (FKGL) remains one of the most widely used metrics. It estimates the U.S. grade level required to understand a text:
+
+\begin{equation}
+    FKGL = 0.39 \times \left(\frac{\text{words}}{\text{sentences}}\right) + 11.8 \times \left(\frac{\text{syllables}}{\text{words}}\right) - 15.59
+\end{equation}
+
+FKGL scores range from 0 to 18, with higher scores indicating more complex text. For example, a score of 9.2 suggests text appropriate for a ninth-grade reading level, while scores above 12 indicate college-level or specialized content.
+
+The SMOG formula provides another estimate of educational level needed for comprehension, focusing particularly on polysyllabic words in a 30-sentence sample:
+
+\begin{equation}
+    SMOG = 1.0430 \times \sqrt{\text{polysyllables} \times \left(\frac{30}{\text{sentences}}\right)} + 3.1291
+\end{equation}
+
+SMOG has gained prominence in healthcare settings due to its emphasis on vocabulary complexity. A 2010 study in the Journal of the Royal College of Physicians of Edinburgh recommended SMOG as the preferred metric for evaluating healthcare materials.
+
+The Dale-Chall Readability Score examines text difficulty based on sentence length and the percentage of "difficult" words - those not appearing in a list of 3,000 familiar words:
+
+\begin{equation}
+    DCRS = 0.1579 \times \left(\frac{\text{difficult words}}{\text{total words}} \times 100\right) + 0.0496 \times \left(\frac{\text{total words}}{\text{total sentences}}\right)
+\end{equation}
+
+When the percentage of difficult words exceeds 5\%, an additional constant of 3.6365 is added. Scores range from 4.9 or below for simple texts to 10 or above for technical content.
+
+Traditional readability formulas face several limitations when applied to medical texts:
+
+\begin{itemize}
+    \item They rely on surface features, missing deeper conceptual complexity
+    \item Medical terms may be difficult regardless of length
+    \item Formulas developed for general texts may not capture medical text nuances
+    \item Short technical terms like "apnea" or "polyp" can be challenging despite their brevity
+\end{itemize}
+
+
+
+\subsection{Adapters}
+\dots
+
+\subsection{Reinforcement Learning}
+\dots
+
+\section{Inference-time Methods}
+\label{c2:s:inference-time}
+
+\subsection{Prompt Engineering}
+\dots
+
+\subsection{Guided Decoding}
+\dots
+
+\subsection{Latent State Manipulation}
+\dots
+
+\subsection{Post-Generation Editing}
+\dots

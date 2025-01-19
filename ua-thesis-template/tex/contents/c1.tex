@@ -1,13 +1,24 @@
 \chapter{Introduction}
 \label{c1}
 
-\gls{nlp} has witnessed remarkable progress in recent years, largely driven by the development of powerful language models that can generate human-like text. These models, such as BERT \cite{devlin2018bert}, GPT-3 \cite{brown2020language}, and T5 \cite{raffel2020exploring}, have demonstrated impressive performance across various language tasks, from question answering to text summarization. However, despite their undeniable potential, current language models often struggle to generate outputs with fine-grained control over the complexity and technical depth of the content \cite{zhang2022survey, liuControllingNeuralText2022}. This limitation poses significant challenges in domains like healthcare, where effective communication requires tailoring information to different levels of expertise, from patients to medical professionals \cite{wittenberg2017simplifying}.
-
-Controlled text generation is an area of research that aims to address this challenge by developing language models that can produce outputs at different levels of complexity while maintaining semantic consistency. Early approaches to controlled text generation relied on rule-based methods \cite{kukich1983design}, which used hand-crafted rules and templates to generate text with specific properties. However, these methods were limited in their ability to capture the nuances and diversity of human language. With the advent of deep learning, neural network-based approaches have become more prevalent in controlled text generation \cite{gatt2018survey}. These models learn to generate text by conditioning on various attributes, such as sentiment or topic \cite{hu2017toward, keskar2019ctrl}.
-Despite the progress made by these approaches, there are still challenges in achieving fine-grained control over the complexity of generated text. Existing methods often rely on discrete attributes or pre-defined complexity levels, which limit the model's ability to generate outputs with continuous variations in complexity \cite{zhang2022survey}. Additionally, maintaining semantic consistency across different complexity levels is a significant challenge, as models may generate text that deviates from the intended meaning when the complexity is altered \cite{liu2022controlling}. Evaluating the quality and effectiveness of controlled text generation systems is also difficult, as it requires assessing both the linguistic quality and the appropriateness of the generated text for the target audience \cite{liu2022controlling}.
-The main objective of this dissertation is to investigate a new approach to controlled text generation that enables fine-grained control over the complexity of generated text while maintaining semantic consistency, specifically in the context of biomedical and consumer health text.
-The proposed approach will explore the use of a continuous space of complexity levels, allowing for smooth transitions between different levels of technical depth. This continuous complexity control mechanism will be incorporated into a unified language model architecture to generate text that can be easily adapted to various levels of expertise without compromising the intended meaning.
-To achieve this objective, the dissertation will focus on the following key aspects:
+In recent years, there has been a growing demand for accessible and reliable health information online.
+Consumers increasingly turn to the internet to find answers to their health-related questions, seeking guidance on topics like symptoms, treatments, and preventive care.
+However, the complexity of medical information can be a significant barrier for many people.
+Most health content is written for a highly educated audience, using technical jargon and assuming a high level of background knowledge \cite{clarke2016readability,storm2020assessing}.
+This can lead to confusion, misunderstanding, and potentially even harmful decisions if people are unable to fully grasp the information they find \cite{charow2019readability}.
+At the same time, oversimplifying medical information comes with its own risks.
+Leaving out important details or nuance for the sake of simplicity can also lead to misinterpretation and poor decision-making \cite{clark2011simplifying}.
+The ideal scenario would be to provide health information at a level of complexity tailored to each individual user's needs and background.
+Someone with medical training should be able to access detailed, technical explanations, while someone with less health literacy should be able to find clear, straightforward answers that they can easily understand and act upon.
+Artificial intelligence, particularly large language models (LLMs), have the potential to bridge this gap by dynamically generating health content at different complexity levels.
+LLMs like GPT-3 \cite{brown2020languagemodelsfewshotlearners} and PaLM \cite{chowdhery2022palm} have demonstrated remarkable abilities to produce fluent, coherent text in a variety of domains.
+By providing these models with health-related prompts, it may be possible to generate accurate, relevant answers to consumer health questions.
+However, current LLMs lack fine-grained control over the complexity of their generated text.
+While they can be prompted to give "simple" or "detailed" answers, there is no guarantee that the outputs will genuinely meet a specific target level of complexity.
+For health applications in particular, it is critical to have robust, reliable control over the complexity of the generated text.
+We need to ensure that "simple" answers are not \textit{too} simple, leaving out key information, and that "complex" answers do not introduce errors in an attempt to include more advanced terminology and concepts.
+Therefore, the core motivation of this work is to develop a system that combines the flexibility and power of LLMs with the careful control needed for providing accurate, appropriate health information to a diverse public audience.
+By enabling fine-grained control over the complexity of generated text, we aim to make health information more accessible and useful for everyone who needs it.
 
 \begin{itemize}
 \item Investigating existing approaches to controlled text generation and identifying their limitations in achieving fine-grained complexity control and maintaining semantic consistency.
