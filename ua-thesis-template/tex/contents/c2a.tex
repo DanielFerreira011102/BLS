@@ -434,6 +434,21 @@ The components measure:
    \item \textbf{Language Quality ($r_{fluency}$):} The fluency and grammaticality of the generated text
 \end{itemize}
 
+% TDPO \cite{zeng2024tokenlevel} improves on previous work by optimizing at the token level while preserving generation diversity. The method maximizes:
+% 
+% \begin{equation}
+% \mathbb{E}_{x,y_{<t},z \sim \pi_\theta} [A_{\pi_{ref}}([x,y_{<t}], z) - \beta D_{KL}(\pi_\theta \| \pi_{ref})]
+% \end{equation}
+% 
+% where $A_{\pi_{ref}}$ measures improvement over a reference policy $\pi_{ref}$. 
+% The key innovation is using sequential KL divergence to maintain diversity while optimizing for control. 
+% 
+% \begin{equation}
+% D_{SeqKL}(x,y;\pi_1\|\pi_2) = \sum_{t=1}^T D_{KL}(\pi_1(\cdot|[x,y_{<t}]) \| \pi_2(\cdot|[x,y_{<t}]))
+% \end{equation}
+% 
+% This prevents the model from collapsing to a limited set of outputs while still meeting control objectives.
+
 TDPO optimizes generation using direct preference optimization at the token level. The method minimizes the forward KL divergence between the policy and reference distribution while maintaining closeness to the original model:
 
 \begin{equation}
@@ -829,3 +844,64 @@ Traditional readability formulas face several limitations when applied to medica
 
 \subsection{Post-Generation Editing}
 \dots
+
+
+\subsection{Inference-time Methods}
+
+Unlike training-time methods, inference-time methods control text generation without changing the model's parameters. They work by adjusting how the model generates text at runtime. These methods are more flexible since they don't need additional training, but they can be slower during generation.
+
+\subsubsection{Prompt Engineering}
+
+Prompt engineering controls text generation by designing specific input instructions. The method comes in two types:
+
+\begin{itemize}
+    \item \textbf{Hard prompts} use natural language instructions like "Write a positive review" or "Explain this in simple terms".
+    \item \textbf{Soft prompts} use trainable vectors that are added to the input embeddings.
+\end{itemize}
+
+P-tuning adds trainable vectors to the input using a bidirectional LSTM:
+
+\begin{equation}
+    h_t = \text{LSTM}(e_t, h_{t-1})
+\end{equation}
+
+where $e_t$ is the embedding of token $t$ and $h_t$ is the hidden state. The model then uses these hidden states as soft prompts to guide generation. This method works better than hard prompts since the vectors can capture more nuanced control signals.
+
+\subsubsection{Guided Decoding}
+
+Guided decoding changes the probability distribution of the next token during generation. The basic idea is to adjust the logits (scores) before selecting each new token.
+
+One approach uses classifier guidance. For a classifier $C$ that measures some attribute (like toxicity or sentiment), we modify the generation probabilities:
+
+\begin{equation}
+    P'(x_t|x_{<t}) = \frac{P(x_t|x_{<t})C(x_{\leq t})^\alpha}{\sum_{x'} P(x'|x_{<t})C(x_{\leq t}')^\alpha}
+\end{equation}
+
+where $\alpha$ controls how strongly the classifier influences generation. Higher $\alpha$ values make the text follow the classifier's preferences more strictly.
+
+Another method uses expert models. DExperts runs the text through both an expert model trained on good examples and an anti-expert trained on bad examples. The logits from these models adjust the main model's output:
+
+\begin{equation}
+    l'_t = l_t + \alpha(l^{\text{expert}}_t - l^{\text{anti}}_t)
+\end{equation}
+
+where $l_t$ are the original logits and $l'_t$ are the adjusted logits. This helps the model avoid generating unwanted content while keeping the text natural.
+
+\subsubsection{Latent Space Manipulation}
+
+This method works by changing the model's internal representations during generation. The key idea is to find directions in the model's hidden space that correspond to specific attributes.
+
+For a hidden state $h_t$, we can add a guidance vector $v$ that pushes the generation toward desired attributes:
+
+\begin{equation}
+    h'_t = h_t + \alpha v
+\end{equation}
+
+These guidance vectors can come from different sources:
+\begin{itemize}
+    \item Comparing the hidden states of examples with and without the desired attribute
+    \item Training a small network to predict attribute-specific changes
+    \item Using gradients from attribute classifiers
+\end{itemize}
+
+One advantage of this method is that it can make smooth adjustments to the text's attributes by changing $\alpha$. However, finding good guidance vectors can be difficult, and the method needs careful tuning to keep the text coherent.
