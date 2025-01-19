@@ -5,6 +5,7 @@
 	import Divider from '$lib/components/Divider.svelte';
 	import About from '$lib/components/About.svelte';
 	import Section from '$lib/components/Section.svelte';
+	import Timeline from '$lib/components/Timeline.svelte';
 
 	let personal = $dataStore.PERSONAL;
 	let specializations = $dataStore.SKILLS.specializations.join(', ');
@@ -29,9 +30,16 @@
 	<Activities />
 </Section>
 
+
 <Divider />
 
-<Section title="about" id={2}>
+<Section title="timeline" id={2}>
+	<Timeline />
+</Section>
+
+<Divider />
+
+<Section title="about" id={3}>
 	<About />
 </Section>
 

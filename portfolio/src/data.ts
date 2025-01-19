@@ -69,6 +69,13 @@ const DOCUMENTS = [
 		type: 'presentation',
 		description: 'This is the fourth sprint presentation for the PDE course.',
 		download: true		
+	},
+	{
+		title: 'PDE_Final.pdf',
+		src: '/documents/PDE_Final.pdf',
+		type: 'presentation',
+		description: 'This is the final presentation for the PDE course.',
+		download: true		
 	}
 ];
 
