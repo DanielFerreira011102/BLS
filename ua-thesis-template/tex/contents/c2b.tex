@@ -96,7 +96,7 @@ Integrating control conditions into text generation presents several technical c
 
 \subsection{Methods Overview}
 
-Methods for implementing controlled text generation can be divided into two main approaches: training-time methods and inference-time methods. 
+Methods for implementing controlled text generation can be divided into two main approaches: training-time methods and inference-time methods.
 This division reflects when control mechanisms are integrated into the text generation process \cite{liang2024controllabletextgenerationlarge, he-etal-2022-ctrlsum}.
 
 \begin{itemize}
@@ -116,12 +116,12 @@ This division reflects when control mechanisms are integrated into the text gene
         \end{itemize}
 \end{itemize}
 
-\section{Training-time Methods}
+\subsection{Training-time Methods}
 \label{c2:s:training-time}
 
 Training-time methods directly incorporate control mechanisms into the model's parameters or architecture. These methods aim to teach the model to recognize and respond to control signals during the training process.
 
-\subsection{Model Retraining}
+\subsubsection{Model Retraining}
 
 Complete model retraining is one of the earliest approaches to controlled text generation.
 This method involves training a language model from scratch with control-specific architectures or objectives.
@@ -181,7 +181,7 @@ The generation begins with an initial sequence containing only the required lexi
 
 This insertion-based approach provides several advantages for lexically constrained generation. It guarantees that required keywords will appear in the output since they form the starting point of generation. The ability to insert tokens at any position allows for more flexible text construction compared to strict left-to-right generation. However, this flexibility comes with computational costs, as each insertion operation requires evaluating multiple possible positions and tokens. The process can become particularly intensive for longer sequences where many insertions are needed to complete the text.
 
-\subsection{Fine-tuning}
+\subsubsection{Fine-tuning}
 
 Fine-tuning adapts a pre-trained language model to handle controlled text generation by adjusting its parameters using specialized datasets or training objectives. 
 This approach preserves the general language generation capabilities of the pre-trained model while improving its ability to respond to specific control signals.
@@ -200,9 +200,8 @@ where $\Theta$ represents the original parameters of the pre-trained model, and 
 
 where $D_{control}$ is a dataset designed for the control task, and $f(X; \Theta)$ represents the model's output for input $X$.
 
-\subsubsection{Adapter-Based Fine-tuning}
-
-Adapter-based fine-tuning introduces specialized neural modules into the pre-trained model while keeping its original parameters frozen. This reduces the risk of catastrophic forgetting, where fine-tuning causes the model to lose previously learned knowledge.
+\paragraph{Adapter-Based Fine-tuning}
+introduces specialized neural modules into the pre-trained model while keeping its original parameters frozen. This reduces the risk of catastrophic forgetting, where fine-tuning causes the model to lose previously learned knowledge.
 
 Auxiliary Tuning \cite{zeldes2020technicalreportauxiliarytuning} adds a separate auxiliary model alongside the pre-trained language model. 
 The auxiliary model processes both the input text and control signals, producing logits that are combined with the base model's output through a softmax operation:
@@ -245,12 +244,11 @@ During generation, multiple adapters can be combined through a weighted fusion m
 
 where $w_i$ are learnable weights balancing different control signals, and $k$ is the number of adapters. This allows LiFi to handle multiple control attributes while maintaining computational efficiency.
 
-\subsubsection{Data-Driven Fine-Tuning}
-
-Data-driven methods focus on creating better datasets to teach language models about control through fine-tuning. 
+\paragraph{Data-Driven Fine-Tuning} 
+focuses on creating better datasets to teach language models about control through fine-tuning.
 
 FLAN \cite{wei2022finetunedlanguagemodelszeroshot} showed that turning NLP tasks into natural language instructions helps models learn new tasks without examples. 
-For instance, instead of training a model to summarize text, FLAN trains it to follow instructions like "Summarize the text" or "Write a positive review about the product".
+For instance, instead of training a model to summarize text, FLAN trains it to follow instructions like ``Summarize the text'' or ``Write a positive review about the product''.
 This helps the model understand what it needs to do through clear directions, enabling zero-shot generalization to new tasks.
 
 Building on this idea, InstructCTG \cite{zhou2023controlledtextgenerationnatural} applies instruction-based fine-tuning specifically to controlled text generation. 
@@ -275,7 +273,7 @@ The total loss is a weighted combination of these two omponents:
 
 where $\lambda$ balances between preserving the original model's capabilities and achieving strong attribute control. One advantage of CHRT is that it can control multiple attributes by combining different transformation blocks during inference, without needing to retrain the model.
 
-\subsection{Reinforcement Learning}
+\subsubsection{Reinforcement Learning}
 
 Reinforcement learning methods optimize text generation by providing feedback signals that indicate how well the generated text satisfies the control objectives. 
 These methods can handle complex, non-differentiable control criteria and adapt to human preferences. 
@@ -317,7 +315,6 @@ Finally, the language model is fine-tuned using Proximal Policy Optimization (PP
 \end{equation}
 where $\beta$ balances between maximizing the predicted reward and maintaining the original model's behavior.
 
-
 Safe RLHF \cite{dai2023saferlhfsafereinforcement} extends RLHF to address a fundamental tension in language model alignment: balancing helpfulness with harmlessness. 
 Traditional \gls{rlhf} approaches often struggle when these objectives conflict, as a model being maximally helpful (e.g., providing detailed information about dangerous topics) might compromise safety.
 Safe RLHF decouples these two objectives by introducing a cost model $C_\psi(y, x)$ that penalizes harmful content. The optimization objective becomes:
@@ -346,14 +343,14 @@ Automated feedback methods guide language model training using predefined reward
 These methods scale better since they don't require collecting human preferences. 
 
 Distributional approaches like GDC \cite{khalifa2021distributionalapproachcontrolledtext} treat controlled generation as a constrained optimization problem. 
-The goal is to find a text distribution that satisfies the control requirements while staying close to the original model distribution. This prevents the model from generating unnatural text when trying to meet control conditions. 
+The goal is to find a text distribution that satisfies the control requirements while staying close to the original model distribution. This prevents the model from generating unnatural text when trying to meet the control conditions. 
 GDC solves this by finding:
 
 \begin{equation}
 P(x) = \argmin_{c \in C} D_{KL}(c | a)
 \end{equation}
 
-where $P$ is the target distribution, $C$ contains distributions meeting the constraints, and $a$ is the original model distribution. The solution takes an energy-based form:
+where $P(x)$ is the target distribution, $C$ contains distributions meeting the constraints, and $a$ is the original model distribution. The solution takes an energy-based form:
 
 \begin{equation}
 P(x) \propto a(x) e^{\sum_i \lambda_i \phi_i(x)}
@@ -396,21 +393,56 @@ TESLEA uses Self-Critical Sequence Training \cite{8099614}, generating two versi
     \mathcal{L}_{total} = \lambda \mathcal{L}_{RL} + (1-\lambda)\mathcal{L}_{MLE}
 \end{equation}
 
-The method effectively reduced text complexity by 2.5 FKGL points, while maintaining comparable ROUGE and SARI scores with existing baselines. 
-Human evaluations showed strong agreement (>70\%) among domain experts on the quality of generated simplifications across multiple dimensions including fluency, coherence, and factual accuracy.
+TESLEA made medical texts significantly easier to read, lowering the FKGL by 2.5 points while maintaining high ROUGE and SARI scores. 
+When evaluated by domain experts, over 70\% agreed on the quality of the simplifications across multiple dimensions including fluency, coherence, and factual accuracy.
 The outputs from TESLEA were consistently shorter than those produced by baseline models and the input paragraphs themselves, suggesting it learned to remove unnecessary technical details while retaining the most relevant content.
 
 \subsection{Inference-time Methods}
-\dots
+
+Inference-time methods change how language models generate text without modifying their parameters. 
+This makes them flexible and practical, especially when working with large models that are expensive to retrain. 
 
 \subsubsection{Prompt Engineering}
-\dots
+
+Prompt engineering controls text generation by providing specific instructions or cues to the language model. These can be either hard prompts (natural language instructions) or soft prompts (trainable vectors).
+
+Hard prompts are direct text instructions that tell the model what to do. For example:
+\begin{verbatim}
+Write a medical text about diabetes using simple language:
+Explain the risks of smoking in a positive tone:
+\end{verbatim}
+
+While simple to use, hard prompts can be unpredictable, small changes in wording can lead to very different outputs. To address this, researchers developed methods to find effective prompts automatically. AutoPrompt \cite{shin-etal-2020-autoprompt} uses gradient-based search to find the best trigger words for a given task. It starts with a template containing [MASK] tokens and replaces them with words that maximize the probability of desired outputs.
+
+Soft prompts offer more reliable control by using trainable vectors instead of words. Prefix-Tuning \cite{li-liang-2021-prefix} adds these vectors before each layer of the model, while keeping the model's parameters fixed. The vectors learn to guide the model toward specific outputs during training. When tested on table-to-text generation and summarization, Prefix-Tuning matched the performance of full model fine-tuning while changing only 0.1\%-2\% of the parameters.
+
+P-tuning \cite{liu-etal-2022-p} improved soft prompting by processing the prompt vectors through a bidirectional LSTM network. This made training more stable and worked better for both classification and generation tasks. The method was particularly good at handling new situations with few examples.
 
 \subsubsection{Guided Decoding}
-\dots
+
+Guided decoding is a technique used during the decoding process of a language model to bias the generated text towards the desired control attributes. 
+It works by manipulating the logits or probability distribution of the model to favor tokens that align with the control conditions.
+This is often done using classifiers or reward models that provide additional supervision signals to guide the generation process.
+
+PPLM \cite{dathathri2020plugplaylanguagemodels} was one of the first methods to show this was possible. It uses simple attribute models (e.g., sentiment classifiers) to adjust the internal states of GPT-2. This lets it control attributes like topic and tone without changing the base model. However, because it needs multiple passes through both models for each word, generation is quite slow.
+
+GeDi \cite{krause-etal-2021-gedi-generative} made this process faster by using small language models trained on specific attributes instead of classifiers. For example, one model trained on positive text and another on negative text. During generation, GeDi compares how likely each potential next word is under both models to decide which words to favor.
+
+DExperts \cite{liu-etal-2021-dexperts} simplified this further by directly combining predictions from three models: a base model, an ``expert'' trained on desired text (like non-toxic), and an ``anti-expert'' trained on undesired text (like toxic). This worked well for making GPT-2 and GPT-3's text less toxic while staying natural. Small expert models (125M parameters) could successfully guide much larger base models (1.5B parameters).
+
+Mix and Match \cite{mireshghallah-etal-2022-mix} took a different approach by treating text generation as a sampling problem. It combines scores from different models (for fluency, topic, safety, etc.) into a single energy function. The method then uses Metropolis-Hastings sampling to find text that balances all these aspects well. While this produced good results, the sampling process made generation slower than other methods.
 
 \subsubsection{Latent Space Manipulation}
-\dots
+
+Latent space manipulation controls text by adjusting the hidden states inside the language model. These hidden states form a high-dimensional space where similar words and concepts are close together. By moving through this space in specific directions, we can change the attributes of generated text.
+
+ICV \cite{liu2024incontextvectorsmakingcontext} finds these directions by comparing how the model processes examples with different attributes. For instance, comparing the hidden states when processing positive versus negative text reveals a ``sentiment direction''. Adding or subtracting along this direction during generation then makes text more positive or negative.
+
+ActAdd \cite{turner2024steeringlanguagemodelsactivation} showed that even simple changes to these hidden states can effectively control generation. The method first identifies which parts of the hidden states correspond to specific attributes. It then adjusts these values during generation, similar to turning a dial to control different aspects of the text.
+
+MIRACLE \cite{lu-etal-2023-miracle} handles multiple attributes at once by mapping text into a special latent space designed to keep different attributes separate. This helps prevent attributes from interfering with each other, allowing more precise control over multiple aspects of the generated text.
+
+\section{Evaluation Metrics}
 
 \subsection{Traditional Readability Metrics}
 \label{subsec:traditional-metrics}
@@ -452,7 +484,7 @@ Traditional readability formulas face several limitations when applied to medica
     
     \item They treat the text as a ``bag of words'', ignoring features like information density, organization, coherence, and syntax.
     
-    \item They do consider the cognitive load imposed by specific terms \cite{Swanson2024}. Short terms like ``polyp'' and ``apnea'' may be challenging for lay readers, while longer words like ``gastrointestinal'' and ``cardiovascular'' may be more familiar in a medical context.
+    \item They do not consider the cognitive load imposed by specific terms \cite{Swanson2024}. Short terms like ``polyp'' and ``apnea'' may be challenging for lay readers, while longer words like ``gastrointestinal'' and ``cardiovascular'' may be more familiar in a medical context.
     
     \item They were developed using general reading materials, often geared towards children's education levels. The assumptions and thresholds used in these formulas may not generalize well to the specialized language and adult literacy levels of medical texts \cite{Crossley2022}.
 
@@ -460,8 +492,75 @@ Traditional readability formulas face several limitations when applied to medica
 
 Despite these limitations, readability formulas provide a quantitative starting point for improving medical text clarity. Experts generally recommend using them alongside other evaluation approaches, combining multiple metrics with expert review and user testing \cite{Ko2024-dd, tanprasert-kauchak-2021-flesch}.
 
-\subsection{Reference-based Evaluation Metrics}
-\dots
+\subsection{Reference-based Metrics}
 
-\subsection{Reference-Free Evaluation Metrics}
-\dots
+Reference-based metrics compare generated text against human-written reference simplifications. 
+These metrics help measure how well the system's output matches examples created by domain experts or crowdsourced annotators.
+
+\textbf{\gls{sari}} \cite{xu-etal-2016-optimizing} specifically targets text simplification quality by comparing n-grams in the candidate and reference texts.
+For a given word sequence, \gls{sari} calculates:
+
+\begin{equation}
+    \text{SARI} = \frac{F_{add} + F_{keep} + F_{del}}{3}
+\end{equation}
+
+where $F_{add}$, $F_{keep}$, and $F_{del}$ are F1 scores for added, kept, and deleted n-grams compared to the reference text. This metric is particularly relevant for medical text simplification as it captures both readability improvements and content preservation \cite{li2024largelanguagemodelsbiomedical}.
+
+\textbf{BERTScore} \cite{zhang2020bertscoreevaluatingtextgeneration} compares generated text against references using contextual embeddings from BERT models. For a candidate token $x_i$ and reference token $\hat{x}_j$, it computes their similarity using cosine similarity of their BERT embeddings. The metric combines these token-level similarities into precision and recall scores:
+
+\begin{equation}
+    R_{BERT} = \frac{1}{|x|} \sum_{x_i \in x} \max_{\hat{x}_j \in \hat{x}} x_i^T \hat{x}_j
+\end{equation}
+
+\begin{equation}
+    P_{BERT} = \frac{1}{|\hat{x}|} \sum_{\hat{x}_j \in \hat{x}} \max_{x_i \in x} x_i^T \hat{x}_j
+\end{equation}
+
+The final BERTScore is an F1 measure that balances precision and recall:
+
+\begin{equation}
+    F_{BERT} = \frac{2(P_{BERT} \cdot R_{BERT})}{P_{BERT} + R_{BERT}}
+\end{equation}
+
+This approach catches semantic similarities that n-gram metrics miss, since BERT embeddings can match related words like ``car'' and ``vehicle''. 
+It also handles word reordering better since matching is done at the token level. 
+BERTScore has shown the highest correlations with human judgments of simplicity and meaning preservation compared to other metrics, particularly when evaluating the outputs of neural sequence-to-sequence models \cite{alva-manchego-etal-2021-un}, though it is unclear how well it generalizes to the medical domain. 
+
+\subsection{Reference-free Metrics}
+
+Reference-free metrics evaluate text without relying on human-written reference simplifications.
+This makes them appealing because collecting high-quality human reference simplifications is time-consuming, expensive, and may not always be feasible \cite{alva-manchego-etal-2021-un, 94205144dd7945cc99b5a6544451b668, deutsch-etal-2022-limitations}.
+
+\textbf{\gls{samsa}} \cite{sulem-etal-2018-semantic} measures structural simplification by analyzing how well complex sentences are broken down into simpler ones. It uses semantic parsing to identify the main ideas in a sentence and checks if each appears in its own simple sentence. For a simplified text $S$ containing $n$ semantic units, \gls{samsa} calculates:
+
+\begin{equation}
+   \text{SAMSA} = \frac{\text{number of properly allocated semantic units}}{n}
+\end{equation}
+
+This metric is especially relevant for medical text, where breaking down complex medical concepts into digestible units improves reader understanding.
+
+\subsection{LLM-based Metrics}
+
+LLM-based metrics use large language models to evaluate text quality. 
+Unlike traditional metrics that count words or measure sentence length, these metrics can understand meaning and assess writing style.
+
+\textbf{G-Eval} \cite{liu-etal-2023-g} uses GPT-4 to score text on four aspects:
+
+\begin{itemize}
+   \item \textbf{Coherence} (1-5): How well ideas connect and flow
+   \item \textbf{Consistency} (1-5): Whether all facts match the source text
+   \item \textbf{Fluency} (1-3): Grammar and sentence quality 
+   \item \textbf{Relevance} (1-5): Whether important information is kept
+\end{itemize}
+
+G-Eval samples multiple scores for each aspect using temperature sampling, then combines them with a probability weighting:
+
+\begin{equation}
+   \text{Score} = \sum_{i=1}^{n} p_i s_i
+\end{equation}
+
+where $p_i$ is the probability of each score, $s_i$ is the score value, and $n$ is the number of samples.
+
+G-Eval prompts GPT-4 to evaluate each aspect separately, asking for step-by-step reasoning before giving a score. 
+While originally designed for summarization tasks, its framework could be adapted for evaluating medical text simplification, though it may require additional fine-tuning on medical data.
+

@@ -4,41 +4,39 @@
 In recent years, there has been a growing demand for accessible and reliable health information online.
 Consumers increasingly turn to the internet to find answers to their health-related questions, seeking guidance on topics like symptoms, treatments, and preventive care.
 However, the complexity of medical information can be a significant barrier for many people.
-Most health content is written for a highly educated audience, using technical jargon and assuming a high level of background knowledge \cite{clarke2016readability,storm2020assessing}.
-This can lead to confusion, misunderstanding, and potentially even harmful decisions if people are unable to fully grasp the information they find \cite{charow2019readability}.
+Most health content is written for a highly educated audience, using technical jargon and assuming a high level of background knowledge. %\cite{clarke2016readability,storm2020assessing}
+This can lead to confusion, misunderstanding, and potentially even harmful decisions if people are unable to fully grasp the information they find. %\cite{charow2019readability}
 At the same time, oversimplifying medical information comes with its own risks.
-Leaving out important details or nuance for the sake of simplicity can also lead to misinterpretation and poor decision-making \cite{clark2011simplifying}.
-The ideal scenario would be to provide health information at a level of complexity tailored to each individual user's needs and background.
-Someone with medical training should be able to access detailed, technical explanations, while someone with less health literacy should be able to find clear, straightforward answers that they can easily understand and act upon.
+Leaving out important details for the sake of simplicity can also lead to misinterpretation and poor decision-making. %\cite{clark2011simplifying}
+The best solution would be to adjust how complex the information is based on who's reading it. A doctor should be able to read detailed technical explanations, while someone with no medical background should get clear, simple answers they can understand and use.
+
 Artificial intelligence, particularly large language models (LLMs), have the potential to bridge this gap by dynamically generating health content at different complexity levels.
-LLMs like GPT-3 \cite{brown2020languagemodelsfewshotlearners} and PaLM \cite{chowdhery2022palmscalinglanguagemodeling} have demonstrated remarkable abilities to produce fluent, coherent text in a variety of domains.
-By providing these models with health-related prompts, it may be possible to generate accurate, relevant answers to consumer health questions.
-However, current LLMs lack fine-grained control over the complexity of the generated text.
-While they can be prompted to give "simple" or "detailed" answers, there is no guarantee that the outputs will genuinely meet a specific target level of complexity.
-For health applications in particular, it is critical to have robust, reliable control over the complexity of the generated text.
-We need to ensure that "simple" answers are not \textit{too} simple, leaving out key information, and that "complex" answers do not introduce errors in an attempt to include more advanced terminology and concepts.
-Therefore, the core motivation of this work is to develop a system that combines the flexibility and power of LLMs with the careful control needed for providing accurate, appropriate health information to a diverse public audience.
-By enabling fine-grained control over the complexity of generated text, we aim to make health information more accessible and useful for everyone who needs it.
+Models like GPT-3  \cite{brown2020languagemodelsfewshotlearners} and PaLM \cite{chowdhery2022palmscalinglanguagemodeling} can write clear text about many topics, including health.
+However, these models don't have reliable ways to control how complex their answers are.
+While we can ask them for ``simple'' or ``detailed'' answers, we can't be sure the text will match what different readers need. 
+This is especially important for health information, where both overly simple and overly complex explanations could be harmful.
+
+This work aims to create a system that combines AI language models with careful control over text complexity. This would make health information more useful for everyone, from medical experts to people with no health background. The system would ensure that simple explanations include all important information, while complex answers remain accurate when using advanced medical terms.
 
 \section{Objectives}
 
-The primary goal of this dissertation is to develop a controllable language model for consumer health \gls{qa} that is capable of generating responses with adjustable complexity levels. This overarching goal is broken down into the following specific objectives:
-
+The primary goal of this dissertation is to develop a controllable language model for consumer health \gls{qa} that is capable of generating responses with adjustable complexity levels. This overarching goal is broken down into the following objectives:
 \begin{itemize}
-\item \textbf{Quantify Medical Text Complexity}: Identify a combination of metrics that effectively captures the complexity of medical text, addressing aspects such as specialized vocabulary, syntactic structures, and conceptual density.
-\item \textbf{Create a Complexity-Annotated Dataset}: Design and curate a high-quality dataset of health question-answer pairs annotated with complexity levels, facilitating the training and evaluation of the controllable QA model.
-\item \textbf{Develop a Controllable Language Model}: Design, implement, and evaluate a language model capable of generating health answers with user-specified complexity levels, ensuring factual accuracy, relevance, and fluency.
+    \item \textbf{Quantify Medical Text Complexity}: Identify a combination of metrics that effectively captures the complexity of medical text, addressing aspects such as specialized vocabulary, syntactic structures, and conceptual density.
+    \item \textbf{Create a Complexity-Annotated Dataset}: Design and curate a high-quality dataset of health question-answer pairs annotated with complexity levels, facilitating the training and evaluation of the controllable QA model.
+    \item \textbf{Develop a Controllable Language Model}: Design, implement, and evaluate a language model capable of generating health answers with user-specified complexity levels, ensuring factual accuracy, relevance, and fluency.
 \end{itemize}
 
 \section{Document Outline}
 
-This dissertation proposal is structured as follows:
-
-% Chapter 2: Background
-% - Controlled Text Generation
-% - Evaluation Metrics
-
+This dissertation is organized as follows:
 \begin{itemize}
-\item \textbf{Chapter 2} provides background information on controlled text generation and evaluation metrics for text complexity.
-\item \textbf{Chapter 3} outlines the work plan for the proposed research, including data collection, model development, and evaluation.
+\item \textbf{Chapter 2: Background} reviews key concepts in language models, controlled text generation, and measuring language complexity. It explains different methods to control text generation and discusses metrics for measuring medical text complexity.
+\item \textbf{Chapter 3: Work Plan} presents the research questions, tasks, and timeline for developing a language model that can generate health answers with adjustable complexity. It describes the methodology for measuring text complexity, creating training data, and building the model.
 \end{itemize}
+
+\vspace{1cm}
+
+\begin{tcolorbox}[colback=gray!5,colframe=gray!40,title=Note on Document Length]
+    This document has been condensed to meet the 25-page submission limit. Several sections, particularly in the latter parts of Chapter 2, have been abbreviated. Extended discussions of control methods, additional control methods and evaluation metrics, and detailed analysis are available if needed.
+\end{tcolorbox}

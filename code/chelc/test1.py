@@ -196,6 +196,9 @@ class BiomedicalComplexityAnalyzer:
                 capture_output=True,
                 check=True
             )
+
+            print(process.stdout)
+
             return process.stdout
         except subprocess.CalledProcessError as e:
             logger.error(f"MetaMapLite error: {e.stderr}")

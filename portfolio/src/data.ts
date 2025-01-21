@@ -45,6 +45,7 @@ const DOCUMENTS = [
 	{
 		title: 'PDE_Sprint_1.pptx',
 		src: '/documents/PDE_Sprint_1.pptx',
+		image: '/src/lib/images/slides.png',
 		type: 'presentation',
 		description: 'This is the first sprint presentation for the PDE course.',
 		download: true
@@ -52,6 +53,7 @@ const DOCUMENTS = [
 	{
 		title: 'PDE_Sprint_2.pptx',
 		src: '/documents/PDE_Sprint_2.pptx',
+		image: '/src/lib/images/slides.png',
 		type: 'presentation',
 		description: 'This is the second sprint presentation for the PDE course.',
 		download: true
@@ -59,6 +61,7 @@ const DOCUMENTS = [
 	{
 		title: 'PDE_Sprint_3.pptx',
 		src: '/documents/PDE_Sprint_3.pptx',
+		image: '/src/lib/images/slides.png',
 		type: 'presentation',
 		description: 'This is the third sprint presentation for the PDE course.',
 		download: true
@@ -66,19 +69,40 @@ const DOCUMENTS = [
 	{
 		title: 'PDE_Sprint_4.pptx',
 		src: '/documents/PDE_Sprint_4.pptx',
+		image: '/src/lib/images/slides.png',
 		type: 'presentation',
 		description: 'This is the fourth sprint presentation for the PDE course.',
 		download: true		
 	},
 	{
-		title: 'PDE_Final.pdf',
-		src: '/documents/PDE_Final.pdf',
+		title: 'PDE_Final.pptx',
+		src: '/documents/PDE_Final.pptx',
+		image: '/src/lib/images/slides.png',
 		type: 'presentation',
 		description: 'This is the final presentation for the PDE course.',
 		download: true		
-	}
+	},
+	{
+		title: 'PDE_Report.pdf',
+		src: '/documents/PDE_Report.pdf',
+		image: '/src/lib/images/pdf.png',
+		type: 'report',
+		description: 'This is the final report for the PDE course.',
+		download: true
+	},
 ];
 
+const ACTIVITIES = [
+	{
+		title: 'Webinar: How to comply with the written presentation rules for UA theses and dissertations',
+		image: '/src/lib/images/webinar.png',
+		src: '/documents/Certificado Como cumprir as normas de apresentação escrita das teses e dissertações da UA - Daniel Ferreira.pdf',
+		description: 'This webinar will provide guidance on how to comply with the written presentation rules for UA theses and dissertations.',
+		download: true,
+		tags: ['Webinar'],
+		date: '2024-10-22', // YYYY-MM-DD
+	},
+];
 
 const CONTACT = {
 	email: 'djbf@ua.pt',
@@ -106,6 +130,12 @@ const NAVLIST = [
 		isCore: true
 	},
 	{
+		title: 'Timeline',
+		subtitle: 'my work plan',
+		href: '#timeline',
+		isCore: true
+	},
+	{
 		title: 'About',
 		subtitle: 'get to know me',
 		href: '#about',
@@ -119,7 +149,8 @@ const DATA = {
 	SKILLS,
 	CONTACT,
 	NAVLIST,
-	DOCUMENTS
+	DOCUMENTS,
+	ACTIVITIES
 };
 
 export default DATA;

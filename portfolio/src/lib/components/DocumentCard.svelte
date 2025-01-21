@@ -1,37 +1,46 @@
 <script lang="ts">
     import { Icon } from 'svelte-icons-pack';
-	import { RiSystemDownloadLine } from 'svelte-icons-pack/ri';
-	import presentation from '$lib/images/slides.png';
+    import { RiSystemDownloadLine } from 'svelte-icons-pack/ri';
 
-	export let title: string;
-	export let src: string;
-	export let download = true;
-	export let type: string;
-	export let description: string;
-
-	const images = {
-		presentation: presentation
-	};
+    export let document: {
+        title: string;
+        src: string;
+        image: string;
+        download: boolean;
+        type: string;
+        description: string;
+    };
 </script>
 
 <a
-	target="_blank"
-	rel="noopener noreferrer"
-	href={download ? src : undefined}
-	download={title}
-	class="flex h-52 w-56 cursor-pointer flex-col overflow-hidden rounded-md border border-gray-200 bg-white shadow"
+    target="_blank"
+    rel="noopener noreferrer"
+    href={document.download ? document.src : undefined}
+    download={document.title}
+    class="group relative flex h-full flex-col overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-all hover:shadow-md"
 >
-	<div class="flex flex-grow items-center justify-center">
-		{#if type === 'presentation'}
-			<img src={images.presentation} alt="presentation" class="h-28 w-28" />
-		{/if}
-	</div>
-	<div class="flex items-center justify-between h-12 px-3">
-		<span class="overflow-hidden text-ellipsis whitespace-nowrap text-sm font-semibold">
-			{title}
-		</span>
-		{#if download}
-			<Icon src={RiSystemDownloadLine} size="24" color="#9ca3af" />
-		{/if}
-	</div>
+    <!-- Icon Container -->
+    <div class="relative flex h-48 items-center justify-center bg-gray-50">
+        <img 
+            src={document.image}
+            alt="presentation" 
+            class="h-28 w-28 transition-transform duration-300 group-hover:scale-105" 
+        />
+    </div>
+
+    <!-- Content -->
+    <div class="flex items-center justify-between p-4">
+        <h3 class="flex-1 text-base font-semibold leading-tight text-gray-900 line-clamp-2">
+            {document.title}
+        </h3>
+        {#if document.download}
+            <div class="ml-3 flex-shrink-0">
+                <Icon 
+                    src={RiSystemDownloadLine} 
+                    size="24" 
+                    className="text-gray-400 group-hover:text-gray-600 transition-colors duration-200" 
+                />
+            </div>
+        {/if}
+    </div>
 </a>
