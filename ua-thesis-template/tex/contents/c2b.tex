@@ -65,7 +65,7 @@ Structural control manages the organization and format of generated text:
    
    \item \textbf{Document Organization:} Long-form text often requires specific organizational structures. This includes section ordering, paragraph breaks, and hierarchical relationships between different parts of the text. For example, a scientific paper generator needs to maintain standard sections like introduction, methods, results, and discussion.
    
-   \item \textbf{Length Control:} Applications may need to generate text of specific lengths, from concise summaries to detailed explanations. Length control involves more than simple truncation - it requires generating complete, coherent text that naturally fits within the specified length constraints.
+   \item \textbf{Length Control:} Applications may need to generate text of specific lengths, from concise summaries to detailed explanations. Length control involves more than simple truncation, it requires generating complete, coherent text that naturally fits within the specified length constraints.
 \end{itemize}
 
 \subsubsection{Lexical Control}
@@ -531,7 +531,7 @@ BERTScore has shown the highest correlations with human judgments of simplicity 
 Reference-free metrics evaluate text without relying on human-written reference simplifications.
 This makes them appealing because collecting high-quality human reference simplifications is time-consuming, expensive, and may not always be feasible \cite{alva-manchego-etal-2021-un, 94205144dd7945cc99b5a6544451b668, deutsch-etal-2022-limitations}.
 
-\textbf{\gls{samsa}} \cite{sulem-etal-2018-semantic} measures structural simplification by analyzing how well complex sentences are broken down into simpler ones. It uses semantic parsing to identify the main ideas in a sentence and checks if each appears in its own simple sentence. For a simplified text $S$ containing $n$ semantic units, \gls{samsa} calculates:
+\textbf{\gls{samsa}} \cite{sulem-etal-2018-semantic} measures structural simplification by analyzing how well complex sentences are broken down into simpler ones. It uses semantic parsing (e.g., UCCA) to identify the main ideas in a sentence and checks if each appears in its own simple sentence. For a simplified text $S$ containing $n$ semantic units, \gls{samsa} calculates:
 
 \begin{equation}
    \text{SAMSA} = \frac{\text{number of properly allocated semantic units}}{n}
