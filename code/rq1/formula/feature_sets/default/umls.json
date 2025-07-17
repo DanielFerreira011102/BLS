@@ -1,0 +1,21 @@
+[
+    "umls/en_core_web_trf/term_density",
+    "umls/en_core_web_trf/semantic_type_density",
+    "umls/en_core_web_trf/unique_concept_density",
+    "umls/en_core_web_trf/avg_cui_score",
+    "umls/en_core_web_trf/lay_term_density",
+    "umls/en_core_web_trf/expert_term_density",
+    "umls/en_core_web_trf/semantic_diversity",
+    "umls/en_core_web_trf/avg_context_score",
+    "umls/en_core_web_trf/term_repetition",
+    "umls/en_core_web_trf/core_expert_term_density",
+    "umls/en_core_web_trf/avg_term_length",
+    "umls/en_core_web_trf/avg_frequency_score",
+    "umls/en_core_web_trf/top3_semtype_concentration",
+    "umls/en_core_web_trf/lay_term_ratio",
+    "umls/en_core_web_trf/avg_matches_per_term",
+    "umls/en_core_web_trf/expert_term_ratio",
+    "umls/en_core_web_trf/avg_combo_score",
+    "umls/en_core_web_trf/expert_to_lay_ratio",
+    "umls/en_core_web_trf/core_expert_term_ratio"
+]

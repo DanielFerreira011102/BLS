@@ -1,0 +1,49 @@
+[
+    {
+      "name": "filter_bad_answers",
+      "description": "Filters out answers that are irrelevant or factually incorrect",
+      "logic": "OR",
+      "filter_if_pass": true,
+      "conditions": [
+        {
+          "group": {
+            "logic": "AND",
+            "conditions": [
+              {
+                "metric": "unieval-sum-relevance",
+                "operator": "<",
+                "threshold": 0.5
+              },
+              {
+                "metric": "unieval-fact-consistency",
+                "operator": "<",
+                "threshold": 0.5
+              }
+            ]
+          }
+        },
+        {
+          "metric": "summac",
+          "operator": "<",
+          "threshold": -0.5
+        },
+        {
+          "group": {
+            "logic": "AND",
+            "conditions": [
+              {
+                "metric": "bertscore-f1",
+                "operator": "<",
+                "threshold": 0.8
+              },
+              {
+                "metric": "bleurt",
+                "operator": "<",
+                "threshold": 0.2
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]

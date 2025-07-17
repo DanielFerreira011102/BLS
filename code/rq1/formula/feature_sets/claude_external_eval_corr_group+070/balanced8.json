@@ -1,0 +1,10 @@
+[
+    "llm/mse_1.0+kl_0.0+ce_0.0+soft_0.0/dimension_scores/background_knowledge",
+    "commonlit/albert",
+    "textstat/difficult_words_percent",
+    "scigispy/WRDIC",
+    "gispy/WRDFAMI_mrc",
+    "scigispy/WRDHYP_partial_norm",
+    "textstat/mcalpine_eflaw",
+    "scigispy/PCREF_chunk_ap"
+]

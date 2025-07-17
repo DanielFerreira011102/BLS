@@ -1,0 +1,49 @@
+[
+  {
+    "name": "highly_problematic",
+    "description": "Identifies highly problematic content with complex nested conditions",
+    "logic": "OR",
+    "filter_if_pass": true,
+    "conditions": [
+      {
+        "group": {
+          "logic": "AND",
+          "conditions": [
+            {"metric": "bleurt", "operator": "<", "threshold": 0.15},
+            {"metric": "unieval-fact-consistency", "operator": "<", "threshold": 0.25},
+            {"metric": "unieval-sum-relevance", "operator": "<", "threshold": 0.4}
+          ]
+        }
+      },
+      {
+        "group": {
+          "logic": "AND",
+          "conditions": [
+            {"metric": "summac", "operator": "<", "threshold": -0.9},
+            {"metric": "factcc", "operator": "<", "threshold": 0.2}
+          ]
+        }
+      },
+    {
+      "group": {
+          "logic": "AND",
+          "conditions": [
+            {"metric": "unieval-fact-consistency", "operator": "<", "threshold": 0.15},
+            {"metric": "unieval-sum-relevance", "operator": "<", "threshold": 0.3},
+            {"metric": "bleurt", "operator": "<", "threshold": 0.2}
+          ]
+        }
+      },
+      {
+        "group": {
+          "logic": "AND",
+          "conditions": [
+            {"metric": "alignscore", "operator": "<", "threshold": 0.01},
+            {"metric": "bertscore-f1", "operator": "<", "threshold": 0.78},
+            {"metric": "unieval-sum-relevance", "operator": "<", "threshold": 0.3}
+          ]
+        }
+      }
+    ]
+  }
+]

@@ -1,0 +1,18 @@
+[
+    "syntax/en_core_web_trf/function_ratio",
+    "syntax/en_core_web_trf/noun_ratio",
+    "syntax/en_core_web_trf/aux_ratio",
+    "syntax/en_core_web_trf/content_ratio",
+    "syntax/en_core_web_trf/sconj_ratio",
+    "syntax/en_core_web_trf/passive_ratio",
+    "syntax/en_core_web_trf/adjective_ratio",
+    "syntax/en_core_web_trf/modal_ratio",
+    "syntax/en_core_web_trf/adverb_ratio",
+    "syntax/en_core_web_trf/avg_np_length",
+    "syntax/en_core_web_trf/negation_density",
+    "syntax/en_core_web_trf/verb_ratio",
+    "syntax/en_core_web_trf/cconj_ratio",
+    "syntax/en_core_web_trf/lr_asymmetry",
+    "syntax/en_core_web_trf/embedding_depth",
+    "syntax/en_core_web_trf/avg_dependency_distance"
+]

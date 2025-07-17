@@ -1,0 +1,12 @@
+[
+    "llm/mse_1.0+kl_0.0+ce_0.0+soft_0.0/dimension_scores/vocabulary_complexity",
+    "llm/mse_1.0+kl_0.0+ce_0.0+soft_0.0/dimension_scores/cognitive_load",
+    "commonlit/albert",
+    "textstat/difficult_words_percent",
+    "llm/mse_1.0+kl_0.0+ce_0.0+soft_0.0/dimension_scores/syntactic_complexity",
+    "gispy/WRDFAMI_mrc",
+    "syntax/en_core_web_trf/modal_ratio",
+    "scigispy/WRDIC",
+    "scigispy/WRDHYP_partial_norm",
+    "textstat/mtld"
+]

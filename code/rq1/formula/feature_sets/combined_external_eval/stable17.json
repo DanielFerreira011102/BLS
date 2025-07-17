@@ -1,0 +1,19 @@
+[
+    "jargon/roberta-large/abbr_general_density",
+    "llm/mse_1.0+kl_0.0+ce_0.0+soft_0.0/dimension_scores/vocabulary_complexity",
+    "textstat/dale_chall",
+    "textstat/type_token_ratio",
+    "commonlit/albert",
+    "jargon/roberta-large/jargon_count",
+    "scigispy/PCREF_chunk_1p",
+    "scigispy/WRDIC",
+    "syntax/en_core_web_trf/embedding_depth",
+    "syntax/en_core_web_trf/verb_ratio",
+    "masked_prob/random/scibert_scivocab_uncased",
+    "syntax/en_core_web_trf/function_ratio",
+    "cluster/medreadme",
+    "masked_prob/random/Bio_ClinicalBERT",
+    "syntax/en_core_web_trf/avg_dependency_distance",
+    "umls/en_core_sci_scibert/avg_cui_score",
+    "gispy/CoREF"
+]

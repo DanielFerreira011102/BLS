@@ -1,0 +1,22 @@
+[
+    "textstat/coleman_liau_index",
+    "textstat/smog_index",
+    "textstat/difficult_words_percent",
+    "textstat/avg_sentence_length",
+    "textstat/flesch_reading_ease",
+    "textstat/mcalpine_eflaw",
+    "textstat/mtld",
+    "textstat/percent_monosyllabic_words",
+    "textstat/flesch_kincaid_grade",
+    "textstat/linsear_write_formula",
+    "textstat/percent_polysyllabic_words",
+    "textstat/avg_word_length",
+    "textstat/dale_chall",
+    "textstat/forcast",
+    "textstat/gunning_fog",
+    "textstat/spache",
+    "textstat/automated_readability_index",
+    "textstat/type_token_ratio",
+    "textstat/text_standard",
+    "textstat/avg_syllables_per_word"
+]

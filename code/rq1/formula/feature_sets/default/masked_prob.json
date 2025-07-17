@@ -1,0 +1,9 @@
+[
+    "masked_prob/rnptc/Bio_ClinicalBERT",
+    "masked_prob/random/Bio_ClinicalBERT",
+    "masked_prob/random/bluebert_pubmed_mimic_uncased_L-12_H-768_A-12",
+    "masked_prob/random/scibert_scivocab_uncased",
+    "masked_prob/random/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext",
+    "masked_prob/random/bert-base-uncased",
+    "masked_prob/random/BioSimCSE-BioLinkBERT-BASE"
+]

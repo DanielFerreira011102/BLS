@@ -1,0 +1,75 @@
+[
+  {
+    "name": "filter_highly_problematic_group1",
+    "description": "Removes content with poor BLEURT and consistency/relevance",
+    "logic": "AND",
+    "conditions": [
+      {
+        "metric": "bleurt",
+        "operator": ">=",
+        "threshold": 0.15
+      },
+      {
+        "metric": "unieval-fact-consistency",
+        "operator": ">=",
+        "threshold": 0.25
+      },
+      {
+        "metric": "unieval-sum-relevance",
+        "operator": ">=",
+        "threshold": 0.4
+      }
+    ]
+  },
+  {
+    "name": "filter_highly_problematic_group2",
+    "description": "Removes content with poor SummaC and FactCC",
+    "logic": "AND",
+    "conditions": [
+      {
+        "metric": "summac",
+        "operator": ">=",
+        "threshold": -0.5
+      }
+    ]
+  },
+  {
+    "name": "filter_highly_problematic_group3",
+    "description": "Removes content with poor consistency, relevance, and BLEURT",
+    "logic": "AND",
+    "conditions": [
+      {
+        "metric": "unieval-fact-consistency",
+        "operator": ">=",
+        "threshold": 0.15
+      },
+      {
+        "metric": "unieval-sum-relevance",
+        "operator": ">=",
+        "threshold": 0.3
+      },
+      {
+        "metric": "bleurt",
+        "operator": ">=",
+        "threshold": 0.2
+      }
+    ]
+  },
+  {
+    "name": "filter_highly_problematic_group4",
+    "description": "Removes content with poor alignment, BERTScore, and relevance",
+    "logic": "AND",
+    "conditions": [
+      {
+        "metric": "bertscore-f1",
+        "operator": ">=",
+        "threshold": 0.78
+      },
+      {
+        "metric": "unieval-sum-relevance",
+        "operator": ">=",
+        "threshold": 0.3
+      }
+    ]
+  }
+]
