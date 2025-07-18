@@ -20,10 +20,23 @@
 #===============================================================================
 
 # Display colorful log messages
-log_section() { echo -e "\n\033[1;36m=== $1 ===\033[0m\n"; }
-log_info() { echo -e "\033[1;32m[INFO]\033[0m $1"; }
-log_warn() { echo -e "\033[1;33m[WARNING]\033[0m $1"; }
-log_error() { echo -e "\033[1;31m[ERROR]\033[0m $1" >&2; }
+log_section() {
+    echo ""
+    echo -e "\033[1;36m=== $1 ===\033[0m"
+    echo ""
+}
+
+log_info() {
+    echo -e "\033[1;32m[INFO]\033[0m $1"
+}
+
+log_warn() {
+    echo -e "\033[1;33m[WARNING]\033[0m $1"
+}
+
+log_error() {
+    echo -e "\033[1;31m[ERROR]\033[0m $1" >&2
+}
 
 # Check if command succeeded
 check_status() {

@@ -24,3 +24,4 @@ xgboost==2.1.4
 lmdeploy==0.6.1
 fastcoref==2.1.6
 pytorch-crf==0.7.2
+plotly==6.2.0

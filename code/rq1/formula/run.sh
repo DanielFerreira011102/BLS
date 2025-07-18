@@ -34,9 +34,9 @@ NORMALIZATION="z_score"
 FEATURES_SET=""  # Default empty, will use phase3 results or automatic selection
 
 # Phase 3 options
-USE_ALL_DATA=false
-FILTER_BY_GROUP=false
-CORR_THRESHOLD=""
+BOOTSTRAP_SAMPLES=1000
+FINAL_FEATURE_COUNT=""  # Default empty, will use all features
+CORR_THRESHOLD=0.7
 
 # Define valid sets
 VALID_SETS=(
@@ -44,15 +44,9 @@ VALID_SETS=(
     "phase1_all"
     "phase2_all"
     
-    # Phase 3 - Claude only
-    "phase3_claude_no_eval"
-    "phase3_claude_external_eval"
-    "phase3_claude_all_eval"
-    
-    # Phase 3 - Combined dataset
-    "phase3_combined_no_eval"
-    "phase3_combined_external_eval"
-    "phase3_combined_all_eval"
+    # Phase 3 - Simplified feature selection
+    "phase3_claude"
+    "phase3_combined"
     
     # Phase 4 - Claude only
     "phase4_claude_no_eval"
@@ -106,27 +100,6 @@ contains() {
     return 1
 }
 
-# Generate a suffix based on parameter combinations
-get_param_suffix() {
-    local suffix=""
-    
-    if [ "$USE_ALL_DATA" = true ]; then
-        suffix="${suffix}_corr_all"
-    fi
-    
-    if [ "$FILTER_BY_GROUP" = true ]; then
-        suffix="${suffix}+group"
-    fi
-    
-    if [ -n "$CORR_THRESHOLD" ]; then
-        # Remove decimal point for cleaner directory names
-        local threshold_str=$(echo "$CORR_THRESHOLD" | tr -d '.')
-        suffix="${suffix}+${threshold_str}"
-    fi
-    
-    echo "$suffix"
-}
-
 # Function to get external datasets (datasets not used in training)
 get_external_datasets() {
     local training_datasets="$1"
@@ -161,15 +134,9 @@ Options:
                    phase1_all                   - Run Phase 1 for all datasets
                    phase2_all                   - Run Phase 2 for all datasets
                    
-                   # Phase 3 - Claude only
-                   phase3_claude_no_eval        - Run Phase 3 for Claude without evaluation
-                   phase3_claude_external_eval  - Run Phase 3 for Claude with external evaluation
-                   phase3_claude_all_eval       - Run Phase 3 for Claude with all evaluation
-                   
-                   # Phase 3 - Combined dataset
-                   phase3_combined_no_eval      - Run Phase 3 for combined without evaluation
-                   phase3_combined_external_eval - Run Phase 3 for combined with external evaluation
-                   phase3_combined_all_eval     - Run Phase 3 for combined with all evaluation
+                   # Phase 3 - Feature selection
+                   phase3_claude                - Run Phase 3 for Claude dataset
+                   phase3_combined              - Run Phase 3 for combined dataset
                    
                    # Phase 4 - Claude only
                    phase4_claude_no_eval        - Run Phase 4 for Claude without evaluation
@@ -182,12 +149,12 @@ Options:
                    phase4_combined_all_eval     - Run Phase 4 for combined with all evaluation
                    
                  Default: all
-  --features SET Specify a feature set to use for Phase 4 (e.g., core7, lasso13)
-                 Feature set must exist in $FEATURE_SETS_DIR/
-  --use-all-data          Enable --use-all-data-for-correlation in phase 3
-  --filter-by-group       Enable --filter-correlation-by-group in phase 3
-  --corr-threshold VALUE  Set the correlation threshold for phase 3
-  --help|-h      Show this help message
+  --features SET             Specify a feature set to use for Phase 4 (e.g., core7, lasso13)
+                             Feature set must exist in $FEATURE_SETS_DIR/
+  --bootstrap-samples N      Number of bootstrap samples for Phase 3 (default: 1000)
+  --final-feature-count N    Number of features to retain in Phase 3 (default: None, all features)
+  --corr-threshold VALUE     Correlation threshold for Phase 3 (default: 0.7)
+  --help|-h                  Show this help message
 EOF
     exit 1
 }
@@ -235,8 +202,8 @@ parse_arguments() {
         case $1 in
             --sets) SETS="$2"; shift 2 ;;
             --features) FEATURES_SET="$2"; shift 2 ;;
-            --use-all-data) USE_ALL_DATA=true; shift ;;
-            --filter-by-group) FILTER_BY_GROUP=true; shift ;;
+            --bootstrap-samples) BOOTSTRAP_SAMPLES="$2"; shift 2 ;;
+            --final-feature-count) FINAL_FEATURE_COUNT="$2"; shift 2 ;;
             --corr-threshold) CORR_THRESHOLD="$2"; shift 2 ;;
             --help|-h) show_usage ;;
             *) log_error "Unknown argument: $1"; show_usage ;;
@@ -271,32 +238,14 @@ parse_arguments() {
         fi
     fi
     
-    # Get parameter suffix for output directories
-    PARAM_SUFFIX=$(get_param_suffix)
-    
     # Log configuration
     log_info "Sets to run: ${SET_LIST[*]}"
     if [ -n "$FEATURES_SET" ]; then
         log_info "Features set: $FEATURES_SET"
     fi
-    if [ "$USE_ALL_DATA" = true ]; then
-        log_info "Use all data for correlation: enabled"
-    else
-        log_info "Use all data for correlation: disabled"
-    fi
-    if [ "$FILTER_BY_GROUP" = true ]; then
-        log_info "Filter correlation by group: enabled"
-    else
-        log_info "Filter correlation by group: disabled"
-    fi
-    if [ -n "$CORR_THRESHOLD" ]; then
-        log_info "Correlation threshold: $CORR_THRESHOLD"
-    else
-        log_info "Correlation threshold: default"
-    fi
-    if [ -n "$PARAM_SUFFIX" ]; then
-        log_info "Parameter suffix for output directories: $PARAM_SUFFIX"
-    fi
+    log_info "Bootstrap samples: $BOOTSTRAP_SAMPLES"
+    log_info "Final feature count: $FINAL_FEATURE_COUNT"
+    log_info "Correlation threshold: $CORR_THRESHOLD"
 }
 
 #===============================================================================
@@ -419,26 +368,14 @@ run_phase2_all() {
 
 run_phase3() {
     local dataset="$1"
-    local eval_datasets="$2"
-    local eval_mode="$3"  # "none", "external", or "all"
-    
-    # Create directory name with the parameter suffix
-    local dir_suffix="${dataset}_${eval_mode}_eval${PARAM_SUFFIX}"
-    local log_dir="$LOGS_DIR/phase3_${dir_suffix}"
+    local log_dir="$LOGS_DIR/phase3_${dataset}"
     
     log_section "Running Phase 3 for dataset: $dataset"
-    log_info "Evaluation mode: $eval_mode"
-    
-    if [ "$eval_mode" != "none" ]; then
-        log_info "Evaluation datasets: $eval_datasets"
-    else
-        log_info "No evaluation datasets"
-    fi
     
     mkdir -p "$log_dir"
     
     local phase1_dir="$OUTPUT_DIR/phase1"
-    local output_dir="$OUTPUT_DIR/phase3/${dir_suffix}"
+    local output_dir="$OUTPUT_DIR/phase3/${dataset}"
     
     mkdir -p "$output_dir"
     
@@ -454,27 +391,17 @@ run_phase3() {
         cmd="$cmd \"$ds\""
     done
     
-    cmd="$cmd --normalization \"$NORMALIZATION\""
-    
-    # Add evaluation datasets ONLY if not in "none" mode
-    if [ "$eval_mode" != "none" ] && [ -n "$eval_datasets" ]; then
-        cmd="$cmd --evaluation-datasets"
-        IFS='+' read -ra EVAL_DS <<< "$eval_datasets"
-        for ds in "${EVAL_DS[@]}"; do
-            cmd="$cmd \"$ds\""
-        done
-    fi
-    
     # Add phase 3 specific options
-    if [ "$USE_ALL_DATA" = true ]; then
-        cmd="$cmd --use-all-data-for-correlation"
+    cmd="$cmd --bootstrap-samples $BOOTSTRAP_SAMPLES"
+    
+    # If final feature count is specified, add it
+    if [ -n "$FINAL_FEATURE_COUNT" ]; then
+        cmd="$cmd --final-feature-count $FINAL_FEATURE_COUNT"
+    else
+        log_info "No final feature count specified, using all features"
     fi
-    if [ "$FILTER_BY_GROUP" = true ]; then
-        cmd="$cmd --filter-correlation-by-group"
-    fi
-    if [ -n "$CORR_THRESHOLD" ]; then
-        cmd="$cmd --correlation-threshold \"$CORR_THRESHOLD\""
-    fi
+    
+    cmd="$cmd --correlation-threshold $CORR_THRESHOLD"
     
     log_info "Executing: $cmd"
     eval "$cmd" > "$log_dir/stdout.log" 2> "$log_dir/stderr.log"
@@ -482,7 +409,11 @@ run_phase3() {
     local status=$?
     if [ $status -eq 0 ]; then
         log_info "Phase 3 completed successfully for dataset: $dataset"
-        grep -A 10 "Feature Selection" "$log_dir/stdout.log" | head -n 10
+        # Try to show selected features if available
+        if [ -f "$output_dir/data/selected_features.csv" ]; then
+            log_info "Selected features:"
+            head -n 15 "$output_dir/data/selected_features.csv"
+        fi
     else
         log_error "Phase 3 failed with exit code $status for dataset: $dataset"
     fi
@@ -490,32 +421,13 @@ run_phase3() {
     return $status
 }
 
-# Phase 3 - Claude only
-run_phase3_claude_no_eval() {
-    run_phase3 "claude" "" "none"
+# Phase 3 functions
+run_phase3_claude() {
+    run_phase3 "claude"
 }
 
-run_phase3_claude_external_eval() {
-    local external_datasets=$(get_external_datasets "claude")
-    run_phase3 "claude" "$external_datasets" "external"
-}
-
-run_phase3_claude_all_eval() {
-    run_phase3 "claude" "$ALL_EVAL_DATASETS" "all"
-}
-
-# Phase 3 - Combined dataset
-run_phase3_combined_no_eval() {
-    run_phase3 "$COMBINED_DATASET" "" "none"
-}
-
-run_phase3_combined_external_eval() {
-    local external_datasets=$(get_external_datasets "$COMBINED_DATASET")
-    run_phase3 "$COMBINED_DATASET" "$external_datasets" "external"
-}
-
-run_phase3_combined_all_eval() {
-    run_phase3 "$COMBINED_DATASET" "$ALL_EVAL_DATASETS" "all"
+run_phase3_combined() {
+    run_phase3 "$COMBINED_DATASET"
 }
 
 #===============================================================================
@@ -533,8 +445,8 @@ run_phase4() {
         features_name=$(basename "$features_file" .json)
     fi
     
-    # Create directory name with parameter suffix
-    local dir_suffix="${dataset}_${eval_mode}_eval${PARAM_SUFFIX}"
+    # Create directory name
+    local dir_suffix="${dataset}_${eval_mode}_eval"
     if [ -n "$features_name" ]; then
         dir_suffix="${dir_suffix}_${features_name}"
     fi
@@ -603,40 +515,35 @@ run_phase4() {
     return $status
 }
 
-# Function to get feature file based on dataset and eval mode
+# Function to get feature file based on dataset
 get_feature_file() {
     local dataset="$1"
-    local eval_mode="$2"
     local feature_file=""
     
     # Check for custom features set first
     if [ -n "$FEATURES_SET" ]; then
         feature_file="${FEATURE_SETS_DIR}/${FEATURES_SET}.json"
     else
-        # Try to use features from corresponding phase3 with parameter suffix
-        feature_file="$OUTPUT_DIR/phase3/${dataset}_${eval_mode}_eval${PARAM_SUFFIX}/models/model_features.json"
+        # Try to use features from corresponding phase3
+        feature_file="$OUTPUT_DIR/phase3/${dataset}/data/selected_features.csv"
         
-        # Fall back to other options if not found
-        if [ ! -f "$feature_file" ]; then
-            if [ "$eval_mode" = "none" ]; then
-                # Try external or all evaluation mode
-                feature_file="$OUTPUT_DIR/phase3/${dataset}_external_eval${PARAM_SUFFIX}/models/model_features.json"
-                if [ ! -f "$feature_file" ]; then
-                    feature_file="$OUTPUT_DIR/phase3/${dataset}_all_eval${PARAM_SUFFIX}/models/model_features.json"
-                fi
-            elif [ "$eval_mode" = "external" ]; then
-                # Try none or all evaluation mode
-                feature_file="$OUTPUT_DIR/phase3/${dataset}_none_eval${PARAM_SUFFIX}/models/model_features.json"
-                if [ ! -f "$feature_file" ]; then
-                    feature_file="$OUTPUT_DIR/phase3/${dataset}_all_eval${PARAM_SUFFIX}/models/model_features.json"
-                fi
-            elif [ "$eval_mode" = "all" ]; then
-                # Try external or none evaluation mode
-                feature_file="$OUTPUT_DIR/phase3/${dataset}_external_eval${PARAM_SUFFIX}/models/model_features.json"
-                if [ ! -f "$feature_file" ]; then
-                    feature_file="$OUTPUT_DIR/phase3/${dataset}_none_eval${PARAM_SUFFIX}/models/model_features.json"
-                fi
+        # Convert CSV to expected JSON format for phase4 if it exists
+        if [ -f "$feature_file" ]; then
+            local json_file="$OUTPUT_DIR/phase3/${dataset}/data/selected_features.json"
+            if [ ! -f "$json_file" ]; then
+                # Create a simple JSON file from CSV for phase4 compatibility
+                python3 -c "
+import pandas as pd
+import json
+df = pd.read_csv('$feature_file')
+features = df['feature'].tolist()
+with open('$json_file', 'w') as f:
+    json.dump(features, f)
+"
             fi
+            feature_file="$json_file"
+        else
+            feature_file=""
         fi
     fi
     
@@ -650,7 +557,7 @@ get_feature_file() {
 
 # Phase 4 - Claude only
 run_phase4_claude_no_eval() {
-    local feature_file=$(get_feature_file "claude" "none")
+    local feature_file=$(get_feature_file "claude")
     if [ -n "$feature_file" ]; then
         run_phase4 "claude" "" "none" "$feature_file"
     else
@@ -660,7 +567,7 @@ run_phase4_claude_no_eval() {
 
 run_phase4_claude_external_eval() {
     local external_datasets=$(get_external_datasets "claude")
-    local feature_file=$(get_feature_file "claude" "external")
+    local feature_file=$(get_feature_file "claude")
     if [ -n "$feature_file" ]; then
         run_phase4 "claude" "$external_datasets" "external" "$feature_file"
     else
@@ -669,7 +576,7 @@ run_phase4_claude_external_eval() {
 }
 
 run_phase4_claude_all_eval() {
-    local feature_file=$(get_feature_file "claude" "all")
+    local feature_file=$(get_feature_file "claude")
     if [ -n "$feature_file" ]; then
         run_phase4 "claude" "$ALL_EVAL_DATASETS" "all" "$feature_file"
     else
@@ -679,7 +586,7 @@ run_phase4_claude_all_eval() {
 
 # Phase 4 - Combined dataset
 run_phase4_combined_no_eval() {
-    local feature_file=$(get_feature_file "$COMBINED_DATASET" "none")
+    local feature_file=$(get_feature_file "$COMBINED_DATASET")
     if [ -n "$feature_file" ]; then
         run_phase4 "$COMBINED_DATASET" "" "none" "$feature_file"
     else
@@ -689,7 +596,7 @@ run_phase4_combined_no_eval() {
 
 run_phase4_combined_external_eval() {
     local external_datasets=$(get_external_datasets "$COMBINED_DATASET")
-    local feature_file=$(get_feature_file "$COMBINED_DATASET" "external")
+    local feature_file=$(get_feature_file "$COMBINED_DATASET")
     if [ -n "$feature_file" ]; then
         run_phase4 "$COMBINED_DATASET" "$external_datasets" "external" "$feature_file"
     else
@@ -698,7 +605,7 @@ run_phase4_combined_external_eval() {
 }
 
 run_phase4_combined_all_eval() {
-    local feature_file=$(get_feature_file "$COMBINED_DATASET" "all")
+    local feature_file=$(get_feature_file "$COMBINED_DATASET")
     if [ -n "$feature_file" ]; then
         run_phase4 "$COMBINED_DATASET" "$ALL_EVAL_DATASETS" "all" "$feature_file"
     else
@@ -725,26 +632,12 @@ main() {
                 run_phase2_all
                 ;;
                 
-            # Phase 3 - Claude only
-            phase3_claude_no_eval)
-                run_phase3_claude_no_eval
+            # Phase 3 - Feature selection
+            phase3_claude)
+                run_phase3_claude
                 ;;
-            phase3_claude_external_eval)
-                run_phase3_claude_external_eval
-                ;;
-            phase3_claude_all_eval)
-                run_phase3_claude_all_eval
-                ;;
-                
-            # Phase 3 - Combined dataset
-            phase3_combined_no_eval)
-                run_phase3_combined_no_eval
-                ;;
-            phase3_combined_external_eval)
-                run_phase3_combined_external_eval
-                ;;
-            phase3_combined_all_eval)
-                run_phase3_combined_all_eval
+            phase3_combined)
+                run_phase3_combined
                 ;;
                 
             # Phase 4 - Claude only

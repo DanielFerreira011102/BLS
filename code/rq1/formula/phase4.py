@@ -53,6 +53,7 @@ class DatasetManager:
             if train_dfs:
                 self.train_data = pd.concat(train_dfs, ignore_index=True)
                 logger.info(f"Combined training data: {len(self.train_data)} rows")
+
             return self.train_data, {}
         
         # Process overlapping datasets (used for both training and evaluation)
@@ -863,6 +864,7 @@ class Visualizer:
             is_training_related = category in ["training", "training_test"]
             title_color = "blue" if is_training_related else "black"
 
+            # Change display name for specific models (hardcoded for now because I did not have time)
             display_name = {
                 "claude": "HSQA-Claude",
                 "cochrane": "Cochrane",

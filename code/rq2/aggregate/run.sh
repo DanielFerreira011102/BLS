@@ -1,15 +1,15 @@
 #!/bin/bash
-#SBATCH --job-name=rq2_metrics_agg    # Name of the job visible in queue
-#SBATCH --nodes=1                     # Number of compute nodes to allocate
-#SBATCH --ntasks=1                    # Number of tasks (processes) to create
-#SBATCH --cpus-per-task=4             # CPU cores per task
-#SBATCH --mem=16G                     # Memory allocation per node
-#SBATCH --partition=cpu               # Compute partition/queue to use
-#SBATCH --nodelist=cpu-srv-02         # Specific node to run on (can be overridden)
-#SBATCH --chdir=/data/home/djbf/storage/bls/rq2  # Working directory
-#SBATCH --output=/data/home/djbf/storage/bls/rq2/logs/%j/metrics_agg.out  # Standard output file (%j = job ID)
-#SBATCH --error=/data/home/djbf/storage/bls/rq2/logs/%j/metrics_agg.err   # Standard error file (%j = job ID)
-#SBATCH --time=4:00:00                # Time limit (4 hours)
+#SBATCH --job-name=rq2_metrics_agg
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=4
+#SBATCH --mem=16G
+#SBATCH --partition=cpu
+#SBATCH --nodelist=cpu-srv-02
+#SBATCH --chdir=/data/home/djbf/storage/bls/rq2
+#SBATCH --output=/data/home/djbf/storage/bls/rq2/logs/%j/metrics_agg.out
+#SBATCH --error=/data/home/djbf/storage/bls/rq2/logs/%j/metrics_agg.err
+#SBATCH --time=4:00:00
 
 #===============================================================================
 # Biomedical Language Simplification (BLS) - RQ2 Metrics Aggregator
@@ -49,55 +49,54 @@ check_status() {
 
 # Show usage information
 show_usage() {
-    echo "Usage: sbatch run.sh [OPTIONS]"
-    echo ""
-    echo "Options:"
-    echo "  --datasets DATASETS      Datasets to aggregate, comma-separated"
-    echo "                           (bioasq,liveqa,medicationqa,mediqaans,medquad,liveqa+medicationqa+mediqaans+bioasq+medquad)"
-    echo "                           or 'all' for all datasets individually"
-    echo "  --input-dir DIR          Base directory containing input JSON files (default: /data/home/djbf/storage/bls/rq2/outputs)"
-    echo "  --exclude PATTERN        Glob pattern to exclude files (default: \"**/deprecated/**/*.json\")"
-    echo ""
-    echo "Examples:"
-    echo "  sbatch run.sh --datasets all"
-    echo "  sbatch run.sh --datasets bioasq,liveqa"
-    echo "  sbatch run.sh --datasets liveqa+medicationqa+mediqaans+bioasq+medquad"
-    echo "  sbatch run.sh --datasets medquad --exclude \"**/test/**/*.json\""
+    cat << EOF
+Usage: sbatch run.sh [OPTIONS]
+
+Options:
+  --datasets DATASETS      Datasets to aggregate, comma-separated
+                           (bioasq,liveqa,medicationqa,mediqaans,medquad,
+                           liveqa+medicationqa+mediqaans+bioasq+medquad)
+                           or 'all' for all datasets individually
+  --input-dir DIR          Base directory containing input JSON files (default: $OUTPUT_DIR)
+  --exclude PATTERN        Glob pattern to exclude files (default: "**/deprecated/**/*.json")
+
+Examples:
+  sbatch run.sh --datasets all
+  sbatch run.sh --datasets bioasq,liveqa
+  sbatch run.sh --datasets liveqa+medicationqa+mediqaans+bioasq+medquad
+  sbatch run.sh --datasets medquad --exclude "**/test/**/*.json"
+EOF
     exit 1
+}
+
+# Get pattern for dataset
+get_pattern() {
+    case "$1" in
+        "bioasq") echo "phase1/bioasq/**/**/readability_metrics.json" ;;
+        "liveqa") echo "phase1/liveqa/**/**/readability_metrics.json" ;;
+        "medicationqa") echo "phase1/medicationqa/**/**/readability_metrics.json" ;;
+        "mediqaans") echo "phase1/mediqaans/**/**/readability_metrics.json" ;;
+        "medquad") echo "phase1/medquad/**/**/readability_metrics.json" ;;
+        "liveqa+medicationqa+mediqaans+bioasq+medquad") echo "phase1/**/**/readability_metrics.json" ;;
+        *) log_error "Unknown dataset: $1"; return 1 ;;
+    esac
 }
 
 # Run aggregation for a dataset
 run_aggregation() {
-    local dataset=$1
-    local input_dir=$2
-    local exclude_pattern=$3
+    local dataset=$1 input_dir=$2 exclude_pattern=$3
     local output_file="$OUTPUT_DIR/phase1/$dataset/aggregated_metrics.json"
-    local pattern=""
+    local pattern
     
-    # Determine pattern based on dataset
-    case "$dataset" in
-        "bioasq") pattern="phase1/bioasq/**/**/readability_metrics.json" ;;
-        "liveqa") pattern="phase1/liveqa/**/**/readability_metrics.json" ;;
-        "medicationqa") pattern="phase1/medicationqa/**/**/readability_metrics.json" ;;
-        "mediqaans") pattern="phase1/mediqaans/**/**/readability_metrics.json" ;;
-        "medquad") pattern="phase1/medquad/**/**/readability_metrics.json" ;;
-        "liveqa+medicationqa+mediqaans+bioasq+medquad") 
-            pattern="phase1/**/**/readability_metrics.json" 
-            output_file="$OUTPUT_DIR/phase1/liveqa+medicationqa+mediqaans+bioasq+medquad/aggregated_metrics.json"
-            ;;
-        *) log_error "Unknown dataset: $dataset"; return 1 ;;
-    esac
+    pattern=$(get_pattern "$dataset") || return 1
     
     log_info "Aggregating metrics for dataset: $dataset"
     log_info "Pattern: $pattern"
-    log_info "Exclude: $exclude_pattern"
     log_info "Output: $output_file"
     
-    # Create output directory
     mkdir -p "$(dirname "$output_file")"
     check_status "Failed to create output directory for $dataset"
     
-    # Run the aggregation
     python "$SOURCE_DIR/aggregate/metrics_aggregator.py" \
         --input-dir "$input_dir" \
         --output-file "$output_file" \
@@ -105,8 +104,7 @@ run_aggregation() {
         --exclude "$exclude_pattern"
     
     check_status "Metrics aggregation failed for dataset: $dataset"
-    
-    log_info "Metrics aggregation completed successfully for dataset: $dataset"
+    log_info "Completed successfully for dataset: $dataset"
 }
 
 #===============================================================================
@@ -116,9 +114,8 @@ run_aggregation() {
 # Define base directories
 HOME_DIR="/data/home/djbf"
 SOURCE_DIR="$HOME_DIR/bls/rq2"
-BASE_DIR="$HOME_DIR/storage/bls"
-OUTPUT_DIR="$BASE_DIR/rq2/outputs"
-LOGS_DIR="$BASE_DIR/rq2/logs/$SLURM_JOB_ID"
+OUTPUT_DIR="$HOME_DIR/storage/bls/rq2/outputs"
+LOGS_DIR="$HOME_DIR/storage/bls/rq2/logs/$SLURM_JOB_ID"
 
 # Create required directories
 mkdir -p "$OUTPUT_DIR" "$LOGS_DIR"
@@ -171,34 +168,11 @@ fi
 # Define available datasets
 AVAILABLE_DATASETS=("bioasq" "liveqa" "medicationqa" "mediqaans" "medquad" "liveqa+medicationqa+mediqaans+bioasq+medquad")
 
-# Determine which datasets to process
-process_datasets=()
-
+# Parse datasets to process
 if [ "$DATASETS" == "all" ]; then
-    # Process all individual datasets but not the combined one
     process_datasets=("bioasq" "liveqa" "medicationqa" "mediqaans" "medquad")
 else
-    IFS=',' read -ra DATASET_LIST <<< "$DATASETS"
-    for dataset in "${DATASET_LIST[@]}"; do
-        # Check if dataset is valid
-        valid_dataset=false
-        for available_dataset in "${AVAILABLE_DATASETS[@]}"; do
-            if [ "$dataset" == "$available_dataset" ]; then
-                valid_dataset=true
-                process_datasets+=("$dataset")
-                break
-            fi
-        done
-        
-        if [ "$valid_dataset" != true ]; then
-            log_warn "Dataset '$dataset' is not recognized. Valid datasets include: ${AVAILABLE_DATASETS[*]}"
-        fi
-    done
-    
-    if [ ${#process_datasets[@]} -eq 0 ]; then
-        log_error "No valid datasets specified"
-        exit 1
-    fi
+    IFS=',' read -ra process_datasets <<< "$DATASETS"
 fi
 
 #===============================================================================
@@ -237,31 +211,11 @@ for dataset in "${process_datasets[@]}"; do
     output_file="$OUTPUT_DIR/phase1/$dataset/aggregated_metrics.json"
     if [ -f "$output_file" ]; then
         file_size=$(du -h "$output_file" | cut -f1)
-        log_info "Dataset: $dataset - Aggregated metrics file: $output_file (Size: $file_size)"
+        log_info "Dataset: $dataset - Output: $output_file (Size: $file_size)"
     else
         log_warn "Dataset: $dataset - Output file not found: $output_file"
     fi
 done
 
 log_info "Job ID: $SLURM_JOB_ID completed at $(date)"
-
-# Deactivate the virtual environment
 deactivate
-
-#===============================================================================
-# USAGE EXAMPLES (For reference only, not executed)
-#===============================================================================
-
-# Run aggregation for all datasets individually:
-#   SLURM:  sbatch run.sh --datasets all
-
-# Run aggregation for combined dataset:
-#   SLURM:  sbatch run.sh --datasets liveqa+medicationqa+mediqaans+bioasq+medquad
-#   PYTHON: python "/data/home/djbf/bls/rq2/aggregate/metrics_aggregator.py" \
-#           --input-dir "/data/home/djbf/storage/bls/rq2/outputs/" \
-#           --output-file "/data/home/djbf/storage/bls/rq2/outputs/phase1/liveqa+medicationqa+mediqaans+bioasq+medquad/aggregated_metrics.json" \
-#           --pattern "phase1/**/**/readability_metrics.json" \
-#           --exclude "**/deprecated/**/*.json"
-
-# Run aggregation for specific datasets:
-#   SLURM:  sbatch run.sh --datasets bioasq,liveqa
